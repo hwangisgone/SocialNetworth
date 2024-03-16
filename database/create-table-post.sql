@@ -1,28 +1,33 @@
+
 CREATE TABLE post (
 	post_id		int		PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	content		text,
 	time_posted timestamp DEFAULT now(),
 	time_edited timestamp DEFAULT now(),
-
-	-- user_id			int,
+	share_count int default 0, 
+	like_count int default 0,
+	comment_count int default 0,
+	user_id			int
 	-- FOREIGN KEY (user_id) REFERENCES user(user_id),
 );
 
-CREATE TABLE like{
-	
-}
+create table share_post(
+	user_id int,
+	post_id int,
+	foreign key (post_id) references post(post_id)
+);
 
-CREATE TABLE comment (
-	id				int				PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	reply_to	int				REFERENCES comment,
-	content		text,
-	time_entered timestamp DEFAULT now(),
+create table reaction(
+	user_id int, 
+	post_id int,
+	time_react timestamp DEFAULT now(),
+	reaction_type char not null default 'H',
+	foreign key (post_id) references post(post_id)
+);
 
-	post_id		int,
-	FOREIGN KEY (post_id) REFERENCES post(post_id),
-
-	-- user_id			int,
-	-- FOREIGN KEY (user_id) REFERENCES user(user_id),
-	
-	CHECK (reply_to <> id)
+create table reply_post(
+	post_id_parent int, 
+	post_id_child int, 
+	foreign key(post_id_parent) references post(post_id),
+	foreign key(post_id_child) references post(post_id)
 );
