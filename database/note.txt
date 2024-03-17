@@ -3,4 +3,3 @@ function related to post
 - query number of comment
 - query number of like
 - list all comment in a post
-- list all comment in one comment
