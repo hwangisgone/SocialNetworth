@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        background-color: #17202A;
+      }
+
+      .nd-background {
+        background-color: #1C2733;
+      }
+        /* can be configured in tailwind.config.js */
+        .group:hover .group-hover\:block {
+            display: block;
+        }
+    .hover\:w-64:hover {
+            width: 45%;
+        }
+    /* NO NEED THIS CSS - just for custom scrollbar which can also be configured in tailwind.config.js*/
+    ::-webkit-scrollbar {
+        width: 2px;
+        height: 2px;
+    }
+    ::-webkit-scrollbar-button {
+        width: 0px;
+        height: 0px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #2d3748;
+        border: 0px none #ffffff;
+        border-radius: 50px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: #2b6cb0;
+    }
+    ::-webkit-scrollbar-thumb:active {
+        background: #000000;
+    }
+    ::-webkit-scrollbar-track {
+        background: #1a202c;
+        border: 0px none #ffffff;
+        border-radius: 50px;
+    }
+    ::-webkit-scrollbar-track:hover {
+        background: #666666;
+    }
+    ::-webkit-scrollbar-track:active {
+        background: #333333;
+    }
+    ::-webkit-scrollbar-corner {
+        background: transparent;
+    }
+    </style>
+</head>
+<body>
+  <div class="flex min-h-screen items-center justify-center rounded-3xl">
+
+
+        <div class="nd-background w-1/2 min-h-1/2 border border-gray-900 rounded-3xl">
+
+            <div class="mx-4 sm:mx-24 md:mx-34 lg:mx-56 mx-auto  flex items-center space-y-4 py-16 font-semibold text-gray-500 flex-col">
+                <svg viewBox="0 0 24 24" class=" h-12 w-12 text-white" fill="currentColor">
+                    <g>
+                        <path
+                            d="M23.643 4.937c-.835.37-1.732.62-2.675.733.962-.576 1.7-1.49 2.048-2.578-.9.534-1.897.922-2.958 1.13-.85-.904-2.06-1.47-3.4-1.47-2.572 0-4.658 2.086-4.658 4.66 0 .364.042.718.12 1.06-3.873-.195-7.304-2.05-9.602-4.868-.4.69-.63 1.49-.63 2.342 0 1.616.823 3.043 2.072 3.878-.764-.025-1.482-.234-2.11-.583v.06c0 2.257 1.605 4.14 3.737 4.568-.392.106-.803.162-1.227.162-.3 0-.593-.028-.877-.082.593 1.85 2.313 3.198 4.352 3.234-1.595 1.25-3.604 1.995-5.786 1.995-.376 0-.747-.022-1.112-.065 2.062 1.323 4.51 2.093 7.14 2.093 8.57 0 13.255-7.098 13.255-13.254 0-.2-.005-.402-.014-.602.91-.658 1.7-1.477 2.323-2.41z">
+                        </path>
+                    </g>
+                </svg>
+
+                <h1 class="text-white text-2xl">Sign in</h1>
+                <p class="text-white text-xs pt-6 pb-32">Enter your email and password</p>
+                <div
+                  class="w-full transform border-b bg-transparent duration-300 text-sm focus-within:border-indigo-500"
+                >
+                  <input
+                    type="text"
+                    placeholder="Email or Username"
+                    class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none text-white"
+                  />
+                </div>
+
+                <div
+                  class="w-full transform border-b bg-transparent duration-300 text-sm focus-within:border-indigo-500"
+                >
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+                  />
+                </div>
+                
+                <button class="w-full p-2 bg-gray-50 rounded-full font-bold text-gray-900 border border-gray-700 "> Log in</button>
+
+
+
+                    <p class="text-sm">Don't have an account? 
+                        <a class="font-semibold text-sky-700" href="">Registrate</a> </p>
+                <div class="w-full mx-auto max-w-sm transform space-y-4 text-center">
+                  <div class="w-full flex items-center space-x-4">
+                      <hr class="w-full border-b" />
+                      <div class="text-sm text-gray-400">Or</div>
+                      <hr class="w-full border-b" />
+                  </div>
+                  <div class="mt-5 flex justify-center gap-3    ">
+                    <svg width="40" height="40" viewBox="0 0 44 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_62_1034)">
+                    <path d="M18.1875 42.1542C8.80208 40.4979 1.625 32.3271 1.625 22.5C1.625 11.5688 10.5688 2.625 21.5 2.625C32.4312 2.625 41.375 11.5688 41.375 22.5C41.375 32.3271 34.1979 40.4979 24.8125 42.1542L23.7083 41.2708H19.2917L18.1875 42.1542Z" fill="url(#paint0_linear_62_1034)"/>
+                    <path d="M29.2292 28.0208L30.1125 22.5H24.8125V18.6354C24.8125 17.0896 25.3646 15.875 27.7938 15.875H30.3333V10.7958C28.8979 10.575 27.3521 10.3542 25.9167 10.3542C21.3896 10.3542 18.1875 13.1146 18.1875 18.0833V22.5H13.2188V28.0208H18.1875V42.0437C19.2917 42.2646 20.3958 42.375 21.5 42.375C22.6042 42.375 23.7083 42.2646 24.8125 42.0437V28.0208H29.2292Z" fill="white"/>
+                    </g>
+                    <defs>
+                    <linearGradient id="paint0_linear_62_1034" x1="21.5" y1="40.9992" x2="21.5" y2="2.625" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#0062E0"/>
+                    <stop offset="1" stop-color="#19AFFF"/>
+                    </linearGradient>
+                    <clipPath id="clip0_62_1034">
+                    <rect width="44" height="45" fill="white"/>
+                    </clipPath>
+                    </defs>
+                    </svg>
+
+                    <svg width="40" height="40" viewBox="0 0 50 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_62_1032)">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M24.9981 5.66666C13.7031 5.66666 4.54541 14.8 4.54541 26.0673C4.54541 35.0804 10.4057 42.7259 18.5338 45.4247C19.5572 45.6113 19.9301 44.9814 19.9301 44.4404C19.9301 43.957 19.9125 42.6733 19.9025 40.9714C14.213 42.2037 13.0125 38.2363 13.0125 38.2363C12.0821 35.8806 10.741 35.2532 10.741 35.2532C8.88381 33.9871 10.8816 34.0121 10.8816 34.0121C12.9347 34.1574 14.0146 36.1148 14.0146 36.1148C15.8391 39.2319 18.8025 38.3315 19.9678 37.8105C20.1536 36.4918 20.681 35.5926 21.2662 35.0829C16.7243 34.5682 11.949 32.8174 11.949 25.0003C11.949 22.7736 12.7463 20.9527 14.0547 19.5263C13.8438 19.0103 13.1419 16.9365 14.2544 14.1275C14.2544 14.1275 15.9722 13.5789 19.8799 16.2189C21.511 15.7668 23.2615 15.5401 25.0006 15.5326C26.7372 15.5401 28.4876 15.7668 30.1213 16.2189C34.0265 13.5789 35.7405 14.1275 35.7405 14.1275C36.8568 16.9365 36.1549 19.0103 35.9439 19.5263C37.2548 20.9527 38.0472 22.7736 38.0472 25.0003C38.0472 32.8374 33.2643 34.5619 28.7074 35.0666C29.442 35.6965 30.0962 36.9414 30.0962 38.8449C30.0962 41.5713 30.0711 43.7716 30.0711 44.4404C30.0711 44.9864 30.439 45.6213 31.4774 45.4222C39.5992 42.7184 45.4545 35.0779 45.4545 26.0673C45.4545 14.8 36.2955 5.66666 24.9981 5.66666Z" fill="black"/>
+                    </g>
+                    <defs>
+                    <clipPath id="clip0_62_1032">
+                    <rect width="50" height="51" fill="white"/>
+                    </clipPath>
+                    </defs>
+                    </svg>
+
+                    <svg width="40" height="40" viewBox="0 0 41 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_62_1037)">
+                    <path d="M8.99591 17.0888C9.79521 14.6115 11.3378 12.4562 13.4036 10.9301C15.4694 9.40412 17.9529 8.58539 20.4998 8.59075C23.3869 8.59075 25.9972 9.64075 28.0472 11.3593L34.0127 5.25C30.3774 2.00375 25.7188 0 20.4998 0C12.4194 0 5.46308 4.7215 2.11816 11.6375L8.99591 17.0888Z" fill="#EA4335"/>
+                    <path d="M27.4017 31.5227C25.5397 32.753 23.1753 33.4092 20.5001 33.4092C17.9633 33.4146 15.4892 32.6024 13.428 31.0876C11.3668 29.5729 9.82289 27.4323 9.01495 24.969L2.11328 30.3362C3.80666 33.8473 6.42728 36.8014 9.67748 38.8632C12.9277 40.925 16.6772 42.0117 20.5001 42C25.5106 42 30.2974 40.1747 33.8832 36.75L27.4035 31.5227H27.4017Z" fill="#34A853"/>
+                    <path d="M33.8831 36.75C37.6329 33.166 40.0673 27.832 40.0673 21C40.0673 19.7575 39.881 18.4222 39.6026 17.1815H20.5V25.2962H31.4948C30.9533 28.0245 29.4961 30.1367 27.4034 31.5227L33.8831 36.75Z" fill="#4A90E2"/>
+                    <path d="M9.01507 24.969C8.59714 23.6896 8.38482 22.3492 8.38641 21C8.38641 19.6315 8.59995 18.3173 8.99628 17.0888L2.11853 11.6375C0.711511 14.5472 -0.0138032 17.7529 0.000198943 21C0.000198943 24.36 0.760407 27.5275 2.11341 30.3363L9.01507 24.969Z" fill="#FBBC05"/>
+                    </g>
+                    <defs>
+                    <clipPath id="clip0_62_1037">
+                    <rect width="41" height="42" fill="white"/>
+                    </clipPath>
+                    </defs>
+                    </svg>
+
+    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</body>
