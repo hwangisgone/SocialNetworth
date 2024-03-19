@@ -70,35 +70,10 @@
       <div class="h-screen w-full bg-white relative flex overflow-hidden">
 
         <!-- Sidebar -->
-        <aside class="h-full w-1/4 flex flex-col space-y-2 items-center relative bg-gray-800 text-white">
+        <aside class="h-full w-1/5 flex flex-col space-y-10 items-center relative bg-gray-800 text-white">
           <!-- Logo -->
-          <div class="relative flex-shrink-0 px-2 py-2 w-10/12 text-gray-400 border-b dark:border-indigo-800 dark:focus-within:text-light focus-within:text-gray-700">
-              <button class="w-auto px-2 max-w-full p-1 rounded-full bg-opacity-0 font-bold text-white"> Purpost</button>
-          </div>
-
-          <!-- Profile -->
-          <div class="relative flex-shrink-0 w-10/12 px-2 text-white">
-              <button class="flex w-auto pr-5 max-w-full p-2 bg-white rounded-full bg-opacity-0 font-bold text-white hover:bg-opacity-40 focus-within:bg-opacity-20">
-              <svg width="27" height="22" viewBox="0 0 27 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M14.2287 0.0957275L26.2478 5.89788C26.6809 6.10848 26.8427 6.59243 26.6095 6.97853C26.3751 7.3657 25.8327 7.50716 25.3996 7.30188L24.4265 6.83175L22.4921 19.053C22.2327 20.3708 20.9324 21.2728 19.324 21.2728H8.28157C6.67553 21.2728 5.37404 20.3719 5.11945 19.0795L3.18149 6.83388L2.21192 7.30188C2.07748 7.3657 1.93116 7.3976 1.7884 7.3976C1.47195 7.3976 1.16382 7.2455 1.00322 6.9796C0.768857 6.59137 0.930651 6.10741 1.36369 5.89788L13.3805 0.0957275C13.6458 -0.0319092 13.9634 -0.0319092 14.2287 0.0957275ZM19.3264 19.6773C19.8939 19.6773 20.6029 19.4476 20.7302 18.803L22.7526 6.02338L13.804 1.70501L4.85772 6.02551L6.88253 18.8285C7.00506 19.4476 7.71291 19.6773 8.28395 19.6773H19.3264ZM13.8045 14.826C11.3241 14.826 9.30759 13.0221 9.30759 10.8055C9.30759 8.58887 11.3241 6.78494 13.8045 6.78494C16.285 6.78494 18.3014 8.58887 18.3014 10.8055C18.3014 13.0221 16.285 14.826 13.8045 14.826ZM13.8045 13.2306C15.3011 13.2306 16.5169 12.1435 16.5169 10.8055C16.5169 9.46743 15.3011 8.38039 13.8045 8.38039C12.3079 8.38039 11.0921 9.46743 11.0921 10.8055C11.0921 12.1435 12.3079 13.2306 13.8045 13.2306Z" fill="white"/>
-              </svg>
-               <a class="px-2" >Home</a></button>
-          </div>
-          <!-- Profile -->
-          <div class="relative flex-shrink-0 w-10/12 px-2 text-white">
-              <button class="w-auto pr-5 max-w-full p-2 bg-white rounded-full bg-opacity-0 font-bold text-white hover:bg-opacity-40 focus-within:bg-opacity-20"> Purpost</button>
-          </div>
-          <!-- Profile -->
-          <div class="relative flex-shrink-0 w-10/12 px-2 text-white">
-              <button class="w-auto pr-5 max-w-full p-2 bg-white rounded-full bg-opacity-0 font-bold text-white hover:bg-opacity-40 focus-within:bg-opacity-20"> Purpost</button>
-          </div>
-          <!-- Profile -->
-          <div class="relative flex-shrink-0 w-10/12 px-2 text-white">
-              <button class="w-auto pr-5 max-w-full p-2 bg-white rounded-full bg-opacity-0 font-bold text-white hover:bg-opacity-40 focus-within:bg-opacity-20"> Purpost</button>
-          </div>
-          <!-- Profile -->
-          <div class="relative flex-shrink-0 w-10/12 px-2 text-white">
-              <button class="w-auto pr-5 max-w-full p-2 bg-white rounded-full bg-opacity-0 font-bold text-white hover:bg-opacity-40 focus-within:bg-opacity-20"> Purpost</button>
+          <div class="relative flex-shrink-0 px-2 py-2 w-full text-gray-400 border-b dark:border-indigo-800 dark:focus-within:text-light focus-within:text-gray-700">
+              <button class="w-full p-2 bg-gray-50 rounded-full bg-opacity-0 font-bold text-white"> Purpost</button>
           </div>
         </aside>
 
@@ -212,65 +187,4 @@
     `
     imageScrollbox.appendChild(imgContainer);
   })
-</script>
-<script type="text/javascript">
-
-
-// Function to handle file upload
-const handleFileUpload = (files) => {
-  if (files.length === 0) {
-    console.error('No file selected');
-    return;
-  }
-  const filePath = URL.createObjectURL(files[0]);
-  uploadImage(filePath);
-};
-
-// Function to upload the image
-const uploadImage = async (filePath) => {
-  try {
-    const file = await fetchFile(filePath);
-    const formData = new FormData();
-    formData.append('file', file, filePath.split('/').pop());
-
-    const response = await fetch('192.168.133.129:8080/api/upload', {
-      method: 'POST',
-      body: formData
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to upload image');
-    }
-
-    const data = await response.text();
-    console.log('Image uploaded successfully:', data);
-  } catch (error) {
-    console.error('Error uploading image:', error.message);
-  }
-};
-
-// Function to fetch file asynchronously
-const fetchFile = async (filePath) => {
-  try {
-    const response = await fetch(filePath);
-    if (!response.ok) {
-      throw new Error('Failed to fetch file');
-    }
-    const blob = await response.blob();
-    return new File([blob], filePath.split('/').pop());
-  } catch (error) {
-    console.error('Error fetching file:', error.message);
-    throw error;
-  }
-};
-
-// Add event listener to file input element
-const fileInput = document.getElementById('fileInput');
-fileInput.addEventListener('change', (event) => {
-  handleFileUpload(event.target.files);
-});
-
-// Trigger file input click programmatically
-fileInput.click();
-
 </script>
