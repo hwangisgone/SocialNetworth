@@ -155,10 +155,12 @@
           <header class="h-12 w-full flex items-center relative justify-end px-5 space-x-10 bg-gray-800 text-base">
           <!-- Profile -->
             <div class="flex relative flex-shrink-0 px-2 py-2 w-full text-gray-400 dark:focus-within:text-light focus-within:text-gray-700">
-                <button class="w-1/2 p-2 bg-gray-50 bg-opacity-0 focus:font-bold text-white"><a class="border-b-2 dark:border-indigo-800">For you</a></button>
+              <table>
+                <tr><button class="w-1/2 p-2 bg-gray-50 bg-opacity-0 focus:font-bold text-white"><a class="border-b-2 dark:border-indigo-800">For you</a></button>
                 <div class="vl dark:border-indigo-800 border-l h-13"></div>
                 <button class="w-1/2 p-2 bg-gray-50 bg-opacity-0 focus:font-bold text-white"><a class="">Follow</a></button>
-
+              </tr>
+              </table>    
             </div>
             
           </header>
@@ -219,7 +221,7 @@
 
               <tbody>
                 <tr>
-                  <td class="px-5 py-5 border-b border-gray-800 bg-gray-800 hover:tr:bg-gray-600 text-sm text-white">
+                  <td class="px-5 py-5 border-b border-gray-800 bg-gray-800 hover:bg-gray-600 text-sm text-white">
                     <div class="flex items-center">
                       <div class="flex-shrink-0 w-10 h-10">
                         <img class="w-full h-full rounded-full"
@@ -328,6 +330,33 @@
 
 
 <script type="text/javascript">
+
+  data = [
+  {
+    postId : 12,
+    postUserId : 34,
+    postUsername : '@abc',
+    postUserFullname : 'Full Name',
+    postTimestamp : '2024-03-19 20:20:20.555',
+    postIsShared : true,
+    postIsSharedFrom : '@def',
+    postIsCreated : '2024-03-18 20:20:20.555',
+    postContent : 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+    mediaCount : 2,
+    media : [
+    {
+      mediaType : 'png',
+      mediaSrc : 'https://i.imgur.com/fjXFX93.jpeg'
+    },
+    {
+      mediaType : 'mp4',
+      mediaSrc : 'https://i.imgur.com/amAh6EE.mp4'
+    }
+    ],
+    likeCount : 56,
+    commentCount : 34,
+    shareCount : 12
+  }];
 
   imgArray = ['https://i.imgur.com/fjXFX93.jpeg', 'https://i.imgur.com/5yeBVeM.jpeg', 'https://i.imgur.com/DBpznrn.jpeg', 'https://i.imgur.com/ISpNf4j.jpeg'];
 
