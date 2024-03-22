@@ -48,6 +48,12 @@ public class PostController {
 		}
 	}
 
+//	Send a request with post body:
+//	{
+//	    "content": "ABCDE",
+//	    "timePosted": "2024-03-20T02:51:41.317"
+//	}
+	
 	@PostMapping("/post")
 	public ResponseEntity<Post> createTutorial(@RequestBody Post post) {
 		try {

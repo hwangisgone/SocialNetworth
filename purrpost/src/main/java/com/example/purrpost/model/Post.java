@@ -1,6 +1,6 @@
 package com.example.purrpost.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 import jakarta.persistence.*; // for Spring Boot 3
 
@@ -8,11 +8,12 @@ import jakarta.persistence.*; // for Spring Boot 3
 @Table(name = "post")
 public class Post {
 
-//	@Id
+
 //	@GeneratedValue(strategy = GenerationType.AUTO)
 //	private long post_id;
+	@Id
 	@Column(name = "post_id", insertable = false)
-	private int id;
+	private long id;
 	
 	@Column(name = "content")
 	private String content;
@@ -59,7 +60,7 @@ public class Post {
 		this.timeEdited = timeEdited;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
