@@ -1,4 +1,3 @@
-
 CREATE TABLE post (
 	post_id			int		PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	content			text,
@@ -27,6 +26,7 @@ CREATE TABLE reply_post(
 
 	CHECK (post_id_parent < post_id_child)  -- Ensures child appears after parent, avoid circular reference
 );
+
 
 
 -- Maybe use later
