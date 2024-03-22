@@ -92,6 +92,8 @@ AFTER INSERT OR DELETE ON reply_post
 FOR EACH ROW
 EXECUTE FUNCTION update_reply_count();
 
+
+
 --5. Create post function 
 CREATE OR REPLACE FUNCTION create_post(
     user_id_param int,
@@ -179,6 +181,9 @@ BEGIN
     RETURN deletion_successful;
 END;
 $$ LANGUAGE plpgsql;
+
+
+
 
 --8. toggle reaction
 CREATE OR REPLACE FUNCTION toggle_reaction(
