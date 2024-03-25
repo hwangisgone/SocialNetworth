@@ -1,0 +1,5 @@
+function related to post
+- query user_id ( maybe with time )
+- query number of comment
+- query number of like
+- list all comment in a post
