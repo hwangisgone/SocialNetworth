@@ -1,3 +1,5 @@
+
+
 CREATE TABLE post (
 	post_id			int		PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	content			text,
@@ -11,8 +13,8 @@ CREATE TABLE post (
 	user_id	int -- REFERENCES user(user_id),
 );
 
-CREATE TABLE reaction(
-	reaction_type char NOT NULL DEFAULT 'H',
+CREATE TABLE reaction (
+	reaction_type char NOT NULL DEFAULT 'L',
 
 	user_id	int, -- REFERENCES user(user_id),
 	post_id	int REFERENCES post(post_id),
