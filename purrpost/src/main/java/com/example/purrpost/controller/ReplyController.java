@@ -25,22 +25,12 @@ public class ReplyController {
 	@Autowired
 	ReplyRepository replyRepository;
 
-	@GetMapping("/allreplies")
-	public ResponseEntity<List<Reply>> getAllReplies() {
-		try {
-			List<Reply> allReplies = replyRepository.findAll();
-			
-			return new ResponseEntity<>(allReplies, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-
+	
 	@GetMapping("/replies_to/{id}")
 	public ResponseEntity<List<Reply>> getRepliesToId(@PathVariable("id") long id) {
 		try {
-			List<Reply> allRepliesTo = replyRepository.findAllById(id);
-			
+			List<Reply> allRepliesTo = replyRepository.findAllByParentId(id);
+
 			return new ResponseEntity<>(allRepliesTo, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -50,35 +40,35 @@ public class ReplyController {
 	@GetMapping("/replies_from/{id}")
 	public ResponseEntity<List<Reply>> getRepliesFromId(@PathVariable("id") long id) {
 		try {
-			List<Reply> allRepliesFrom = replyRepository.findAllById(id);
-			
+			List<Reply> allRepliesFrom = replyRepository.findAllByChildId(id);
+
 			return new ResponseEntity<>(allRepliesFrom, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	//load post
+	// @GetMapping("/reply/{id}")
+	// public ResponseEntity<Reply> getReplyById(@PathVariable("id") long id) {
+	// 	Optional<Reply> replyData = replyRepository.findById(id);
 
-	@GetMapping("/reply/{id}")
-	public ResponseEntity<Reply> getReplyById(@PathVariable("id") long id) {
-		Optional<Reply> replyData = replyRepository.findById(id);
-
-		if (replyData.isPresent()) {
-			return new ResponseEntity<>(replyData.get(), HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
+	// 	if (replyData.isPresent()) {
+	// 		return new ResponseEntity<>(replyData.get(), HttpStatus.OK);
+	// 	} else {
+	// 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	// 	}
+	// }
 
 	@PostMapping("/reply")
 	public ResponseEntity<Reply> createReply(@RequestBody Reply reply) {
 		try {
 			Reply _reply = replyRepository.save(reply);
-			
+
 			return new ResponseEntity<>(_reply, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	
 }

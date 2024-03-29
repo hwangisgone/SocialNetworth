@@ -1,54 +1,49 @@
 package com.example.purrpost.model;
 
-import jakarta.persistence.*; // for Spring Boot 3
-
+import jakarta.persistence.*; 
 @Entity
+@IdClass(ReplyId.class)
 @Table(name = "reply_post")
 public class Reply {
 
-	@Id
-	// @GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+    @Id
+    private long parentId;
 
-	@Column(name = "post_id_parent")
-	private long id_parent;
-
-	@Column(name = "post_id_child")
-	private long id_child;
+    @Id
+    private long childId;
 
 
-	public Reply() {
+    // Other fields and methods
 
+    public Reply() {
+    }
+
+    public Reply(long parentId, long childId) {
+		this.parentId = parentId;
+		this.childId = childId;
 	}
 
-	public Reply(long id_parent, long id_child) {
-		this.id_parent = id_parent;
-		this.id_child = id_child;
+	public long getParentId() {
+		return parentId;
 	}
 
-	public long getIdParent() {
-		return id_parent;
+    public long getChildId() {
+		return childId;
 	}
 
-	public long getIdChild() {
-		return id_child;
+	public void setIdParent(long parentId) {
+		this.parentId = parentId;
 	}
 
-	public void setIdParent(long id_parent) {
-		this.id_parent = id_parent;
+    public void setIdChild(long childId) {
+		this.childId = childId;
 	}
 
-	public void setIdChild(long id_child) {
-		this.id_child = id_child;
-	}
-
-	public long getId() {
-		return id;
-	}
+	
 
 	
 	@Override
 	public String toString() {
-		return "Reply [id=" + id + ", id_parent=" + id_parent + ", id_child=" + id_child + "]";
+		return "Reply [parentId=" + parentId + ", childId=" + childId + "]";
 	}
 }
