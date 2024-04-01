@@ -1,5 +1,3 @@
-
-
 CREATE TABLE post (
 	post_id			int		PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	content			text,
