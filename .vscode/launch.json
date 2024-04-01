@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-PurrpostApplication<purrpost>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.purrpost.PurrpostApplication",
+            "projectName": "purrpost",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

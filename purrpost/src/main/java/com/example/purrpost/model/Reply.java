@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 @IdClass(ReplyId.class)
 @Table(name = "reply_post")
 public class Reply {
-
+	
     @Id
     private long parentId;
 
@@ -38,8 +38,6 @@ public class Reply {
     public void setIdChild(long childId) {
 		this.childId = childId;
 	}
-
-	
 
 	
 	@Override
