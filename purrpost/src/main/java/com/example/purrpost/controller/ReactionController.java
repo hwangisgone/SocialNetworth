@@ -24,6 +24,7 @@ public class ReactionController {
 	@Autowired
 	ReactionRepository reactionRepository;
 
+//	!!! For testing only
 	@GetMapping("/post/{id}/reactions")
 	public ResponseEntity<List<Reaction>> getAllReactions(@PathVariable("id") int postId) {
 		try {
