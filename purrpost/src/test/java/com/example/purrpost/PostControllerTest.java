@@ -11,7 +11,6 @@ import io.restassured.http.ContentType;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeAll;
 //import org.junit.jupiter.api.AfterAll;
 //import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,10 +20,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.jdbc.Sql;
-//import org.testcontainers.containers.PostgreSQLContainer;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.example.purrpost.model.Post;
 import com.example.purrpost.repository.PostRepository;
 

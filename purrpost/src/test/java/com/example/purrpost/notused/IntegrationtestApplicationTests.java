@@ -1,4 +1,4 @@
-package com.example.purrpost;
+package com.example.purrpost.notused;
 
 import org.junit.ClassRule;
 import org.junit.Test;
