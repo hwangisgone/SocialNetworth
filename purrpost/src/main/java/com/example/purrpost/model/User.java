@@ -11,11 +11,12 @@ public class User{
 //	@GeneratedValue(strategy = GenerationType.AUTO)
 //	private long post_id;
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)	// Use database side to generate
 	@Column(name = "user_id", insertable = false)
 	private long userId;
 	
 	@Column(name = "name_tag")
-	private String name_tag;
+	private String nameTag;
 	
 	@Column(name = "password")
 	private String password;
@@ -43,13 +44,13 @@ public class User{
 		
 	}
 	public User(String name_tag, String password) {
-		this.name_tag = name_tag; 
+		this.nameTag = name_tag; 
 		this.password = password;	
 
 	}
 
 	public String getNametag() {
-		return name_tag;
+		return nameTag;
 	}
 	
 	public String getPassword() {
