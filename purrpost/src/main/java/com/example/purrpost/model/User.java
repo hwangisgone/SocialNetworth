@@ -5,7 +5,7 @@ import java.util.Date;
 import jakarta.persistence.*; // for Spring Boot 3
 
 @Entity
-@Table(name = "post")
+@Table(name = "social_user")
 public class User{
 
 //	@GeneratedValue(strategy = GenerationType.AUTO)
