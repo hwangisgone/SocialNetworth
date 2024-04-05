@@ -25,9 +25,17 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
 	
-	// https://mvnrepository.com/artifact/org.postgresql/postgresql
-	implementation("org.postgresql:postgresql:42.7.1")
 	
+	// https://mvnrepository.com/artifact/org.postgresql/postgresql
+	implementation("org.postgresql:postgresql:42.7.2")
+	
+	// https://mvnrepository.com/artifact/org.testcontainers/postgresql
+	testImplementation("org.testcontainers:postgresql:1.19.7")
+
+	// Testing REST
+	// https://mvnrepository.com/artifact/io.rest-assured/rest-assured
+	testImplementation("io.rest-assured:rest-assured:5.4.0")
+
 }
 
 tasks.withType<Test> {

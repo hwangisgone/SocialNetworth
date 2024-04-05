@@ -4,7 +4,7 @@ CREATE OR REPLACE FUNCTION retrieve_posts_by_user_id(
     user_id_param int
 )
 RETURNS JSONB
-AS $$
+AS '
 DECLARE
     posts_json JSONB;
 BEGIN
@@ -21,25 +21,25 @@ BEGIN
 
     RETURN posts_json;
 END;
-$$ LANGUAGE plpgsql;
+' LANGUAGE plpgsql;
 
 
 ---2. Trigger for share_post table
 CREATE OR REPLACE FUNCTION update_share_count()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER AS '
 BEGIN
-    IF TG_OP = 'INSERT' THEN
+    IF TG_OP = ''INSERT'' THEN
         UPDATE post
         SET share_count = share_count + 1
         WHERE post_id = NEW.post_id;
-    ELSIF TG_OP = 'DELETE' THEN
+    ELSIF TG_OP = ''DELETE'' THEN
         UPDATE post
         SET share_count = share_count - 1
         WHERE post_id = OLD.post_id;
     END IF;
     RETURN NULL;
 END;
-$$ LANGUAGE plpgsql;
+' LANGUAGE plpgsql;
 
 CREATE TRIGGER share_post_trigger
 AFTER INSERT OR DELETE ON share_post
@@ -49,20 +49,20 @@ EXECUTE FUNCTION update_share_count();
 
 --3. Trigger for reaction table
 CREATE OR REPLACE FUNCTION update_reaction_count()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER AS '
 BEGIN
-    IF TG_OP = 'INSERT' THEN
+    IF TG_OP = ''INSERT'' THEN
         UPDATE post
         SET like_count = like_count + 1
         WHERE post_id = NEW.post_id;
-    ELSIF TG_OP = 'DELETE' THEN
+    ELSIF TG_OP = ''DELETE'' THEN
         UPDATE post
         SET like_count = like_count - 1
         WHERE post_id = OLD.post_id;
     END IF;
     RETURN NULL;
 END;
-$$ LANGUAGE plpgsql;
+' LANGUAGE plpgsql;
 
 CREATE TRIGGER reaction_trigger
 AFTER INSERT OR DELETE ON reaction
@@ -72,20 +72,20 @@ EXECUTE FUNCTION update_reaction_count();
 
 --4. Trigger for reply_post table
 CREATE OR REPLACE FUNCTION update_reply_count()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER AS '
 BEGIN
-    IF TG_OP = 'INSERT' THEN
+    IF TG_OP = ''INSERT'' THEN
         UPDATE post
         SET comment_count = comment_count + 1
         WHERE post_id = NEW.post_id_parent;
-    ELSIF TG_OP = 'DELETE' THEN
+    ELSIF TG_OP = ''DELETE'' THEN
         UPDATE post
         SET comment_count = comment_count - 1
         WHERE post_id = OLD.post_id_parent;
     END IF;
     RETURN NULL;
 END;
-$$ LANGUAGE plpgsql;
+' LANGUAGE plpgsql;
 
 CREATE TRIGGER reply_post_trigger
 AFTER INSERT OR DELETE ON reply_post
@@ -100,7 +100,7 @@ EXECUTE FUNCTION update_reply_count();
 --     content_param text
 -- )
 -- RETURNS JSONB
--- AS $$
+-- AS '
 -- DECLARE
 --     new_post_id int;
 --     new_post_json JSONB;
@@ -116,7 +116,7 @@ EXECUTE FUNCTION update_reply_count();
 
 --     RETURN new_post_json;
 -- END;
--- $$ LANGUAGE plpgsql;
+-- ' LANGUAGE plpgsql;
 
 -- --6. Function modify post 
 -- CREATE OR REPLACE FUNCTION modify_post(
@@ -125,7 +125,7 @@ EXECUTE FUNCTION update_reply_count();
 --     new_content_param text
 -- )
 -- RETURNS JSONB
--- AS $$
+-- AS '
 -- DECLARE
 --     updated_post_json JSONB;
 -- BEGIN
@@ -153,7 +153,7 @@ EXECUTE FUNCTION update_reply_count();
 --         RETURN NULL;
 --     END IF;
 -- END;
--- $$ LANGUAGE plpgsql;
+-- ' LANGUAGE plpgsql;
 
 -- --7. Delete post 
 -- CREATE OR REPLACE FUNCTION delete_post(
@@ -161,7 +161,7 @@ EXECUTE FUNCTION update_reply_count();
 --     user_id_param int
 -- )
 -- RETURNS BOOLEAN
--- AS $$
+-- AS '
 -- DECLARE
 --     deletion_successful BOOLEAN := false;
 -- BEGIN
@@ -180,7 +180,7 @@ EXECUTE FUNCTION update_reply_count();
     
 --     RETURN deletion_successful;
 -- END;
--- $$ LANGUAGE plpgsql;
+-- ' LANGUAGE plpgsql;
 
 
 
@@ -191,7 +191,7 @@ EXECUTE FUNCTION update_reply_count();
 --     user_id_param int
 -- )
 -- RETURNS VOID
--- AS $$
+-- AS '
 -- BEGIN
 --     -- Check if the record exists in the reaction table
 --     IF EXISTS (
@@ -208,7 +208,7 @@ EXECUTE FUNCTION update_reply_count();
 --         VALUES (user_id_param, post_id_param);
 --     END IF;
 -- END;
--- $$ LANGUAGE plpgsql;
+-- ' LANGUAGE plpgsql;
 
 -- --9. toggle share
 -- CREATE OR REPLACE FUNCTION toggle_share(
@@ -216,7 +216,7 @@ EXECUTE FUNCTION update_reply_count();
 --     user_id_param int
 -- )
 -- RETURNS VOID
--- AS $$
+-- AS '
 -- BEGIN
 --     -- Check if the record exists in the share_post table
 --     IF EXISTS (
@@ -234,7 +234,7 @@ EXECUTE FUNCTION update_reply_count();
 --     END IF;
 
 -- END;
--- $$ LANGUAGE plpgsql;
+-- ' LANGUAGE plpgsql;
 
 
 -- --10. Retrieve all post reply to post_id
@@ -242,7 +242,7 @@ EXECUTE FUNCTION update_reply_count();
 --     post_id_param int
 -- )
 -- RETURNS JSONB
--- AS $$
+-- AS '
 -- DECLARE
 --     posts_json JSONB;
 -- BEGIN
@@ -260,7 +260,7 @@ EXECUTE FUNCTION update_reply_count();
 
 --     RETURN posts_json;
 -- END;
--- $$ LANGUAGE plpgsql;
+-- ' LANGUAGE plpgsql;
 
 
 
