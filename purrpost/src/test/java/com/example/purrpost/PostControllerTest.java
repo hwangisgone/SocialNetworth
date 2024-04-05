@@ -20,6 +20,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
+
 import com.example.purrpost.model.Post;
 import com.example.purrpost.repository.PostRepository;
 
@@ -32,10 +34,12 @@ import com.example.purrpost.repository.PostRepository;
 //	"file:../database/create_table_post.sql",
 //	"file:../database/function_post.sql"
 //})
+// THIS SQL MAKES TESTING CRASH
+
 @TestPropertySource({"/test.properties"})
 class PostControllerTest {
 
-// \cd D:/,DOWNLOADS/SocialNetworth/database
+// \cd D:/,DOWNLOADS/SocialNetworth/database		// psql command saved here
 // \i load_all.sql
 
 	@LocalServerPort
@@ -46,12 +50,9 @@ class PostControllerTest {
 
 	@BeforeEach
 	void setUp() {
-//	ScriptUtils.runInitScript(new JdbcDatabaseDelegate(CONTAINER, ""), "sql-files/Unittest-ddl.sql");
-//	ScriptUtils.runInitScript(new JdbcDatabaseDelegate(CONTAINER, ""), "sql-files/Unittest-data.sql");
-
-		// Set up before each test: Make sure ports are working
+		// Set up before each test: Make sure this is working with different ports
 		RestAssured.baseURI = "http://localhost:" + port;
-		// Maybe delete all?
+		// Maybe delete everything before each test?
 		// postRepository.deleteAll();
 	}
 
@@ -61,8 +62,11 @@ class PostControllerTest {
 	
 	@Test
 	void correctClassPath() {
+		// Check if using the correct database
 		assertEquals(dataSourceURL, "jdbc:postgresql://localhost:5432/PURRPOST-TEST");
 	}
+	
+	
 	
 	@Test
 	void testGetAllPosts() {
@@ -72,6 +76,8 @@ class PostControllerTest {
 			new Post("Second test", new Date())
 		);
 		postRepository.saveAll(posts);
+		
+		
 		// https://www.baeldung.com/rest-assured-tutorial
 		// https://github.com/rest-assured/rest-assured/wiki/Usage
 		given().contentType(ContentType.JSON)
@@ -118,4 +124,10 @@ class PostControllerTest {
 		Post latestPost = postRepository.findTopByOrderByIdDesc();
 		assertEquals("POST TEST", latestPost.getContent());
 	}
+	
+//	@BeforeEach // For container based approach
+//	void setUp() {
+//	ScriptUtils.runInitScript(new JdbcDatabaseDelegate(CONTAINER, ""), "sql-files/Unittest-ddl.sql");
+//	ScriptUtils.runInitScript(new JdbcDatabaseDelegate(CONTAINER, ""), "sql-files/Unittest-data.sql");
+//	}
 }
