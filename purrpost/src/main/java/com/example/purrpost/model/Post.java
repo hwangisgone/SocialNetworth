@@ -8,10 +8,10 @@ import jakarta.persistence.*; // for Spring Boot 3
 @Table(name = "post")
 public class Post {
 
-
 //	@GeneratedValue(strategy = GenerationType.AUTO)
 //	private long post_id;
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)	// Use database side to generate
 	@Column(name = "post_id", insertable = false)
 	private long id;
 	
