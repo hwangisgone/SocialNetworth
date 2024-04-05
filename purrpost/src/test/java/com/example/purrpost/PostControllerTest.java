@@ -2,6 +2,8 @@ package com.example.purrpost;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.hamcrest.Matchers.equalTo;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -15,6 +17,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.TestPropertySource;
@@ -34,6 +37,7 @@ import com.example.purrpost.repository.PostRepository;
 //	"file:../database/create_table_post.sql",
 //	"file:../database/function_post.sql"
 //})
+@TestPropertySource({"/test.properties"})
 class PostControllerTest {
 
 // \cd D:/,DOWNLOADS/SocialNetworth/database
@@ -52,15 +56,22 @@ class PostControllerTest {
 
 		// Set up before each test: Make sure ports are working
 		RestAssured.baseURI = "http://localhost:" + port;
+		// Maybe delete all?
+		// postRepository.deleteAll();
 	}
 
+	// Get value from properties
+	@Value("${spring.datasource.url}")
+	private String dataSourceURL;
+	
 	@Test
-	void testClassPath() {
-		System.out.println(System.getProperty("java.class.path").replace(";", ";\n"));
+	void correctClassPath() {
+		assertEquals(dataSourceURL, "jdbc:postgresql://localhost:5432/PURRPOST-TEST");
 	}
 	
 	@Test
-	void testAllPosts() {
+	void testGetAllPosts() {
+		postRepository.deleteAll();
 		List<Post> posts = List.of(
 			new Post("First test", new Date()), 
 			new Post("Second test", new Date())
@@ -71,27 +82,45 @@ class PostControllerTest {
 		given().contentType(ContentType.JSON)
 		.when().get("/api/allposts")
 		.then()
-		.statusCode(200)
-		.body(".", hasSize(2));
+			.statusCode(200)
+			.body(".", hasSize(2));
 	}
 
 	@Test
-	void testPost() {
-		Post newPost = new Post("First test", new Date());
+	void testReadPost() {
+		Post newPost = new Post("GET TEST", new Date());
 		newPost = postRepository.save(newPost);
 		postRepository.flush();
 		
 		// Found
 		given().contentType(ContentType.JSON)
-		.when().get("/api/post/" + newPost.getId())
+		.when()
+			.get("/api/post/" + newPost.getId())
 		.then()
-		.statusCode(200)
-		.body(".", hasSize(1));
+			.statusCode(200)
+			.body("content", equalTo("GET TEST"));
 
+		
 		// Not Found
 		given().contentType(ContentType.JSON)
-		.when().get("/api/post/777")
+		.when()
+			.get("/api/post/777")
 		.then()
-		.statusCode(404);
+			.statusCode(404);
+	}
+	
+	@Test
+	void testCreatePost() {
+		given().contentType(ContentType.JSON)
+			.body("{\"content\":\"POST TEST\",\"timePosted\":\"2024-04-05T09:31:37.047+00:00\"}")
+		.when()
+			.post("/api/post")
+		.then()
+			// .log().all();
+			.statusCode(201);	// 201 created
+		
+		
+		Post latestPost = postRepository.findTopByOrderByIdDesc();
+		assertEquals("POST TEST", latestPost.getContent());
 	}
 }
