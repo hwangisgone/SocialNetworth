@@ -37,19 +37,19 @@ public class UserController {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}	
-	@GetMapping("/post/{name_tag}/{password}")
-	public long getTutorialByNameAndPassword(@PathVariable("name_tag") String name_tag, @PathVariable("password") String password){
+	@GetMapping("/user/{name_tag}/{password}")
+	public String getTutorialByNameAndPassword(@PathVariable("name_tag") String name_tag, @PathVariable("password") String password){
 		List<User> allUsers = userRepository.findAll();
 		
 		for (User user : allUsers) {
 			if( user.getNametag().equals(name_tag)) {
 				if( user.getPassword().equals(password)) {
-					return user.getUserId();
+					return "Log in succesfully";
 				}
-				else return -1;
+				else return "Wrong password";
 			}
 		}
-		return -2	;
+		return "Incorrect user name" ;
  		
 	}
 	
