@@ -10,5 +10,13 @@ CREATE TABLE "user" (
 	registration_date DATE NOT NULL,
 
 	role		VARCHAR NOT NULL,
+	follow_count int DEFAULT 0, 
+	followed_count int DEFAULT 0,
 	check (role = 'user' or role = 'admin')
+);
+
+CREATE TABLE follow (
+	user_id	int REFERENCES "user"(user_id) ON DELETE CASCADE,
+	user_id_follow	int REFERENCES "user"(user_id) ON DELETE CASCADE,
+	PRIMARY KEY (user_id, user_id_follow)
 );
