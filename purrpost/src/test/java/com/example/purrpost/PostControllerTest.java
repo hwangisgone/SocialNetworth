@@ -3,12 +3,18 @@ package com.example.purrpost;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.hamcrest.Matchers.equalTo;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -77,8 +83,8 @@ class PostControllerTest {
 		// Prepare test data
 		postRepository.deleteAll();
 		List<Post> posts = List.of(
-			new Post("First test", new Date()), 
-			new Post("Second test", new Date())
+			new Post("First test"), 
+			new Post("Second test")
 		);
 		postRepository.saveAll(posts);
 		
@@ -96,7 +102,7 @@ class PostControllerTest {
 
 	@Test
 	void testReadPost() {
-		Post newPost = new Post("GET POST TEST", new Date());
+		Post newPost = new Post("GET POST TEST");
 		newPost = postRepository.save(newPost);
 		postRepository.flush();
 		
@@ -119,7 +125,7 @@ class PostControllerTest {
 	@Test
 	void testCreatePost() {
 		given().contentType(ContentType.JSON)
-			.body("{\"content\":\"CREATE POST TEST\",\"timePosted\":\"2024-04-05T09:31:37.047+00:00\"}")
+			.body("{\"content\":\"CREATE POST TEST\"}")
 		.when()
 			.post("/api/post")
 		.then()
@@ -133,25 +139,25 @@ class PostControllerTest {
 	@Test
 	void testUpdatePost() {
 		// Test data
-		Post newPost = new Post("GET POST TEST", new Date());
+		Post newPost = new Post("GET POST TEST");
 		newPost = postRepository.save(newPost);
 		postRepository.flush();
 		
+		
 		// HTTP REQUEST & Assert returned object
 		given().contentType(ContentType.JSON)
-			.body("{\"content\":\"UPDATED POST TEST\",\"timeEdited\":\"2024-04-10T11:51:41.317+00:00\"}")
+			.body("{\"content\":\"UPDATED POST TEST\"}")
 		.when()
 			.put("/api/post/" + newPost.getId())
 		.then()
 			.statusCode(200)
-			.body("content", equalTo("UPDATED POST TEST"))
-			.body("timeEdited", equalTo("2024-04-10T11:51:41.317+00:00"));
+			.body("content", equalTo("UPDATED POST TEST"));
 		
 		// Assert database
 		Optional<Post> testPost = postRepository.findById(newPost.getId());
 		if (testPost.isPresent()) {
 			assertEquals("UPDATED POST TEST", testPost.get().getContent());
-			// assertEquals("2024-04-10T11:51:41.317+00:00", testPost.get().getTimeEdited());			
+			assertTrue(testPost.get().getTimeEdited().until(OffsetDateTime.now(), ChronoUnit.SECONDS) < 1);		
 		} else {
 			fail("Cannot find post?");
 		}
@@ -160,7 +166,7 @@ class PostControllerTest {
 	@Test
 	void testDeletePost() {
 		// Test data
-		Post newPost = new Post("GET POST TEST", new Date());
+		Post newPost = new Post("GET POST TEST");
 		newPost = postRepository.save(newPost);
 		postRepository.flush();
 		

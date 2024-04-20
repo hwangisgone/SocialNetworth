@@ -1,6 +1,6 @@
 package com.example.purrpost.model;
 
-import java.util.Date;
+import java.time.OffsetDateTime;
 
 import jakarta.persistence.*; // for Spring Boot 3
 
@@ -20,20 +20,20 @@ public class Post {
 	private String content;
 
 	@Column(name = "time_posted", updatable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date timePosted;
+//	@Temporal(TemporalType.TIMESTAMP)
+	private OffsetDateTime timePosted;
 
 	@Column(name = "time_edited")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date timeEdited;
+//	@Temporal(TemporalType.TIMESTAMP)
+	private OffsetDateTime timeEdited;
 
 	public Post() {
 
 	}
 
-	public Post(String content, Date timePosted) {
+	public Post(String content) {
 		this.content = content;
-		this.timePosted = timePosted;
+		this.timePosted = OffsetDateTime.now();
 	}
 
 
@@ -45,19 +45,19 @@ public class Post {
 		this.content = content;
 	}
 
-	public Date getTimePosted() {
+	public OffsetDateTime getTimePosted() {
 		return timePosted;
 	}
 
-	public void setTimePosted(Date timePosted) {
+	public void setTimePosted(OffsetDateTime timePosted) {
 		this.timePosted = timePosted;
 	}
 
-	public Date getTimeEdited() {
+	public OffsetDateTime getTimeEdited() {
 		return timeEdited;
 	}
 
-	public void setTimeEdited(Date timeEdited) {
+	public void setTimeEdited(OffsetDateTime timeEdited) {
 		this.timeEdited = timeEdited;
 	}
 

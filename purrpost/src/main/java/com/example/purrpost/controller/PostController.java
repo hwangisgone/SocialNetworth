@@ -1,5 +1,6 @@
 package com.example.purrpost.controller;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,6 +59,8 @@ public class PostController {
 	@PostMapping("/post")
 	public ResponseEntity<Post> createTutorial(@RequestBody Post post) {
 		try {
+			post.setTimePosted(OffsetDateTime.now());		// !!! May need to reconsider timezome problems
+			// https://stackoverflow.com/questions/3914404/how-to-get-current-moment-in-iso-8601-format-with-date-hour-and-minute
 			Post _post = postRepository.save(post);
 			
 			return new ResponseEntity<>(_post, HttpStatus.CREATED);
@@ -73,7 +76,7 @@ public class PostController {
 		if (postData.isPresent()) {
 			Post selected_post = postData.get();
 			selected_post.setContent(updated_post.getContent());
-			selected_post.setTimeEdited(updated_post.getTimeEdited());
+			selected_post.setTimeEdited(OffsetDateTime.now());
 			return new ResponseEntity<>(postRepository.save(selected_post), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -89,18 +92,4 @@ public class PostController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
-//	@GetMapping("/post/published")
-//	public ResponseEntity<List<Tutorial>> findById() {
-//		try {
-//			List<Post> tutorials = postRepository.findByPublished(true);
-//
-//			if (tutorials.isEmpty()) {
-//				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//			}
-//			return new ResponseEntity<>(tutorials, HttpStatus.OK);
-//		} catch (Exception e) {
-//			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//		}
-//	}
 }

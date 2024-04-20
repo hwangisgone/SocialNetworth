@@ -1,8 +1,8 @@
 CREATE TABLE post (
 	post_id			int		PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	content			text,
-	time_posted		timestamp DEFAULT now(),
-	time_edited		timestamp DEFAULT now(),
+	time_posted		timestamp with time zone DEFAULT now(), -- Equivalent type is OffsetDateTime
+	time_edited		timestamp with time zone DEFAULT now(), -- https://stackoverflow.com/questions/75492508/should-i-use-instant-or-datetime-or-localdatetime-in-java-entities/75498773#75498773
 
 	share_count		int DEFAULT 0, 
 	like_count		int DEFAULT 0,
