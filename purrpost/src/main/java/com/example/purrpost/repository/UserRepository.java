@@ -11,6 +11,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	// https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html
 	List<User> findByNameTagAndPassword(String name_tag, String password);
 	
+	List<User> findByNameTag(String name_tag);
+	
 //  List<Tutorial> findByPublished(boolean published);
 //
 //  List<Tutorial> findByTitleContaining(String title);
