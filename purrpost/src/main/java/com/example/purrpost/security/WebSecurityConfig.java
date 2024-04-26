@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
@@ -40,11 +39,11 @@ public class WebSecurityConfig {
         return http
         		.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(requests -> requests
-                	.requestMatchers("/welcome", "/api/addNewUser", "/auth/generateToken").permitAll()
+                	.requestMatchers("/welcome", "/api/login").permitAll()
                 	.anyRequest().authenticated()
                 )
 //                .logout(logout -> logout.permitAll())
-                .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
+                .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(Customizer.withDefaults())
                 .build();
@@ -61,19 +60,20 @@ public class WebSecurityConfig {
     }
     
     // the value we need to set in our application.yml
-    @Value("${key.public.location}")
+    @Value("${rsa.public.location}")
     private RSAPublicKey publicKey;
     
-    @Value("${key.private.location}")
+    @Value("${rsa.private.location}")
     private RSAPrivateKey privateKey;
     
+    // https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html
     @Bean
-    public JwtDecoder jwtDecoder() {
+    JwtDecoder jwtDecoder() {
     	return NimbusJwtDecoder.withPublicKey(this.publicKey).build();
     }
     
     @Bean
-    private JwtEncoder jwtEncoder() {
+    JwtEncoder jwtEncoder() {
     	// https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/oauth2/jwt/NimbusJwtEncoder.html
     	JWK jwk = new RSAKey.Builder(this.publicKey).privateKey(this.privateKey).build();
     	JWKSource<SecurityContext> jwksource = new ImmutableJWKSet<>(new JWKSet(jwk));

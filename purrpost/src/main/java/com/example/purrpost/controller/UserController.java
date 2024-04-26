@@ -2,17 +2,21 @@ package com.example.purrpost.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.purrpost.model.Post;
 import com.example.purrpost.model.User;
 import com.example.purrpost.repository.UserRepository;
+import com.example.purrpost.service.JwtTokenService;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
@@ -31,15 +35,26 @@ public class UserController {
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-	}	
-	@GetMapping("/user/{name_tag}/{password}")
-	public ResponseEntity<User> getTutorialByNameAndPassword(@PathVariable("name_tag") String name_tag, @PathVariable("password") String password){
-		List<User> foundUser = userRepository.findByNameTagAndPassword(name_tag, password);
+	}
+	
+	@Autowired
+	private JwtTokenService tokenService;
+	
+	@PostMapping("/login")
+	public ResponseEntity<User> loginWithJWT(@RequestBody User user){
+		List<User> foundUser = userRepository.findByNameTagAndPassword(user.getNameTag(), user.getPassword());
+
+		// Reference: https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/index.html#servlet-authentication-unpwd
+		
+		Authentication authRequest = UsernamePasswordAuthenticationToken.unauthenticated(user.getNameTag(), user.getPassword());
+		
+		HttpHeaders headers = new HttpHeaders();
 		
 		if (foundUser.size() == 1) {
-			 return new ResponseEntity<>(foundUser.get(0), HttpStatus.OK);
+			headers.setBearerAuth(tokenService.generateToken(authRequest));
+			return new ResponseEntity<>(foundUser.get(0), headers, HttpStatus.OK);
 		} else {
-			 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(user, HttpStatus.UNAUTHORIZED);
 		}	
 	}
 	

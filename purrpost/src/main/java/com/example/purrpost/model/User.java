@@ -1,5 +1,6 @@
 package com.example.purrpost.model;
 
+import java.time.Instant;
 import java.util.Date;
 
 import jakarta.persistence.*; // for Spring Boot 3
@@ -36,8 +37,8 @@ public class User{
 	@Column(name = "phone")
 	private String phone;
 	
-	@Column(name = "registation_date")
-	private Date registation_date;
+	@Column(name = "registration_date")
+	private Date registrationDate;
 	
 
 	public User() {
@@ -45,29 +46,64 @@ public class User{
 	}
 	public User(String name_tag, String password) {
 		this.nameTag = name_tag; 
-		this.password = password;	
-
+		this.password = password;
 	}
 
-	public String getNametag() {
-		return nameTag;
+	public void setDefaultUser() {
+		this.registrationDate = Date.from(Instant.now());
+		this.role = "user";
 	}
 	
+	
+	public String getNameTag() {
+		return nameTag;
+	}
+	public void setNameTag(String nameTag) {
+		this.nameTag = nameTag;
+	}
 	public String getPassword() {
 		return password;
-		
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getBio() {
+		return bio;
+	}
+	public void setBio(String bio) {
+		this.bio = bio;
+	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public Date getRegistrationDate() {
+		return registrationDate;
+	}
+	public void setRegistrationDate(Date registrationDate) {
+		this.registrationDate = registrationDate;
 	}
 	public long getUserId() {
 		return userId;
 	}
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
-
-	
-
-
-	
-	
-
 }
