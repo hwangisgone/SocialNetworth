@@ -1,15 +1,16 @@
 package com.example.purrpost.controller;
 
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.http.HttpHeaders;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,7 +36,34 @@ public class UserController {
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+
 	}
+
+	@PostMapping("/register")
+	public ResponseEntity<User> register(@RequestBody User user) {
+		List<User> foundName = userRepository.findByNameTag(user.getNameTag());
+		if (foundName.size() == 0) {
+			try {
+				User _user = userRepository.save(new User(
+					user.getUserId(),
+					user.getNameTag(),
+					user.getPassword(),
+					user.getName(),
+					user.getEmail(),
+					user.getBio(),
+					user.getRole(),
+					user.getPhone(),
+					user.getRegistrationDate())
+				);
+				return new ResponseEntity<>(_user, HttpStatus.CREATED);
+			} catch (Exception e) {
+				return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+			
+		}
+		return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
 	
 	@Autowired
 	private JwtTokenService tokenService;
@@ -45,7 +73,6 @@ public class UserController {
 		List<User> foundUser = userRepository.findByNameTagAndPassword(user.getNameTag(), user.getPassword());
 
 		// Reference: https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/index.html#servlet-authentication-unpwd
-		
 		Authentication authRequest = UsernamePasswordAuthenticationToken.unauthenticated(user.getNameTag(), user.getPassword());
 		
 		HttpHeaders headers = new HttpHeaders();
@@ -57,7 +84,4 @@ public class UserController {
 			return new ResponseEntity<>(user, HttpStatus.UNAUTHORIZED);
 		}	
 	}
-	
-//	@GetMapping("/secured")
-	
 }
