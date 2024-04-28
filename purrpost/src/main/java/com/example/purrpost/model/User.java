@@ -1,5 +1,9 @@
 package com.example.purrpost.model;
 
+<<<<<<< HEAD
+=======
+import java.time.Instant;
+>>>>>>> 3bff5ee8c13e2728af7abbb779562b3bb7af8259
 import java.util.Date;
 
 import jakarta.persistence.*; // for Spring Boot 3
@@ -36,8 +40,13 @@ public class User{
 	@Column(name = "phone")
 	private String phone;
 	
+<<<<<<< HEAD
 	@Column(name = "registation_date")
 	private Date registation_date;
+=======
+	@Column(name = "registration_date")
+	private Date registrationDate;
+>>>>>>> 3bff5ee8c13e2728af7abbb779562b3bb7af8259
 	
 
 	public User() {
@@ -45,6 +54,7 @@ public class User{
 	}
 	public User(String name_tag, String password) {
 		this.nameTag = name_tag; 
+<<<<<<< HEAD
 		this.password = password;	
 
 	}
@@ -76,12 +86,32 @@ public class User{
 	public void setUserId(long userId) {
 		this.userId = userId;
 	}
+=======
+		this.password = password;
+	}
+
+	public void setDefaultUser() {
+		this.registrationDate = Date.from(Instant.now());
+		this.role = "user";
+	}
+	
+	
+>>>>>>> 3bff5ee8c13e2728af7abbb779562b3bb7af8259
 	public String getNameTag() {
 		return nameTag;
 	}
 	public void setNameTag(String nameTag) {
 		this.nameTag = nameTag;
 	}
+<<<<<<< HEAD
+=======
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+>>>>>>> 3bff5ee8c13e2728af7abbb779562b3bb7af8259
 	public String getName() {
 		return name;
 	}
@@ -112,6 +142,7 @@ public class User{
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+<<<<<<< HEAD
 	public Date getRegistation_date() {
 		return registation_date;
 	}
@@ -128,4 +159,15 @@ public class User{
 	
 	
 
+=======
+	public Date getRegistrationDate() {
+		return registrationDate;
+	}
+	public void setRegistrationDate(Date registrationDate) {
+		this.registrationDate = registrationDate;
+	}
+	public long getUserId() {
+		return userId;
+	}
+>>>>>>> 3bff5ee8c13e2728af7abbb779562b3bb7af8259
 }

@@ -92,6 +92,37 @@ AFTER INSERT OR DELETE ON reply_post
 FOR EACH ROW
 EXECUTE FUNCTION update_reply_count();
 
+--5. Trigger follow for user table
+CREATE OR REPLACE FUNCTION update_follow_count()
+RETURNS TRIGGER AS '
+BEGIN
+    IF TG_OP = ''INSERT'' THEN
+        UPDATE "user"
+        SET follow_count = follow_count + 1
+        WHERE user_id = NEW.user_id_follow;
+		
+		UPDATE "user"
+        SET followed_count = followed_count + 1
+        WHERE user_id = NEW.user_id;
+		
+    ELSIF TG_OP = ''DELETE'' THEN
+        UPDATE "user"
+        SET follow_count = follow_count - 1
+        WHERE user_id = OLD.user_id_follow;
+		
+		UPDATE "user"
+        SET followed_count = followed_count - 1
+        WHERE user_id = OLD.user_id;
+    END IF;
+    RETURN NULL;
+END;
+' LANGUAGE plpgsql;
+
+CREATE TRIGGER follow_trigger
+AFTER INSERT OR DELETE ON follow
+FOR EACH ROW
+EXECUTE FUNCTION update_follow_count();
+
 
 
 -- --5. Create post function 
