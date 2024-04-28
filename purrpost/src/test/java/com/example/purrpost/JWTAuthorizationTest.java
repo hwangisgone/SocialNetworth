@@ -7,6 +7,7 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
+import org.junit.jupiter.api.BeforeAll;
 //import org.junit.jupiter.api.AfterAll;
 //import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,9 +35,6 @@ import com.example.purrpost.repository.UserRepository;
 
 @TestPropertySource({"/test.properties"})
 class JWTAuthorizationTest {
-
-	@Autowired
-	UserRepository userRepository;
 	
 	@LocalServerPort
 	private Integer port;
@@ -46,17 +44,15 @@ class JWTAuthorizationTest {
 		RestAssured.baseURI = "http://localhost:" + port;
 	}
 
-	// Get value from properties
-	@Value("${spring.datasource.url}")
-	private String dataSourceURL;
-	
-	@Test
-	void correctClassPath() {
+	@BeforeAll
+	static void checkDataSource(@Value("${spring.datasource.url}") String dataSourceURL) {
 		// Check if using the correct database
-		assertEquals(dataSourceURL, "jdbc:postgresql://localhost:5432/PURRPOST-TEST");
+		assertEquals("jdbc:postgresql://localhost:5432/PURRPOST-TEST", dataSourceURL);
 	}
 	
-	
+	@Autowired
+	UserTestHelper userHelper;
+	// Needed for auths
 	
 	@Test
 	void testUnauthorizedApi() {
@@ -68,41 +64,19 @@ class JWTAuthorizationTest {
 				.statusCode(401);
 		// .log().all();	if you want to log into the console
 	}
-	
-	String testToken;
 
 	@Test
 	void testGetToken() {
-		userRepository.deleteAll();
-		User testUser = new User("TEST 1", "TEST PASS");
-		testUser.setDefaultUser();
-		testUser.setName("TEST NAME");
-		testUser.setEmail("test@email.com");
-		userRepository.save(testUser);
-		
-		Response res = 
-			given()
-			.contentType(ContentType.JSON)
-				.body("{\"nameTag\":\"TEST 1\", \"password\": \"TEST PASS\"}")
-			.when()
-				.post("/api/login")
-			.then()
-				.statusCode(200)
-				.header("Authorization", startsWith("Bearer"))
-				.extract()
-				.response();
-		
-		testToken = res.getHeader("Authorization");
+		userHelper.initiateUser();
+		userHelper.initiateToken();
 	}
 	
 	@Test
 	void testAuthorizedApi() {
-		testGetToken();
-		
 		given()
 			.contentType(ContentType.JSON)
 			.when()
-				.header("Authorization", testToken)
+				.header("Authorization", userHelper.getTestToken())
 				.get("/api/allposts")
 			.then()
 				.statusCode(200);

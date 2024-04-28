@@ -50,10 +50,9 @@ public class User{
 		this.password = password;
 	}
 	
-	public User(long userId, String nameTag, String password, String name, String email, String bio, String role,
+	public User(String nameTag, String password, String name, String email, String bio, String role,
 			String phone, Date registrationDate) {
 		super();
-		this.userId = userId;
 		this.nameTag = nameTag;
 		this.password = password;
 		this.name = name;
@@ -64,7 +63,9 @@ public class User{
 		this.registrationDate = registrationDate;
 	}
 
-	public void setDefaultUser() {
+	public void setDefaultTestUser() {
+		this.name = "TEST NAME";
+		this.email = "test@email.com";
 		this.registrationDate = Date.from(Instant.now());
 		this.role = "user";
 	}

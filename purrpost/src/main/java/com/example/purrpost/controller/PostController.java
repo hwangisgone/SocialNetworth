@@ -57,7 +57,7 @@ public class PostController {
 //	}
 	
 	@PostMapping("/post")
-	public ResponseEntity<Post> createTutorial(@RequestBody Post post) {
+	public ResponseEntity<Post> createPost(@RequestBody Post post) {
 		try {
 			post.setTimePosted(OffsetDateTime.now());		// !!! May need to reconsider timezome problems
 			// https://stackoverflow.com/questions/3914404/how-to-get-current-moment-in-iso-8601-format-with-date-hour-and-minute

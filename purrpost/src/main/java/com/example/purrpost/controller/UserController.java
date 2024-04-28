@@ -45,7 +45,6 @@ public class UserController {
 		if (foundName.size() == 0) {
 			try {
 				User _user = userRepository.save(new User(
-					user.getUserId(),
 					user.getNameTag(),
 					user.getPassword(),
 					user.getName(),

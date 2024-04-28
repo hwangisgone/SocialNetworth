@@ -4,9 +4,9 @@ CREATE TABLE post (
 	time_posted		timestamp with time zone DEFAULT now(),		-- Equivalent type is OffsetDateTime
 	time_edited		timestamp with time zone DEFAULT now(),		-- https://stackoverflow.com/questions/75492508/should-i-use-instant-or-datetime-or-localdatetime-in-java-entities/75498773#75498773
 
-	share_count		int DEFAULT 0, 
-	like_count		int DEFAULT 0,
-	comment_count	int DEFAULT 0,
+	like_count		int DEFAULT 0, 
+	reply_count		int DEFAULT 0,
+	share_count		int DEFAULT 0,
 
 	user_id		int NOT NULL REFERENCES social_user(user_id) ON DELETE CASCADE
 );

@@ -84,8 +84,8 @@ class ReactionControllerTest {
 		// Prepare test data
 		postRepository.deleteAll();
 		List<Post> posts = List.of(
-			new Post("First test"), 
-			new Post("Second test")
+			new Post(0, "First test"), 
+			new Post(0, "Second test")
 		);
 		postRepository.saveAll(posts);
 		
@@ -103,7 +103,7 @@ class ReactionControllerTest {
 
 	@Test
 	void testReadPost() {
-		Post newPost = new Post("GET POST TEST");
+		Post newPost = new Post(0, "GET POST TEST");
 		newPost = postRepository.save(newPost);
 		postRepository.flush();
 		
@@ -140,7 +140,7 @@ class ReactionControllerTest {
 	@Test
 	void testUpdatePost() {
 		// Test data
-		Post newPost = new Post("GET POST TEST");
+		Post newPost = new Post(0, "GET POST TEST");
 		newPost = postRepository.save(newPost);
 		postRepository.flush();
 		
@@ -167,7 +167,7 @@ class ReactionControllerTest {
 	@Test
 	void testDeletePost() {
 		// Test data
-		Post newPost = new Post("GET POST TEST");
+		Post newPost = new Post(0, "GET POST TEST");
 		newPost = postRepository.save(newPost);
 		postRepository.flush();
 		
