@@ -42,7 +42,7 @@ public class ReactionController {
 
 
 	@PostMapping("/post/{id}/react")
-	public ResponseEntity<Reaction> createTutorial(@RequestBody Reaction reaction) {
+	public ResponseEntity<Reaction> createReaction(@RequestBody Reaction reaction) {
 		try {
 			Reaction _reaction = reactionRepository.save(reaction);
 			
@@ -54,7 +54,7 @@ public class ReactionController {
 
 
 	@DeleteMapping("/post/{id}/react")
-	public ResponseEntity<HttpStatus> deleteTutorial(@RequestBody Reaction reaction) {
+	public ResponseEntity<HttpStatus> deleteReaction(@RequestBody Reaction reaction) {
 		try {
 			reactionRepository.deleteByUserIdAndPostId(reaction.getUserId(), reaction.getPostId());
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);

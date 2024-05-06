@@ -1,18 +1,26 @@
-select create_post('2','This is a new post');
-SELECT modify_post('4', '3', 'Updated content');
+insert into "user"(email, password, name, name_tag, registration_date, role) 
+values('125@emgkjl', 'lhn1', 'lhn1', 'hn1', '01-01-2023', 'user'),
+('122@emgkjl', 'lhn2', 'lhn2', 'hn2', '01-01-2023', 'user'),
+('128@emgkjl', 'lhn3', 'lhn3', 'hn3', '01-01-2023', 'user');
 
-select delete_post('5','3');
+
+select * from "user";
+delete from "user";
+
 select * from post;
-select * from reply_post;
 select * from reaction;
-drop function retrieve_posts_reply(int);
+DROP TRIGGER IF EXISTS follow_trigger ON follow;
+drop trigger if exists update_follow_count_on_delete_trigger on follow;
 
-select retrieve_posts_reply('1');
+delete from post;
+insert into post(content, user_id) values('New post two', 1);
 
-insert into reply_post values('1', '6');
+insert into reaction(user_id, post_id) values(1,1);
+select * from follow;
 
-drop function toggle_reaction(int, int);
-select toggle_reaction(1,1);
+delete from follow where 
+user_id_follow = 8;
 
-select create_post()
-drop function create_post( int, text);
+insert into follow values(7,8);
+insert into follow values(7,9);
+
