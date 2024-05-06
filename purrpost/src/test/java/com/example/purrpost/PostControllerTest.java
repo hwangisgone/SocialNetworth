@@ -3,16 +3,21 @@ package com.example.purrpost;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.hamcrest.Matchers.equalTo;
 
 import io.restassured.RestAssured;
+import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
+import io.restassured.specification.RequestSpecification;
 
-import java.util.Date;
+import java.time.OffsetDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.jupiter.api.BeforeAll;
 //import org.junit.jupiter.api.AfterAll;
 //import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +31,9 @@ import org.springframework.test.context.jdbc.Sql;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_CLASS;
 
 import com.example.purrpost.model.Post;
+import com.example.purrpost.model.User;
 import com.example.purrpost.repository.PostRepository;
+import com.example.purrpost.repository.UserRepository;
 
 // https://testcontainers.com/guides/testing-spring-boot-rest-api-using-testcontainers/
 
@@ -51,43 +58,65 @@ class PostControllerTest {
 
 	@Autowired
 	PostRepository postRepository;
+	
+	@Autowired
+	UserTestHelper userHelper; // Needed for auths
+	
 
+	// BeforeAll can only use static methods
+	@BeforeAll
+	static void checkDataSource(@Value("${spring.datasource.url}") String dataSourceURL) {
+		// Check if using the correct database
+		assertEquals("jdbc:postgresql://localhost:5432/PURRPOST-TEST", dataSourceURL);
+	}
+	
+	
+	private static boolean dataLoaded = false;
+	private static long testUserId;
+	
+	RequestSpecification requestSpec;
+	
+	private void setUpOnce() {
+		// Prepare test data
+		testUserId = userHelper.initiateUser();
+		userHelper.initiateToken();
+		
+		postRepository.deleteAll();
+		
+		List<Post> posts = List.of(
+			new Post(testUserId, "First test"), 
+			new Post(testUserId, "Second test")
+		);
+		postRepository.saveAll(posts);
+	}
+	
 	@BeforeEach
 	void setUp() {
 		// Set up before each test: Make sure this is working with different ports
 		RestAssured.baseURI = "http://localhost:" + port;
-		// Maybe delete everything before each test?
-		// postRepository.deleteAll();
-	}
 
-	// Get value from properties
-	@Value("${spring.datasource.url}")
-	private String dataSourceURL;
-	
-	@Test
-	void correctClassPath() {
-		// Check if using the correct database
-		assertEquals(dataSourceURL, "jdbc:postgresql://localhost:5432/PURRPOST-TEST");
+		// Load initial data (once only)
+		if (!dataLoaded) {
+			setUpOnce();
+		}
+		
+		// Build request with header
+		RequestSpecBuilder builder = new RequestSpecBuilder();
+		builder.setContentType(ContentType.JSON);
+		builder.addHeader("Authorization", userHelper.getTestToken());
+		requestSpec = builder.build();
 	}
-	
 	
 	
 	@Test
 	void testGetAllPosts() {
-		// Prepare test data
-		postRepository.deleteAll();
-		List<Post> posts = List.of(
-			new Post("First test", new Date()), 
-			new Post("Second test", new Date())
-		);
-		postRepository.saveAll(posts);
-		
 		
 		// HTTP REQUEST & Assert returned object
 		// https://www.baeldung.com/rest-assured-tutorial
 		// https://github.com/rest-assured/rest-assured/wiki/Usage
-		given().contentType(ContentType.JSON)
-		.when().get("/api/allposts")
+		given().spec(requestSpec)
+		.when()
+			.get("/api/allposts")
 		.then()
 			.statusCode(200)
 			.body(".", hasSize(2));
@@ -96,12 +125,12 @@ class PostControllerTest {
 
 	@Test
 	void testReadPost() {
-		Post newPost = new Post("GET POST TEST", new Date());
+		Post newPost = new Post(testUserId, "GET POST TEST");
 		newPost = postRepository.save(newPost);
 		postRepository.flush();
 		
 		// Found
-		given().contentType(ContentType.JSON)
+		given().spec(requestSpec)
 		.when()
 			.get("/api/post/" + newPost.getId())
 		.then()
@@ -109,7 +138,7 @@ class PostControllerTest {
 			.body("content", equalTo("GET POST TEST"));
 		
 		// Not Found
-		given().contentType(ContentType.JSON)
+		given().spec(requestSpec)
 		.when()
 			.get("/api/post/777")
 		.then()
@@ -118,8 +147,8 @@ class PostControllerTest {
 	
 	@Test
 	void testCreatePost() {
-		given().contentType(ContentType.JSON)
-			.body("{\"content\":\"CREATE POST TEST\",\"timePosted\":\"2024-04-05T09:31:37.047+00:00\"}")
+		given().spec(requestSpec)
+			.body("{\"userId\": " + testUserId + ", \"content\":\"CREATE POST TEST\"}")
 		.when()
 			.post("/api/post")
 		.then()
@@ -133,25 +162,25 @@ class PostControllerTest {
 	@Test
 	void testUpdatePost() {
 		// Test data
-		Post newPost = new Post("GET POST TEST", new Date());
+		Post newPost = new Post(testUserId, "GET POST TEST");
 		newPost = postRepository.save(newPost);
 		postRepository.flush();
 		
+		
 		// HTTP REQUEST & Assert returned object
-		given().contentType(ContentType.JSON)
-			.body("{\"content\":\"UPDATED POST TEST\",\"timeEdited\":\"2024-04-10T11:51:41.317+00:00\"}")
+		given().spec(requestSpec)
+			.body("{\"content\":\"UPDATED POST TEST\"}")
 		.when()
 			.put("/api/post/" + newPost.getId())
 		.then()
 			.statusCode(200)
-			.body("content", equalTo("UPDATED POST TEST"))
-			.body("timeEdited", equalTo("2024-04-10T11:51:41.317+00:00"));
+			.body("content", equalTo("UPDATED POST TEST"));
 		
 		// Assert database
 		Optional<Post> testPost = postRepository.findById(newPost.getId());
 		if (testPost.isPresent()) {
 			assertEquals("UPDATED POST TEST", testPost.get().getContent());
-			// assertEquals("2024-04-10T11:51:41.317+00:00", testPost.get().getTimeEdited());			
+			assertTrue(testPost.get().getTimeEdited().until(OffsetDateTime.now(), ChronoUnit.SECONDS) < 1);		
 		} else {
 			fail("Cannot find post?");
 		}
@@ -160,12 +189,12 @@ class PostControllerTest {
 	@Test
 	void testDeletePost() {
 		// Test data
-		Post newPost = new Post("GET POST TEST", new Date());
+		Post newPost = new Post(testUserId, "GET POST TEST");
 		newPost = postRepository.save(newPost);
 		postRepository.flush();
 		
 		// HTTP REQUEST & Assert returned object
-		given().contentType(ContentType.JSON)
+		given().spec(requestSpec)
 		.when()
 			.delete("/api/post/" + newPost.getId())
 		.then()

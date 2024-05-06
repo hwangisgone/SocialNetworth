@@ -1,0 +1,9 @@
+SVGRepo
+Eye	- Yandex UI Filled Icons
+Heart	- Solar Bold Icons		- CC Attribution License
+Share	- Solar Bold Icons		- CC Attribution License
+Message	- Clarity Project Icons		- MIT License
+Search	- Dazzle Line Icons		- CC Attribution License
+Location - Responsive Glyph Icons	- CC Attribution License 
+
+Pics	- ??? Ask An
