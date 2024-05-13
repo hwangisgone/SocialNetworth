@@ -42,10 +42,10 @@
 	import NavigationBar from './NavigationBar.svelte';
 </script>
 
-<div class="flex min-h-screen w-screen items-center justify-center rounded-3xl">
-	<div class="nd-background w-screen min-h-1/2 border border-gray-900 rounded-3xl">
+<div class="flex min-h-full w-full items-center justify-center rounded-3xl">
+	<div class="nd-background w-full min-h-1/2 border border-gray-900 rounded-3xl">
 				<!-- component -->
-		<div class="h-screen w-full relative flex overflow-hidden">
+		<div class="h-full w-full relative flex overflow-hidden">
 
 			<!-- Sidebar -->
 			<aside class="h-full w-2/12 flex flex-col space-y-5 items-center relative bg-gray-800 text-white px-4">
