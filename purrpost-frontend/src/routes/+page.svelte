@@ -40,6 +40,7 @@
 	import SearchBar from './SearchBar.svelte';
 	import PostPopup from './PostPopup.svelte';
 	import NavigationBar from './NavigationBar.svelte';
+	import RecommendationComp from './RecommendationComp.svelte';
 </script>
 
 <div class="flex min-h-full w-full items-center justify-center rounded-3xl">
@@ -118,6 +119,8 @@
 			<!-- Search Bar -->
 			<aside class="h-full w-3/12 flex flex-col space-y-10 items-center relative bg-gray-800 text-white">
 				<SearchBar />
+
+				<RecommendationComp />
 			</aside>
 		</div>
 
