@@ -39,6 +39,7 @@
 
 	import SearchBar from './SearchBar.svelte';
 	import PostPopup from './PostPopup.svelte';
+	import NavigationBar from './NavigationBar.svelte';
 </script>
 
 <div class="flex min-h-screen w-screen items-center justify-center rounded-3xl">
@@ -47,7 +48,7 @@
 		<div class="h-screen w-full relative flex overflow-hidden">
 
 			<!-- Sidebar -->
-			<aside class="h-full w-2/12 flex flex-col space-y-10 items-center relative bg-gray-800 text-white px-4">
+			<aside class="h-full w-2/12 flex flex-col space-y-5 items-center relative bg-gray-800 text-white px-4">
 				<!-- Logo -->
 				<div class="relative flex-shrink-0 px-2 py-2 w-full text-gray-400 border-b dark:border-indigo-800 dark:focus-within:text-light focus-within:text-gray-700 text-center">
 					<a class="btn btn-ghost btn-circle" href="./"> 
@@ -55,8 +56,7 @@
 					</a>
 				</div>
 
-				<!-- Empty space -->
-				<div class="pb-24"></div>
+				<NavigationBar />
 
 				<PostPopup />
 			</aside>
