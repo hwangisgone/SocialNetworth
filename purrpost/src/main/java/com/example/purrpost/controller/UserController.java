@@ -68,19 +68,22 @@ public class UserController {
 	private JwtTokenService tokenService;
 	
 	@PostMapping("/login")
-	public ResponseEntity<User> loginWithJWT(@RequestBody User user){
+	public ResponseEntity<String> loginWithJWT(@RequestBody User user){
 		List<User> foundUser = userRepository.findByNameTagAndPassword(user.getNameTag(), user.getPassword());
 
 		// Reference: https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/index.html#servlet-authentication-unpwd
 		Authentication authRequest = UsernamePasswordAuthenticationToken.unauthenticated(user.getNameTag(), user.getPassword());
 		
 		HttpHeaders headers = new HttpHeaders();
+		System.out.println("Logging in with nameTag=" + user.getNameTag() + " and password=" + user.getPassword());
 		
 		if (foundUser.size() == 1) {
 			headers.setBearerAuth(tokenService.generateToken(authRequest));
-			return new ResponseEntity<>(foundUser.get(0), headers, HttpStatus.OK);
+			return new ResponseEntity<>(foundUser.get(0).toString(), headers, HttpStatus.OK);
+		} else if (foundUser.size() < 1) {
+			return new ResponseEntity<>("Username/password incorrect", HttpStatus.UNAUTHORIZED);
 		} else {
-			return new ResponseEntity<>(user, HttpStatus.UNAUTHORIZED);
-		}	
+			return new ResponseEntity<>("Server error, found more than 1 user???", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 }

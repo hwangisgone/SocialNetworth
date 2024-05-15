@@ -42,7 +42,7 @@ public class WebSecurityConfig {
                 	.requestMatchers("/welcome", "/api/login").permitAll()
                 	.anyRequest().authenticated()
                 )
-//                .logout(logout -> logout.permitAll())
+                .logout(logout -> logout.permitAll())
                 .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(Customizer.withDefaults())
