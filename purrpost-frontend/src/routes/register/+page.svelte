@@ -71,8 +71,3 @@
 	</div>
 </div>
 
-<style>
-	.max-width-button {
-	  max-width: 390px; /* Adjust the value as needed */
-	}
-</style>
