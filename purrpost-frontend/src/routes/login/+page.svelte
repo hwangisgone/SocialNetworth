@@ -7,7 +7,7 @@
 </script>
 
 <div class="flex min-h-screen items-center justify-center rounded-3xl">
-	<div class="nd-background w-1/2 min-h-1/2 border border-gray-900 rounded-3xl">
+	<div class="nd-background w-2/3 min-h-1/2 border border-gray-900 rounded-3xl">
 
 		<div class="mx-4 sm:mx-24 md:mx-34 lg:mx-56 mx-auto  flex items-center space-y-4 py-16 font-semibold text-gray-500 flex-col">
 			<PurrPostLogo width="60" height="60"/>
@@ -40,19 +40,17 @@
 
 				<p class="text-sm">Don't have an account? 
 					<a class="font-semibold text-sky-700" href="./register">Registrate</a> </p>
+					<div class="w-full flex items-center space-x-4">
+						<hr class="w-full border-b" />
+						<div class="text-sm text-gray-400">Or</div>
+						<hr class="w-full border-b" />
+					</div>
+					<div class="mt-5 flex justify-center gap-3    ">
+						  <GoogleLogo width="40" height="40"/>
+						  <GithubLogo width="40" height="40"/>
+						  <FacebookLogo width="40" height="40"/>
+					  </div>
 
-			<div class="w-full mx-auto max-w-sm transform space-y-4 text-center">
-			  <div class="w-full flex items-center space-x-4">
-				  <hr class="w-full border-b" />
-				  <div class="text-sm text-gray-400">Or</div>
-				  <hr class="w-full border-b" />
-			  </div>
-			  <div class="mt-5 flex justify-center gap-3    ">
-					<GoogleLogo width="40" height="40"/>
-					<GithubLogo width="40" height="40"/>
-					<FacebookLogo width="40" height="40"/>
-				</div>
-			</div>
 
 		</div>
 
