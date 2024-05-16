@@ -9,6 +9,6 @@ import com.example.purrpost.model.User;
 //Spring Data JPA creates CRUD implementation at runtime automatically.
 public interface UserRepository extends JpaRepository<User, Long> {
 	// https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html
-	List<User> findByNameTagAndPassword(String name_tag, String password);
-	List<User> findByNameTag(String name_tag);
+	List<User> findByNameTagAndPassword(String nameTag, String password);
+	List<User> findByNameTag(String nameTag);
 }
