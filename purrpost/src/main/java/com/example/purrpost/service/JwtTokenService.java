@@ -21,6 +21,7 @@ public class JwtTokenService {
 	}
 	
 	public String generateToken(Authentication auth) {
+		System.out.println(this.encoder);
 		Instant now = Instant.now();
 		
 		String scope = auth.getAuthorities().stream()
@@ -31,7 +32,7 @@ public class JwtTokenService {
 				.issuer("self")
 				.issuedAt(now)
 				.expiresAt(now.plus(1, ChronoUnit.DAYS))
-				.subject(auth.getName())
+				.subject(auth.getCredentials().toString())
 				.claim("scope", scope)
 				.build();
 		

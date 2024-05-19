@@ -13,50 +13,39 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.purrpost.model.Follow;
 import com.example.purrpost.model.Reaction;
+import com.example.purrpost.repository.FollowRepository;
 import com.example.purrpost.repository.ReactionRepository;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/api")
-public class ReactionController {
+public class FollowController {
 
 	@Autowired
-	ReactionRepository reactionRepository;
+	FollowRepository followRepository;
 
 //	!!! For testing only
-	@GetMapping("/post/{id}/reactions")
-	public ResponseEntity<List<Reaction>> getAllReactions(@PathVariable("id") long postId) {
+	@PostMapping("/{user_id}/follow")
+	public ResponseEntity<String> getAllReactions(@PathVariable("user_id") long userId) {
 		try {
-			List<Reaction> reactions = reactionRepository.findAllByPostId(postId);
-
-			if (reactions.isEmpty()) {
-				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-			}
-
-			return new ResponseEntity<>(reactions, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-
-
-	@PostMapping("/post/{id}/react")
-	public ResponseEntity<Reaction> createReaction(@RequestBody Reaction reaction) {
-		try {
-			Reaction _reaction = reactionRepository.save(reaction);
+			// !!! IMPORTANT TO FIX
+			Follow _follow = followRepository.save(new Follow(userId, userId));
 			
-			return new ResponseEntity<>(_reaction, HttpStatus.CREATED);
+			return new ResponseEntity<>("Followed", HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 
-	@DeleteMapping("/post/{id}/react")
-	public ResponseEntity<HttpStatus> deleteReaction(@RequestBody Reaction reaction) {
+
+	@DeleteMapping("/{user_id}/follow")
+	public ResponseEntity<HttpStatus> deleteReaction(@PathVariable("user_id") long userId) {
 		try {
-			reactionRepository.deleteByUserIdAndPostId(reaction.getUserId(), reaction.getPostId());
+			// !!! IMPORTANT TO FIX
+			followRepository.deleteByUserIdAndFollowerId(userId, userId);
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

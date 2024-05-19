@@ -1,54 +1,53 @@
 package com.example.purrpost.model;
 
-import com.example.purrpost.model.compositeid.InteractionId;
+import com.example.purrpost.model.compositeid.ReactionId;
 
 import jakarta.persistence.*; // for Spring Boot 3
 
 @Entity
 @Table(name = "reaction")
-@IdClass(InteractionId.class)
+@IdClass(ReactionId.class)
 public class Reaction {
 
-	@Id 
+	@Id
 	@Column(name = "user_id")
-	private int userId;
-	
-	@Id 
+	private long userId;
+
+	@Id
 	@Column(name = "post_id")
-	private int postId;
-	
+	private long postId;
+
 	@Column(name = "reaction_type")
 	private char reactionType;
-	
+
 	public Reaction() {
 	}
-	
-	public Reaction(int userId, int postId, char reactionType) {
+
+	public Reaction(long userId, long postId, char reactionType) {
 		super();
 		this.userId = userId;
 		this.postId = postId;
 		this.reactionType = reactionType;
 	}
 
-	
 	@Override
 	public String toString() {
 		return "Reaction [user_id=" + userId + ", post_id=" + postId + ", reaction_type=" + reactionType + "]";
 	}
 
-	public int getUserId() {
+	public long getUserId() {
 		return userId;
 	}
-	
-	public void setUserId(int userId) {
+
+	public void setUserId(long userId) {
 		this.userId = userId;
 	}
 
-	public int getPostId() {
+	public long getPostId() {
 		return postId;
 	}
 
-	public void setPostId(int postId) {
+	public void setPostId(long postId) {
 		this.postId = postId;
 	}
 

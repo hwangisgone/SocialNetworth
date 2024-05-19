@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +24,7 @@ import com.example.purrpost.service.JwtTokenService;
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/api")
-public class UserController {
+public class LoginController {
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -77,8 +79,15 @@ public class UserController {
 		HttpHeaders headers = new HttpHeaders();
 		System.out.println("Logging in with nameTag=" + user.getNameTag() + " and password=" + user.getPassword());
 		
+		
+		
 		if (foundUser.size() == 1) {
 			headers.setBearerAuth(tokenService.generateToken(authRequest));
+			
+			SecurityContext context = SecurityContextHolder.getContext();
+			Authentication authentication = context.getAuthentication();
+			System.out.println("\nLogged in with =" + authentication.getName() + "\n" );
+			
 			return new ResponseEntity<>(foundUser.get(0).toString(), headers, HttpStatus.OK);
 		} else if (foundUser.size() < 1) {
 			return new ResponseEntity<>("Username/password incorrect", HttpStatus.UNAUTHORIZED);

@@ -7,6 +7,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +35,10 @@ public class PostController {
 	public ResponseEntity<List<Post>> getAllPosts() {
 		try {
 			List<Post> allPosts = postRepository.findAll();
+			
+			SecurityContext context = SecurityContextHolder.getContext();
+			Authentication authentication = context.getAuthentication();
+			System.out.println("\nLogged in with =" + authentication.getName() + "\n" );
 			
 			return new ResponseEntity<>(allPosts, HttpStatus.OK);
 		} catch (Exception e) {
