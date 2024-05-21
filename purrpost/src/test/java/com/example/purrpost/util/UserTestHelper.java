@@ -17,13 +17,12 @@ public class UserTestHelper {
 	
 	private String testToken;
 
-	@Autowired
 	UserRepository userRepository;
 	
-//	@Autowired
-//	public UserTestHelper(UserRepository userRepository) {
-//		this.userRepository = userRepository;
-//	}
+	@Autowired
+	public UserTestHelper(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
 	
 	public long initiateUser() {
 		userRepository.deleteAll();
@@ -55,5 +54,4 @@ public class UserTestHelper {
 	public String getTestToken() {
 		return testToken;
 	}
-
 }

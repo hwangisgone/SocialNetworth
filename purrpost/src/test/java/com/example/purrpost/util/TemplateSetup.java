@@ -2,8 +2,6 @@ package com.example.purrpost.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
 import com.example.purrpost.model.Post;
 import com.example.purrpost.repository.PostRepository;
 

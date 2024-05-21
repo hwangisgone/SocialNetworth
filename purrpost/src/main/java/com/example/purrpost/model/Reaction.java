@@ -25,6 +25,9 @@ public class Reaction {
 	@Column(name = "reaction_type")
 	private char reactionType;
 
+	public Reaction() {
+	}
+
 	public Reaction(long userId, long postId, char reactionType) {
 		super();
 		this.userId = userId;

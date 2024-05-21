@@ -26,7 +26,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class ReactionController {
 
 	//  Input for create
-	class ReactionInput {
+	static class ReactionInput {
 		@Schema(example = "L", requiredMode = Schema.RequiredMode.REQUIRED)
 		private char reactionType;
 

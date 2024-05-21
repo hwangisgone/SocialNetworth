@@ -87,7 +87,7 @@ class ReactionControllerTest {
 		
 		Optional<Reaction>  latestReaction = reactionRepository.findByUserIdAndPostId(temp.getUserId(), temp.getPost1Id());
 		if (latestReaction.isPresent()) {
-			assertEquals("H", latestReaction.get().getReactionType());
+			assertEquals('H', latestReaction.get().getReactionType());
 		} else {
 			fail("Reaction not created!");
 		}

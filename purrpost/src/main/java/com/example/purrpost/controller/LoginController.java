@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,17 +20,18 @@ import com.example.purrpost.repository.UserRepository;
 import com.example.purrpost.service.JwtTokenService;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.Valid;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/api")
 public class LoginController {
 	//  Input for register/login
-	class SocialUserLoginInput {
-		@Schema(example = "username", requiredMode = Schema.RequiredMode.REQUIRED)
+	static class SocialUserLoginInput {
+		@NonNull @Schema(example = "username", requiredMode = Schema.RequiredMode.REQUIRED)
 		private String nameTag;
 
-		@Schema(example = "password", requiredMode = Schema.RequiredMode.REQUIRED)
+		@NonNull @Schema(example = "password", requiredMode = Schema.RequiredMode.REQUIRED)
 		private String password;
 
 		public String getNameTag() {
@@ -39,18 +41,19 @@ public class LoginController {
 		public String getPassword() {
 			return password;
 		}
+		
 	}
 
-	class SocialUserRegisterInput extends SocialUserLoginInput {
-		@Schema(example = "Steve Joshua", requiredMode = Schema.RequiredMode.REQUIRED)
+	// Spring DOES clear out static class before assigning them with RequestBody
+	static class SocialUserRegisterInput extends SocialUserLoginInput {
+		@NonNull @Schema(example = "Steve Joshua", requiredMode = Schema.RequiredMode.REQUIRED)
 		private String name;
 
-		@Schema(example = "example@email.com", requiredMode = Schema.RequiredMode.REQUIRED)
+		@NonNull @Schema(example = "example@email.com", requiredMode = Schema.RequiredMode.REQUIRED)
 		private String email;
 
-		@Schema(example = "This bio contains nothing.", requiredMode = Schema.RequiredMode.REQUIRED)
+		@NonNull @Schema(example = "This bio contains nothing.", requiredMode = Schema.RequiredMode.REQUIRED)
 		private String bio;
-
 
 		public String getName() {
 			return name;
@@ -95,10 +98,12 @@ public class LoginController {
 				));
 				return new ResponseEntity<>(_user, HttpStatus.CREATED);
 			} catch (Exception e) {
+				System.out.println(e.getMessage());
 				return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 
 		}
+		System.out.println("User registered");
 		return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 

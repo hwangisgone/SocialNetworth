@@ -37,7 +37,7 @@ public class WebSecurityConfig {
         return http
         		.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(requests -> requests
-                	.requestMatchers("/welcome", "/api/login",
+                	.requestMatchers("/welcome", "/api/login", "/api/register",
                 			"/v3/api-docs/**",
                 			"/v3/api-docs.yaml",
                 			"/swagger-ui/**",

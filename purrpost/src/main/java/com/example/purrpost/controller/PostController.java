@@ -31,7 +31,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 public class PostController {
 
 	//  Input for create/update
-	class PostInput {
+	static class PostInput {
 		@Schema(example = "Something Something", requiredMode = Schema.RequiredMode.REQUIRED)
 		private String content;
 
