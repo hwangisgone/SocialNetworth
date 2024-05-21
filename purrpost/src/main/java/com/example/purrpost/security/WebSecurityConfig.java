@@ -39,7 +39,10 @@ public class WebSecurityConfig {
         return http
         		.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(requests -> requests
-                	.requestMatchers("/welcome", "/api/login").permitAll()
+                	.requestMatchers("/welcome", "/api/login",
+                			"/v3/api-docs/**", 
+                			"/swagger-ui/**", 
+                			"/swagger-ui.html").permitAll()
                 	.anyRequest().authenticated()
                 )
                 .logout(logout -> logout.permitAll())

@@ -39,6 +39,9 @@ dependencies {
 	// https://mvnrepository.com/artifact/io.rest-assured/rest-assured
 	testImplementation("io.rest-assured:rest-assured:5.4.0")
 
+	// Documentations for API
+	// https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
 }
 
 tasks.withType<Test> {
