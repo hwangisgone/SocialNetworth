@@ -49,7 +49,7 @@
 	<div class="h-screen w-full relative flex overflow-hidden">
 
 			<!-- Sidebar -->
-			<aside class="h-full w-5/12 flex flex-col space-y-2 items-center relative text-white">
+			<aside class="h-full w-5/12 flex flex-col border-r border-gray-200 dark:border-gray-700 space-y-2 items-center relative text-white">
 				<!-- Logo -->
 				<div class="relative h-12 flex-shrink-0 w-10/12 text-gray-400 focus-within:text-light focus-within:text-gray-700">
 					<a class="btn btn-ghost btn-circle" href="./"> 
@@ -91,7 +91,7 @@
 				<!-- Main -->
 				<main class="max-w-full h-full flex relative overflow-y-hidden">
 				  <!-- Container -->
-				   <div id="imageContainer" class="h-full w-full m-4 flex flex-wrap items-start bg-opacity-0 justify-start rounded-tl grid-flow-col auto-cols-max gap-4 overflow-y-scroll">
+				   <div id="imageContainer" class="w-full m-4 flex flex-wrap items-start bg-opacity-0 justify-start rounded-tl grid-flow-col auto-cols-max gap-4 overflow-y-scroll">
 					<!-- Container -->
 						  
 					</div>
@@ -100,7 +100,7 @@
 			  </div>
 
 			<!-- Search Bar -->
-			<aside class="h-full w-6/12 flex flex-col space-y-10 items-center relative">
+			<aside class="h-full w-6/12 flex flex-col border-l border-gray-200 dark:border-gray-700 space-y-10 items-center relative">
 				<SearchBar />
 
 				<RecommendationComp />

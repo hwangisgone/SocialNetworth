@@ -1,5 +1,5 @@
 <!-- Trending -->
-<div class="bg-gray-50 w-full px-2 dark:bg-gray-700 rounded-2xl m-2">
+<div class="bg-gray-200 w-11/12 dark:bg-gray-700 rounded-2xl m-2">
   <h1 class="text-gray-900 dark:text-white text-md font-bold p-3 border-b border-gray-200 dark:border-gray-200">
     What’s happening
   </h1>
@@ -19,7 +19,7 @@
 <!-- /Trending -->
 
 <!-- Follow -->
-<div class="bg-gray-50 w-full px-2 dark:bg-gray-700 rounded-2xl m-2">
+<div class="bg-gray-200 w-11/12 dark:bg-gray-700 rounded-2xl m-2">
   <h1 class="text-gray-900 dark:text-white text-md font-bold p-3 border-b border-gray-200 dark:border-gray-200">
     Who to follow
   </h1>
