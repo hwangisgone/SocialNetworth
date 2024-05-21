@@ -5,6 +5,24 @@
 #### JWT
 https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/index.html
 
+#### CRUD Response code:
+
+CREATE	| CREATE
+- ok: 201 CREATED
+- fail: 500 INTERNAL SERVER ERROR
+
+READ	| GET
+- ok: 200 OK
+- fail: 404 NOT FOUND
+
+UPDATE	| PUT
+- ok: 200 OK
+- fail: 404 NOT FOUND
+
+DELETE	| DELETE
+- ok: 204 NO_CONTENT
+- fail: 404 NOT FOUND
+
 #### Gradle
 For further reference, please consider the following sections:
 

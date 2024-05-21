@@ -39,16 +39,7 @@ public class PostController {
 		}
 	}
 
-	@GetMapping("/post/{id}")
-	public ResponseEntity<Post> getTutorialById(@PathVariable("id") long id) {
-		Optional<Post> postData = postRepository.findById(id);
 
-		if (postData.isPresent()) {
-			return new ResponseEntity<>(postData.get(), HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
 
 //	Send a request with post body:
 //	{
@@ -70,6 +61,17 @@ public class PostController {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@GetMapping("/post/{id}")
+	public ResponseEntity<Post> getTutorialById(@PathVariable("id") long id) {
+		Optional<Post> postData = postRepository.findById(id);
+
+		if (postData.isPresent()) {
+			return new ResponseEntity<>(postData.get(), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 
 	@PutMapping("/post/{id}")
 	public ResponseEntity<Post> updatePost(@PathVariable("id") long id, @RequestBody Post updated_post) {
@@ -88,10 +90,14 @@ public class PostController {
 	@DeleteMapping("/post/{id}")
 	public ResponseEntity<HttpStatus> deletePost(@PathVariable("id") long id) {
 		try {
-			postRepository.deleteById(id);
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			if (postRepository.existsById(id)) {
+				postRepository.deleteById(id);
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);	
+			} else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);	
+			}
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 }
