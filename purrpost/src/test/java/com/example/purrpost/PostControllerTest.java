@@ -31,7 +31,7 @@ import org.springframework.test.context.jdbc.Sql;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_CLASS;
 
 import com.example.purrpost.model.Post;
-import com.example.purrpost.model.User;
+import com.example.purrpost.model.SocialUser;
 import com.example.purrpost.repository.PostRepository;
 import com.example.purrpost.repository.UserRepository;
 

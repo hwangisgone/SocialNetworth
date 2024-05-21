@@ -1,15 +1,22 @@
 package com.example.purrpost.model;
 
-import jakarta.persistence.*; 
+
+import com.example.purrpost.model.compositeid.ReplyId;
+
+import jakarta.persistence.*; // for Spring Boot 3
+
+
 @Entity
-@IdClass(ReplyId.class)
 @Table(name = "reply_post")
+@IdClass(ReplyId.class)
 public class Reply {
 	
-    @Id
-    private long parentId;
-
-    @Id
+	@Id
+    @Column(name = "post_id_parent")
+	private long parentId;
+	
+	@Id
+    @Column(name = "post_id_child")
     private long childId;
 
 
