@@ -1,4 +1,4 @@
-package com.example.purrpost;
+package com.example.purrpost.util;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.startsWith;
@@ -17,14 +17,15 @@ public class UserTestHelper {
 	
 	private String testToken;
 
+	@Autowired
 	UserRepository userRepository;
 	
-	@Autowired
-	public UserTestHelper(UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
+//	@Autowired
+//	public UserTestHelper(UserRepository userRepository) {
+//		this.userRepository = userRepository;
+//	}
 	
-	long initiateUser() {
+	public long initiateUser() {
 		userRepository.deleteAll();
 		SocialUser testUser = new SocialUser();
 		testUser.setNameTag("TEST 1");
@@ -35,7 +36,7 @@ public class UserTestHelper {
 		return testUser.getUserId();
 	}
 	
-	void initiateToken() {
+	public void initiateToken() {
 		Response res = 
 				given()
 				.contentType(ContentType.JSON)
@@ -48,14 +49,11 @@ public class UserTestHelper {
 					.extract()
 					.response();
 			
-		this.setTestToken(res.getHeader("Authorization"));
+		this.testToken = res.getHeader("Authorization");
 	}
 
 	public String getTestToken() {
 		return testToken;
 	}
 
-	public void setTestToken(String testToken) {
-		this.testToken = testToken;
-	}
 }

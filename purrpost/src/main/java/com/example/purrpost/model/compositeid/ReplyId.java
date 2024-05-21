@@ -16,12 +16,12 @@ public class ReplyId implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if ((obj == null) || (getClass() != obj.getClass())) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		}
 		ReplyId other = (ReplyId) obj;
 		return childId == other.childId && parentId == other.parentId;
 	}

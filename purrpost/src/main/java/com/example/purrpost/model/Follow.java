@@ -1,7 +1,13 @@
 package com.example.purrpost.model;
 
 import com.example.purrpost.model.compositeid.FollowId;
-import jakarta.persistence.*; // for Spring Boot 3
+
+// for Spring Boot 3
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "follow")

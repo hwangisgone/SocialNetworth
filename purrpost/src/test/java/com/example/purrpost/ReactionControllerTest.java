@@ -1,22 +1,11 @@
 package com.example.purrpost;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
-import static org.hamcrest.Matchers.equalTo;
-
 import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
+import io.restassured.specification.RequestSpecification;
 
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 //import org.junit.jupiter.api.AfterAll;
@@ -24,16 +13,15 @@ import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_CLASS;
 
-import com.example.purrpost.model.Post;
-import com.example.purrpost.repository.PostRepository;
+import com.example.purrpost.model.Reaction;
 import com.example.purrpost.repository.ReactionRepository;
+import com.example.purrpost.util.TemplateSetup;
 
 // https://testcontainers.com/guides/testing-spring-boot-rest-api-using-testcontainers/
 
@@ -60,128 +48,69 @@ class ReactionControllerTest {
 	ReactionRepository reactionRepository;
 	
 	@Autowired
-	PostRepository postRepository;
-
+	private TemplateSetup temp;
+	private RequestSpecification requestSpec;
+	
 	@BeforeEach
 	void setUp() {
+		// Set up before each test: Make sure this is working with different ports
 		RestAssured.baseURI = "http://localhost:" + port;
-	}
 
-	// Get value from properties
-	@Value("${spring.datasource.url}")
-	private String dataSourceURL;
-	
-	@Test
-	void correctClassPath() {
-		// Check if using the correct database
-		assertEquals(dataSourceURL, "jdbc:postgresql://localhost:5432/PURRPOST-TEST");
+		requestSpec = temp.buildAuthenticatedHeader();
 	}
 	
 	
 	
-	@Test
-	void testGetAllPosts() {
-		// Prepare test data
-		postRepository.deleteAll();
-		List<Post> posts = List.of(
-			new Post(0, "First test"), 
-			new Post(0, "Second test")
-		);
-		postRepository.saveAll(posts);
-		
-		
-		// HTTP REQUEST & Assert returned object
-		// https://www.baeldung.com/rest-assured-tutorial
-		// https://github.com/rest-assured/rest-assured/wiki/Usage
-		given().contentType(ContentType.JSON)
-		.when().get("/api/allposts")
-		.then()
-			.statusCode(200)
-			.body(".", hasSize(2));
-		// .log().all();	if you want to log into the console
-	}
-
-	@Test
-	void testReadPost() {
-		Post newPost = new Post(0, "GET POST TEST");
-		newPost = postRepository.save(newPost);
-		postRepository.flush();
-		
-		// Found
-		given().contentType(ContentType.JSON)
-		.when()
-			.get("/api/post/" + newPost.getId())
-		.then()
-			.statusCode(200)
-			.body("content", equalTo("GET POST TEST"));
-		
-		// Not Found
-		given().contentType(ContentType.JSON)
-		.when()
-			.get("/api/post/777")
-		.then()
-			.statusCode(404);
-	}
+//	@Test
+//	void testGetAllReactions() {
+//
+//		// HTTP REQUEST & Assert returned object
+//		// https://www.baeldung.com/rest-assured-tutorial
+//		// https://github.com/rest-assured/rest-assured/wiki/Usage
+//		given().contentType(ContentType.JSON)
+//		.when().get("/api/allposts")
+//		.then()
+//			.statusCode(200)
+//			.body(".", hasSize(2));
+//		// .log().all();	if you want to log into the console
+//	}
 	
 	@Test
-	void testCreatePost() {
-		given().contentType(ContentType.JSON)
-			.body("{\"content\":\"CREATE POST TEST\"}")
+	void testCreateReaction() {
+		given().spec(requestSpec)
+			.body("{\"reactionType\":\"H\"}")
 		.when()
-			.post("/api/post")
+			.post("/api/post/" + temp.getPost1Id() + "/react")
 		.then()
 			.statusCode(201);	// 201 created
 		
 		
-		Post latestPost = postRepository.findTopByOrderByIdDesc();
-		assertEquals("CREATE POST TEST", latestPost.getContent());
-	}
-	
-	@Test
-	void testUpdatePost() {
-		// Test data
-		Post newPost = new Post(0, "GET POST TEST");
-		newPost = postRepository.save(newPost);
-		postRepository.flush();
-		
-		
-		// HTTP REQUEST & Assert returned object
-		given().contentType(ContentType.JSON)
-			.body("{\"content\":\"UPDATED POST TEST\"}")
-		.when()
-			.put("/api/post/" + newPost.getId())
-		.then()
-			.statusCode(200)
-			.body("content", equalTo("UPDATED POST TEST"));
-		
-		// Assert database
-		Optional<Post> testPost = postRepository.findById(newPost.getId());
-		if (testPost.isPresent()) {
-			assertEquals("UPDATED POST TEST", testPost.get().getContent());
-			assertTrue(testPost.get().getTimeEdited().until(OffsetDateTime.now(), ChronoUnit.SECONDS) < 1);		
+		Optional<Reaction>  latestReaction = reactionRepository.findByUserIdAndPostId(temp.getUserId(), temp.getPost1Id());
+		if (latestReaction.isPresent()) {
+			assertEquals("H", latestReaction.get().getReactionType());
 		} else {
-			fail("Cannot find post?");
+			fail("Reaction not created!");
 		}
 	}
 	
 	@Test
-	void testDeletePost() {
+	void testDeleteReaction() {
 		// Test data
-		Post newPost = new Post(0, "GET POST TEST");
-		newPost = postRepository.save(newPost);
-		postRepository.flush();
+		Reaction newReaction = new Reaction(temp.getUserId(), temp.getPost2Id(), 'L');
+		reactionRepository.save(newReaction);
+		reactionRepository.flush();
 		
 		// HTTP REQUEST & Assert returned object
-		given().contentType(ContentType.JSON)
+		given().spec(requestSpec)
 		.when()
-			.delete("/api/post/" + newPost.getId())
+			.delete("/api/post/" + temp.getPost2Id() + "/react")
 		.then()
 			.statusCode(204);	// 204 no content
 		
 		// Assert database
-		Optional<Post> testPost = postRepository.findById(newPost.getId());
-		if (testPost.isPresent()) {
-			fail("Post not deleted!");
+		Optional<Reaction> testReaction = reactionRepository.findByUserIdAndPostId(temp.getUserId(), temp.getPost2Id());
+		if (testReaction.isPresent()) {
+			fail("Reaction not deleted!");
 		}
 	}
 	

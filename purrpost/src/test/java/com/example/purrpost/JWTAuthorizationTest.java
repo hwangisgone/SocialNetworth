@@ -22,6 +22,7 @@ import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TE
 
 import com.example.purrpost.model.SocialUser;
 import com.example.purrpost.repository.UserRepository;
+import com.example.purrpost.util.UserTestHelper;
 
 // https://testcontainers.com/guides/testing-spring-boot-rest-api-using-testcontainers/
 

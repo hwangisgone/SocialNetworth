@@ -11,5 +11,5 @@ public interface ReplyRepository extends JpaRepository<Reply, ReplyId> {
   //List<Tutorial> findById(long id_child);
   List<Reply> findAllByParentId(long parentId);
   List<Reply> findAllByChildId(long childId);
-  
+
 }

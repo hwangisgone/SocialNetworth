@@ -11,12 +11,12 @@
 //public class PurrPostUser extends SocialUser implements UserDetails {
 //	private static final long serialVersionUID = 1L;
 //	private SocialUser underlyingUser;
-//	
+//
 //	public PurrPostUser(SocialUser user) {
 //		super(user);
 //		this.underlyingUser = user;
 //	}
-//	
+//
 //	public long getExposedUserId() {
 //		return this.underlyingUser.getUserId();
 //	}
@@ -39,7 +39,7 @@
 //		return this.underlyingUser.getNameTag();
 //	}
 //
-//	
+//
 //	@Override
 //	public boolean isAccountNonExpired() {
 //		// TODO Auto-generated method stub
@@ -66,3 +66,5 @@
 //
 //
 //}
+
+
