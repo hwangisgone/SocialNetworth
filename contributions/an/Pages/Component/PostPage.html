@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: 'Helvetica', 'Arial', sans-serif;
+        color: #444444;
+        background-color: #FAFAFA;
+        background-color: #17202A;
+        font-size: 1.5rem;
+        line-height: 2rem;
+      }
+
+      main {
+        background-color: #17202A;
+      }
+
+      .nd-background {
+        background-color: #1C2733;
+      }
+        /* can be configured in tailwind.config.js */
+        .group:hover .group-hover\:block {
+            display: block;
+        }
+    .hover\:w-64:hover {
+            width: 45%;
+        }
+    /* NO NEED THIS CSS - just for custom scrollbar which can also be configured in tailwind.config.js*/
+    ::-webkit-scrollbar {
+        width: 2px;
+        height: 2px;
+    }
+    ::-webkit-scrollbar-button {
+        width: 0px;
+        height: 0px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #2d3748;
+        border: 0px none #ffffff;
+        border-radius: 50px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: #2b6cb0;
+    }
+    ::-webkit-scrollbar-thumb:active {
+        background: #000000;
+    }
+    ::-webkit-scrollbar-track {
+        background: #1a202c;
+        border: 0px none #ffffff;
+        border-radius: 50px;
+    }
+    ::-webkit-scrollbar-track:hover {
+        background: #666666;
+    }
+    ::-webkit-scrollbar-track:active {
+        background: #333333;
+    }
+    ::-webkit-scrollbar-corner {
+        background: transparent;
+    }
+    </style>
+</head>
+<body class="text-2lx bg-white dark:bg-dim-900">
+  <div class="flex min-h-screen w-screen items-center justify-center">
+
+
+    <div class="nd-background w-screen min-h-1/2 border border-gray-900">
+          <!-- component -->
+      <div class="h-screen w-full relative flex overflow-hidden">
+
+        <!-- Sidebar -->
+        <aside class="h-full w-5/12 flex flex-col space-y-2 items-center relative text-white">
+          <!-- Logo -->
+          <div class="relative h-12 flex-shrink-0 w-10/12 text-gray-400 focus-within:text-light focus-within:text-gray-700">
+              <button class="w-auto px-2 max-w-full p-1 rounded-full bg-opacity-0 text-white">
+                <div>  
+                <span class="relative w-full justify-center items-center">
+                  <svg width="21" height="24" viewBox="0 0 21 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20.4145 2.73125C19.6669 3.19375 18.8638 3.50625 18.0195 3.6475C18.8808 2.9275 19.5416 1.785 19.8531 0.425C19.0474 1.0925 18.1547 1.5775 17.2048 1.8375C16.4438 0.7075 15.3605 0 14.1607 0C11.858 0 9.99034 2.6075 9.99034 5.825C9.99034 6.28 10.0279 6.7225 10.0978 7.15C6.63022 6.90625 3.55838 4.5875 1.50094 1.065C1.14282 1.9275 0.936896 2.9275 0.936896 3.9925C0.936896 6.0125 1.67374 7.79625 2.79199 8.84C2.10797 8.80875 1.46513 8.5475 0.902874 8.11125V8.18625C0.902874 11.0075 2.33986 13.3613 4.24867 13.8963C3.89771 14.0288 3.52973 14.0988 3.15012 14.0988C2.88152 14.0988 2.6192 14.0638 2.36493 13.9963C2.89585 16.3088 4.43579 17.9938 6.26134 18.0388C4.83331 19.6013 3.03462 20.5325 1.08104 20.5325C0.744402 20.5325 0.41224 20.505 0.0854492 20.4513C1.93159 22.105 4.12333 23.0675 6.47801 23.0675C14.1509 23.0675 18.3454 14.195 18.3454 6.5C18.3454 6.25 18.341 5.9975 18.3329 5.7475C19.1476 4.925 19.8549 3.90125 20.4127 2.735L20.4145 2.73125Z" fill="white"/>
+                  </svg>
+                </div>
+              </span> 
+                
+
+              </button>
+          </div>
+          <a
+                href="javascript:void(0)"
+                onclick="document.querySelector('html').classList.toggle('dark')"
+                class="mx-auto w-11 h-11 xl:w-48 flex items-center justify-center bg-blue-400 hover:bg-blue-500 py-3 rounded-full text-white font-bold font-sm transition duration-350 ease-in-out"
+              >
+                <svg
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  class="block xl:hidden h-6 w-6"
+                >
+                  <g>
+                    <path
+                      d="M15.692 11.205l6.383-7.216c.45-.45.45-1.18 0-1.628-.45-.45-1.178-.45-1.627 0l-7.232 6.402s.782.106 1.595.93c.548.558.882 1.51.882 1.51z"
+                    ></path>
+                    <path
+                      d="M17.45 22.28H3.673c-1.148 0-2.083-.946-2.083-2.11V7.926c0-1.165.934-2.112 2.082-2.112h5.836c.414 0 .75.336.75.75s-.336.75-.75.75H3.672c-.32 0-.583.274-.583.612V20.17c0 .336.26.61.582.61h13.78c.32 0 .583-.273.583-.61v-6.28c0-.415.336-.75.75-.75s.75.335.75.75v6.28c0 1.163-.934 2.11-2.084 2.11z"
+                    ></path>
+                  </g>
+                </svg>
+                <span class="hidden xl:block font-bold text-md"
+                  >Toggle Dark Mode</span
+                >
+              </a>
+          <!-- Navigation bar -->
+          <nav class="mt-5">
+              <a href="#" class="flex items-center justify-center xl:justify-start text-blue-400 mb-8 transition duration-350 ease-in-out">
+                <svg fill="currentColor" viewBox="0 0 24 24" class="h-6 w-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M22.58 7.35L12.475 1.897c-.297-.16-.654-.16-.95 0L1.425 7.35c-.486.264-.667.87-.405 1.356.18.335.525.525.88.525.16 0 .324-.038.475-.12l.734-.396 1.59 11.25c.216 1.214 1.31 2.062 2.66 2.062h9.282c1.35 0 2.444-.848 2.662-2.088l1.588-11.225.737.398c.485.263 1.092.082 1.354-.404.263-.486.08-1.093-.404-1.355zM12 15.435c-1.795 0-3.25-1.455-3.25-3.25s1.455-3.25 3.25-3.25 3.25 1.455 3.25 3.25-1.455 3.25-3.25 3.25z"></path>
+                </svg>
+                <span class="hidden xl:block ml-4 font-bold text-md">Home</span>
+              </a>
+
+              <a href="#" class="flex items-center justify-center xl:justify-start text-gray-800 dark:text-white hover:text-blue-400 dark:hover:text-blue-400 mb-8 transition duration-350 ease-in-out">
+                <svg fill="currentColor" viewBox="0 0 24 24" class="h-6 w-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 7.337h-3.93l.372-4.272c.036-.412-.27-.775-.682-.812-.417-.03-.776.27-.812.683l-.383 4.4h-6.32l.37-4.27c.037-.413-.27-.776-.68-.813-.42-.03-.777.27-.813.683l-.382 4.4H3.782c-.414 0-.75.337-.75.75s.336.75.75.75H7.61l-.55 6.327H3c-.414 0-.75.336-.75.75s.336.75.75.75h3.93l-.372 4.272c-.036.412.27.775.682.812l.066.003c.385 0 .712-.295.746-.686l.383-4.4h6.32l-.37 4.27c-.036.413.27.776.682.813l.066.003c.385 0 .712-.295.746-.686l.382-4.4h3.957c.413 0 .75-.337.75-.75s-.337-.75-.75-.75H16.39l.55-6.327H21c.414 0 .75-.336.75-.75s-.336-.75-.75-.75zm-6.115 7.826h-6.32l.55-6.326h6.32l-.55 6.326z"></path>
+                </svg>
+                <span class="hidden xl:block ml-4 font-bold text-md">Explore</span>
+              </a>
+
+              <a href="#" class="flex items-center justify-center xl:justify-start text-gray-800 dark:text-white hover:text-blue-400 dark:hover:text-blue-400 mb-8 transition duration-350 ease-in-out">
+                <svg fill="currentColor" viewBox="0 0 24 24" class="h-6 w-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21.697 16.468c-.02-.016-2.14-1.64-2.103-6.03.02-2.532-.812-4.782-2.347-6.335C15.872 2.71 14.01 1.94 12.005 1.93h-.013c-2.004.01-3.866.78-5.242 2.174-1.534 1.553-2.368 3.802-2.346 6.334.037 4.33-2.02 5.967-2.102 6.03-.26.193-.366.53-.265.838.102.308.39.515.712.515h4.92c.102 2.31 1.997 4.16 4.33 4.16s4.226-1.85 4.327-4.16h4.922c.322 0 .61-.206.71-.514.103-.307-.003-.645-.263-.838zM12 20.478c-1.505 0-2.73-1.177-2.828-2.658h5.656c-.1 1.48-1.323 2.66-2.828 2.66zM4.38 16.32c.74-1.132 1.548-3.028 1.524-5.896-.018-2.16.644-3.982 1.913-5.267C8.91 4.05 10.397 3.437 12 3.43c1.603.008 3.087.62 4.18 1.728 1.27 1.285 1.933 3.106 1.915 5.267-.024 2.868.785 4.765 1.525 5.896H4.38z"></path>
+                </svg>
+                <span class="hidden xl:block ml-4 font-bold text-md">Notifications</span>
+              </a>
+
+              <a href="#" class="flex items-center justify-center xl:justify-start text-gray-800 dark:text-white hover:text-blue-400 dark:hover:text-blue-400 mb-8 transition duration-350 ease-in-out">
+                <svg fill="currentColor" viewBox="0 0 24 24" class="h-6 w-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.25 3.018H4.75C3.233 3.018 2 4.252 2 5.77v12.495c0 1.518 1.233 2.753 2.75 2.753h14.5c1.517 0 2.75-1.235 2.75-2.753V5.77c0-1.518-1.233-2.752-2.75-2.752zm-14.5 1.5h14.5c.69 0 1.25.56 1.25 1.25v.714l-8.05 5.367c-.273.18-.626.182-.9-.002L3.5 6.482v-.714c0-.69.56-1.25 1.25-1.25zm14.5 14.998H4.75c-.69 0-1.25-.56-1.25-1.25V8.24l7.24 4.83c.383.256.822.384 1.26.384.44 0 .877-.128 1.26-.383l7.24-4.83v10.022c0 .69-.56 1.25-1.25 1.25z"></path>
+                </svg>
+                <span class="hidden xl:block ml-4 font-bold text-md">Messages</span>
+              </a>
+
+              <a href="#" class="flex items-center justify-center xl:justify-start text-gray-800 dark:text-white hover:text-blue-400 dark:hover:text-blue-400 mb-8 transition duration-350 ease-in-out">
+                <svg fill="currentColor" viewBox="0 0 24 24" class="h-6 w-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.9 23.5c-.157 0-.312-.05-.442-.144L12 17.928l-7.458 5.43c-.228.164-.53.19-.782.06-.25-.127-.41-.385-.41-.667V5.6c0-1.24 1.01-2.25 2.25-2.25h12.798c1.24 0 2.25 1.01 2.25 2.25v17.15c0 .282-.158.54-.41.668-.106.055-.223.082-.34.082zM12 16.25c.155 0 .31.048.44.144l6.71 4.883V5.6c0-.412-.337-.75-.75-.75H5.6c-.413 0-.75.338-.75.75v15.677l6.71-4.883c.13-.096.285-.144.44-.144z"></path>
+                </svg>
+                <span class="hidden xl:block ml-4 font-bold text-md">Bookmarks</span>
+              </a>
+
+              <a href="#" class="flex items-center justify-center xl:justify-start text-gray-800 dark:text-white hover:text-blue-400 dark:hover:text-blue-400 mb-8 transition duration-350 ease-in-out">
+                <svg fill="currentColor" viewBox="0 0 24 24" class="h-6 w-6">
+                  <g>
+                    <path d="M19.75 22H4.25C3.01 22 2 20.99 2 19.75V4.25C2 3.01 3.01 2 4.25 2h15.5C20.99 2 22 3.01 22 4.25v15.5c0 1.24-1.01 2.25-2.25 2.25zM4.25 3.5c-.414 0-.75.337-.75.75v15.5c0 .413.336.75.75.75h15.5c.414 0 .75-.337.75-.75V4.25c0-.413-.336-.75-.75-.75H4.25z"></path>
+                    <path d="M17 8.64H7c-.414 0-.75-.337-.75-.75s.336-.75.75-.75h10c.414 0 .75.335.75.75s-.336.75-.75.75zm0 4.11H7c-.414 0-.75-.336-.75-.75s.336-.75.75-.75h10c.414 0 .75.336.75.75s-.336.75-.75.75zm-5 4.11H7c-.414 0-.75-.335-.75-.75s.336-.75.75-.75h5c.414 0 .75.337.75.75s-.336.75-.75.75z"></path>
+                  </g>
+                </svg>
+                <span class="hidden xl:block ml-4 font-bold text-md">Lists</span>
+              </a>
+
+              <a href="#" class="flex items-center justify-center xl:justify-start text-gray-800 dark:text-white hover:text-blue-400 dark:hover:text-blue-400 mb-8 transition duration-350 ease-in-out">
+                <svg fill="currentColor" viewBox="0 0 24 24" class="h-6 w-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11.816c1.355 0 2.872-.15 3.84-1.256.814-.93 1.078-2.368.806-4.392-.38-2.825-2.117-4.512-4.646-4.512S7.734 3.343 7.354 6.17c-.272 2.022-.008 3.46.806 4.39.968 1.107 2.485 1.256 3.84 1.256zM8.84 6.368c.162-1.2.787-3.212 3.16-3.212s2.998 2.013 3.16 3.212c.207 1.55.057 2.627-.45 3.205-.455.52-1.266.743-2.71.743s-2.255-.223-2.71-.743c-.507-.578-.657-1.656-.45-3.205zm11.44 12.868c-.877-3.526-4.282-5.99-8.28-5.99s-7.403 2.464-8.28 5.99c-.172.692-.028 1.4.395 1.94.408.52 1.04.82 1.733.82h12.304c.693 0 1.325-.3 1.733-.82.424-.54.567-1.247.394-1.94zm-1.576 1.016c-.126.16-.316.246-.552.246H5.848c-.235 0-.426-.085-.552-.246-.137-.174-.18-.412-.12-.654.71-2.855 3.517-4.85 6.824-4.85s6.114 1.994 6.824 4.85c.06.242.017.48-.12.654z"></path>
+                </svg>
+                <span class="hidden xl:block ml-4 font-bold text-md">Profile</span>
+              </a>
+
+              <a href="#" class="flex items-center justify-center xl:justify-start text-gray-800 dark:text-white hover:text-blue-400 dark:hover:text-blue-400 mb-8 transition duration-350 ease-in-out">
+                <svg fill="currentColor" viewBox="0 0 24 24" class="h-6 w-6">
+                  <g>
+                    <path d="M16.5 10.25c-.965 0-1.75.787-1.75 1.75s.784 1.75 1.75 1.75c.964 0 1.75-.786 1.75-1.75s-.786-1.75-1.75-1.75zm0 2.5c-.414 0-.75-.336-.75-.75 0-.413.337-.75.75-.75s.75.336.75.75c0 .413-.336.75-.75.75zm-4.5-2.5c-.966 0-1.75.787-1.75 1.75s.785 1.75 1.75 1.75 1.75-.786 1.75-1.75-.784-1.75-1.75-1.75zm0 2.5c-.414 0-.75-.336-.75-.75 0-.413.337-.75.75-.75s.75.336.75.75c0 .413-.336.75-.75.75zm-4.5-2.5c-.965 0-1.75.787-1.75 1.75s.785 1.75 1.75 1.75c.964 0 1.75-.786 1.75-1.75s-.787-1.75-1.75-1.75zm0 2.5c-.414 0-.75-.336-.75-.75 0-.413.337-.75.75-.75s.75.336.75.75c0 .413-.336.75-.75.75z"></path>
+                    <path d="M12 22.75C6.072 22.75 1.25 17.928 1.25 12S6.072 1.25 12 1.25 22.75 6.072 22.75 12 17.928 22.75 12 22.75zm0-20C6.9 2.75 2.75 6.9 2.75 12S6.9 21.25 12 21.25s9.25-4.15 9.25-9.25S17.1 2.75 12 2.75z"></path>
+                  </g>
+                </svg>
+                <span class="hidden xl:block ml-4 font-bold text-md">More</span>
+              </a>
+
+              <a href="#" class="mx-auto w-11 h-11 xl:w-auto flex items-center justify-center bg-blue-400 hover:bg-blue-500 py-3 rounded-full text-white font-bold font-sm transition duration-350 ease-in-out mb-10">
+                <svg fill="currentColor" viewBox="0 0 24 24" class="block xl:hidden h-6 w-6">
+                  <path d="M8.8 7.2H5.6V3.9c0-.4-.3-.8-.8-.8s-.7.4-.7.8v3.3H.8c-.4 0-.8.3-.8.8s.3.8.8.8h3.3v3.3c0 .4.3.8.8.8s.8-.3.8-.8V8.7H9c.4 0 .8-.3.8-.8s-.5-.7-1-.7zm15-4.9v-.1h-.1c-.1 0-9.2 1.2-14.4 11.7-3.8 7.6-3.6 9.9-3.3 9.9.3.1 3.4-6.5 6.7-9.2 5.2-1.1 6.6-3.6 6.6-3.6s-1.5.2-2.1.2c-.8 0-1.4-.2-1.7-.3 1.3-1.2 2.4-1.5 3.5-1.7.9-.2 1.8-.4 3-1.2 2.2-1.6 1.9-5.5 1.8-5.7z"></path>
+                </svg>
+                <span class="hidden xl:block font-bold text-md">Tweet</span>
+              </a>
+            </nav>
+          
+        </aside>
+
+        
+       
+        <div class="w-full h-full flex flex-col justify-between">
+          <!-- Header -->
+          <header class="h-12 w-full flex items-center relative justify-end px-5 space-x-10 bg-gray-800 text-base">
+          <!-- Profile -->
+            <div class="flex relative flex-shrink-0 px-2 py-2 w-full text-gray-400 dark:focus-within:text-light focus-within:text-gray-700">
+              <table class="w-full h-12">
+                <tr>
+                  <th><div class="w-11/12 p-2 bg-gray-50 font-light bg-opacity-0 text-white"><a class="hover:border-b-4 cursor-pointer dark:border-indigo-400">For you</a></div></th>
+                  <th><div class="vl dark:border-indigo-800 border-l h-12"></div></th>
+                  <th><div class="w-11/12 p-2 bg-gray-50 font-light bg-opacity-0 text-white"><a class="hover:border-b-4 cursor-pointer dark:border-indigo-400">Follow</a></div></th>
+              </tr>
+              </table>    
+            </div>
+            
+          </header>
+
+          <!-- Main -->
+          <main class="max-w-full h-full flex relative overflow-y-hidden">
+            <!-- Container -->
+             <div id="imageContainer" class="h-full w-full m-4 flex flex-wrap items-start bg-opacity-0 justify-start rounded-tl grid-flow-col auto-cols-max gap-4 overflow-y-scroll">
+              <!-- Container -->
+                    
+              </div>
+          </main>
+
+        </div>
+
+        <!-- Search Bar -->
+        <aside class="h-full w-6/12 flex flex-col space-y-10 items-center relative bg-gray-800 text-white">
+          <!-- Search -->
+          <div class="relative h-12 flex-shrink-0 px-8 py-1 w-full text-gray-400 dark:border-indigo-800 dark:focus-within:text-light bg-opacity-0 focus-within:text-gray-700">
+            <span class="absolute inset-y-0 py-2 px-3 inline-flex items-center bg-opacity-0">
+            <svg
+                class="w-5 h-5 bg-opacity-0"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+            >
+                <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+            </svg>
+            </span>
+            <input
+            x-ref="searchInput"
+            type="text"
+            class="w-full h-10 py-1 pl-10 pr-4 border rounded-full bg-gray-700 placeholder:text-base border-transparent text-light focus:outline-none"
+            placeholder="Search..."
+            />
+        </div>
+
+        <!-- Recommendation -->
+        <div class="inline-block w-11/12 shadow m-2 rounded-2xl overflow-hidden">
+          <table class="min-w-full rounded-3xl leading-normal">
+              <thead>
+                <tr>
+                  <th
+                    class="px-5 py-3 border-b-2 border-gray-500 bg-gray-700 text-white text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    Name
+                  </th>
+                  <th
+                    class="px-5 py-3 border-b-2 border-gray-500 bg-gray-700 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  </th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td class="px-5 py-5 border-b border-gray-800 bg-gray-800 hover:bg-gray-600 text-sm text-white">
+                    <div class="flex items-center">
+                      <div class="flex-shrink-0 w-10 h-10">
+                        <img class="w-full h-full rounded-full"
+                                                  src="https://i.imgur.com/EXQVxqQ.png"
+                                                  alt="" />
+                                          </div>
+                        <div class="ml-3">
+                          <p class="text-white whitespace-no-wrap">
+                            Name
+                          </p>
+                          <p class="text-gray-400 text-sm whitespace-no-wrap">
+                            @Name
+                          </p>
+                        </div>
+                      </div>
+                  </td>
+                  
+                  <td class="px-5 py-5 border-b border-gray-800 bg-gray-800 text-sm">
+                    <span
+                                          class="relative inline-block px-3 py-1 font-semibold leading-tight">
+                                          <span aria-hidden
+                                              class="absolute inset-0 bg-gray-800 opacity-50 rounded-full border border-blue-500"></span>
+                    <span class="text-white relative">Follow</span>
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="px-5 py-5 border-b border-gray-800 bg-gray-800 text-sm text-white">
+                    <div class="flex items-center">
+                      <div class="flex-shrink-0 w-10 h-10">
+                        <img class="w-full h-full rounded-full"
+                                                  src="https://i.imgur.com/GCBVgXD.jpeg"
+                                                  alt="" />
+                                          </div>
+                        <div class="ml-3">
+                          <p class="text-white whitespace-no-wrap">
+                            Name
+                          </p>
+                          <p class="text-gray-400 text-sm whitespace-no-wrap">
+                            @Name
+                          </p>
+                        </div>
+                      </div>
+                  </td>
+                  
+                  <td class="px-5 py-5 border-b border-gray-800 bg-gray-800 text-sm">
+                    <span
+                                          class="relative inline-block px-3 py-1 font-semibold leading-tight">
+                                          <span aria-hidden
+                                              class="absolute inset-0 bg-gray-800 opacity-50 rounded-full border border-blue-500"></span>
+                    <span class="text-white relative">Follow</span>
+                    </span>
+                  </td>
+                </tr> 
+                <tr>
+                  <td class="px-5 py-5 border-b border-gray-800 bg-gray-800 text-sm text-white">
+                    <div class="flex items-center">
+                      <div class="flex-shrink-0 w-10 h-10">
+                        <img class="w-full h-full rounded-full"
+                                                  src="https://i.imgur.com/sFNj4bs.jpeg"
+                                                  alt="" />
+                                          </div>
+                        <div class="ml-3">
+                          <p class="text-white whitespace-no-wrap">
+                            Name
+                          </p>
+                          <p class="text-gray-400 text-sm whitespace-no-wrap">
+                            @Name
+                          </p>
+                        </div>
+                      </div>
+                  </td>
+                  
+                  <td class="px-5 py-5 border-b border-gray-800 bg-gray-800 text-sm">
+                    <span
+                                          class="relative inline-block px-3 py-1 font-semibold leading-tight">
+                                          <span aria-hidden
+                                              class="absolute inset-0 bg-gray-800 opacity-50 rounded-full border border-blue-500"></span>
+                    <span class="text-white relative">Follow</span>
+                    </span>
+                  </td>
+                </tr> 
+                
+              </tbody>
+
+              <tfoot>
+                <tr>
+                  <th
+                    class="px-5 py-3 border-t-2 border-gray-500 bg-gray-700 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                   
+                  </th>
+                  <th
+                    class="px-5 py-3 border-t-2 border-gray-500 bg-gray-700 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  </th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </aside>
+      </div>
+
+    </div>
+
+    </div>
+</body>
+
+
+<script type="text/javascript">
+
+  data = [
+  {
+    postId : 12,
+    postUserId : 34,
+    postUsername : '@abc',
+    postUserFullname : 'Full Name',
+    postTimestamp : '2024-03-19 20:20:20.555',
+    postIsShared : true,
+    postIsSharedFrom : '@def',
+    postIsCreated : '2024-03-18 20:20:20.555',
+    postContent : 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+    mediaCount : 2,
+    media : [
+    {
+      mediaType : 'png',
+      mediaSrc : 'https://i.imgur.com/fjXFX93.jpeg'
+    },
+    {
+      mediaType : 'mp4',
+      mediaSrc : 'https://i.imgur.com/amAh6EE.mp4'
+    }
+    ],
+    likeCount : 56,
+    commentCount : 34,
+    shareCount : 12
+  }];
+
+  imgArray = ['https://i.imgur.com/fjXFX93.jpeg', 'https://i.imgur.com/5yeBVeM.jpeg', 'https://i.imgur.com/DBpznrn.jpeg', 'https://i.imgur.com/ISpNf4j.jpeg'];
+
+  const imageScrollbox = document.getElementById('imageContainer');
+  imageScrollbox.innerHTML = '';
+
+  imgArray.forEach(img_src =>{
+    imgContainer = document.createElement('div');
+    imgContainer.className = "w-full bg-opacity-0 p-3";
+    imgContainer.innerHTML = `
+      <div class="w-full bg-opacity-0 p-3">
+                <img class="w-full object-cover" src="${img_src}">
+                <ul class="mt-3 flex flex-wrap">
+                  <li class="mr-auto">
+                    <a href="#" class="flex text-gray-400 hover:text-gray-600">
+                      <svg class="mr-0.5" style="width:24px;height:24px" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M21,12L14,5V9C7,10 4,15 3,20C5.5,16.5 9,14.9 14,14.9V19L21,12Z"></path>
+                      </svg>
+                      1
+                    </a>
+                  </li>
+                  <li class="mr-2">
+                    <a href="#" class="flex text-gray-400 hover:text-gray-600">
+                      <svg class="mr-0.5" style="width:24px;height:24px" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z"></path>
+                      </svg>
+                      24
+                    </a>
+                  </li>
+                  <li class="mr-2">
+                    <a href="#" class="flex text-gray-400 hover:text-gray-600">
+                      <svg class="mr-0.5" style="width:24px;height:24px" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M9,22A1,1 0 0,1 8,21V18H4A2,2 0 0,1 2,16V4C2,2.89 2.9,2 4,2H20A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H13.9L10.2,21.71C10,21.9 9.75,22 9.5,22V22H9Z"></path>
+                      </svg>
+                      3
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" class="flex text-gray-400 hover:text-gray-600">
+                      <svg class="mr-0.5" style="width:24px;height:24px" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z"></path>
+                      </svg>
+                      3
+                    </a>
+                  </li>
+                </ul>
+
+    `
+    imageScrollbox.appendChild(imgContainer);
+  })
+</script>
+<script type="text/javascript">
+
+
+// Function to handle file upload
+const handleFileUpload = (files) => {
+  if (files.length === 0) {
+    console.error('No file selected');
+    return;
+  }
+  const filePath = URL.createObjectURL(files[0]);
+  uploadImage(filePath);
+};
+
+// Function to upload the image
+const uploadImage = async (filePath) => {
+  try {
+    const file = await fetchFile(filePath);
+    const formData = new FormData();
+    formData.append('file', file, filePath.split('/').pop());
+
+    const response = await fetch('192.168.133.129:8080/api/upload', {
+      method: 'POST',
+      body: formData
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to upload image');
+    }
+
+    const data = await response.text();
+    console.log('Image uploaded successfully:', data);
+  } catch (error) {
+    console.error('Error uploading image:', error.message);
+  }
+};
+
+// Function to fetch file asynchronously
+const fetchFile = async (filePath) => {
+  try {
+    const response = await fetch(filePath);
+    if (!response.ok) {
+      throw new Error('Failed to fetch file');
+    }
+    const blob = await response.blob();
+    return new File([blob], filePath.split('/').pop());
+  } catch (error) {
+    console.error('Error fetching file:', error.message);
+    throw error;
+  }
+};
+
+// Add event listener to file input element
+const fileInput = document.getElementById('fileInput');
+fileInput.addEventListener('change', (event) => {
+  handleFileUpload(event.target.files);
+});
+
+// Trigger file input click programmatically
+fileInput.click();
+
+
+
+</script>

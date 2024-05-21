@@ -2,15 +2,12 @@
 	import SearchIcon from '$lib/icon/search.svg?component';
 </script>
 
-<!-- Search -->
-<div class="relative flex-shrink-0 px-2 py-2 w-full text-gray-400 border-b dark:border-indigo-800 dark:focus-within:text-light focus-within:text-gray-700">
-	<span class="absolute inset-y-0 inline-flex items-center px-4">
-	<SearchIcon width=20 height=20 />
-	</span>
-	<input
-	x-ref="searchInput"
-	type="text"
-	class="w-full py-2 pl-10 pr-4 border rounded-full dark:bg-dark dark:border-transparent dark:text-light focus:outline-none focus:ring"
-	placeholder="Search..."
-	/>
+<!-- Search Bar -->
+<div class="relative m-2 w-full px-5">
+	<div class="absolute text-gray-600 flex items-center pl-4 h-full cursor-pointer">
+	  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mail" width="18" height="18" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+		<path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path>
+	  </svg>
+	</div>
+	<input class="w-full bg-gray-200 dark:bg-dim-400 border-gray-200 dark:border-dim-400 text-gray-100 focus:bg-gray-100 dark:focus:bg-dim-900 focus:outline-none focus:border focus:border-blue-200 font-normal h-9 flex items-center pl-12 text-sm rounded-full border shadow" placeholder="Search Twitter">
 </div>
