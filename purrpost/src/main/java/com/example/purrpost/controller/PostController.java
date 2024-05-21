@@ -7,9 +7,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.purrpost.model.Post;
 import com.example.purrpost.repository.PostRepository;
+import com.example.purrpost.service.UserRetrieval;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
@@ -35,11 +33,6 @@ public class PostController {
 	public ResponseEntity<List<Post>> getAllPosts() {
 		try {
 			List<Post> allPosts = postRepository.findAll();
-			
-			SecurityContext context = SecurityContextHolder.getContext();
-			Authentication authentication = context.getAuthentication();
-			System.out.println("\nLogged in with =" + authentication.getName() + "\n" );
-			
 			return new ResponseEntity<>(allPosts, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -66,12 +59,14 @@ public class PostController {
 	@PostMapping("/post")
 	public ResponseEntity<Post> createPost(@RequestBody Post post) {
 		try {
+			post.setUserId(UserRetrieval.getCurrentUserId());
 			post.setTimePosted(OffsetDateTime.now());		// !!! May need to reconsider timezome problems
 			// https://stackoverflow.com/questions/3914404/how-to-get-current-moment-in-iso-8601-format-with-date-hour-and-minute
 			Post _post = postRepository.save(post);
 			
 			return new ResponseEntity<>(_post, HttpStatus.CREATED);
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

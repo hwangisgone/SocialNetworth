@@ -38,11 +38,13 @@ public class Follow {
 		this.userId = userId;
 	}
 
-	public long getfollowerId() {
+	public long getFollowerId() {
 		return followerId;
 	}
 
-	public void setfollowerId(long followerId) {
+	public void setFollowerId(long followerId) {
 		this.followerId = followerId;
 	}
+
+
 }

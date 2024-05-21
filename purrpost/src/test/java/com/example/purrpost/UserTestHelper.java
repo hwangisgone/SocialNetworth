@@ -6,7 +6,7 @@ import static org.hamcrest.Matchers.startsWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.example.purrpost.model.User;
+import com.example.purrpost.model.SocialUser;
 import com.example.purrpost.repository.UserRepository;
 
 import io.restassured.http.ContentType;
@@ -26,7 +26,7 @@ public class UserTestHelper {
 	
 	long initiateUser() {
 		userRepository.deleteAll();
-		User testUser = new User();
+		SocialUser testUser = new SocialUser();
 		testUser.setNameTag("TEST 1");
 		testUser.setPassword("TEST PASSWORD");
 		testUser.setDefaultTestUser();

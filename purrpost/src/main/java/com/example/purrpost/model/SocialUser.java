@@ -7,7 +7,7 @@ import jakarta.persistence.*; // for Spring Boot 3
 
 @Entity
 @Table(name = "social_user")
-public class User{
+public class SocialUser{
 
 //	@GeneratedValue(strategy = GenerationType.AUTO)
 //	private long post_id;
@@ -41,26 +41,25 @@ public class User{
 	private Date registrationDate;
 
 
-	public User() {
+	public SocialUser() {
 		
 	}
 	
-	public User(String name_tag, String password) {
+	public SocialUser(String name_tag, String password) {
 		this.nameTag = name_tag; 
 		this.password = password;
 	}
 	
-	public User(String nameTag, String password, String name, String email, String bio, String role,
-			String phone, Date registrationDate) {
+	public SocialUser(SocialUser user) {
 		super();
-		this.nameTag = nameTag;
-		this.password = password;
-		this.name = name;
-		this.email = email;
-		this.bio = bio;
-		this.role = role;
-		this.phone = phone;
-		this.registrationDate = registrationDate;
+		this.nameTag = user.nameTag;
+		this.password = user.password;
+		this.name = user.name;
+		this.email = user.email;
+		this.bio = user.bio;
+		this.role = user.role;
+		this.phone = user.phone;
+		this.registrationDate = user.registrationDate;
 	}
 
 	public void setDefaultTestUser() {
