@@ -50,7 +50,7 @@
 	<div class="h-screen w-full relative flex overflow-hidden">
 
 			<!-- Sidebar -->
-			<aside class="h-full w-5/12 flex flex-col border-r border-gray-200 dark:border-gray-700 space-y-2 items-center relative text-white">
+			<aside class="h-full w-72 xs:w-96 xl:w-5/12 flex flex-col border-r border-gray-200 dark:border-gray-700 space-y-2 items-center relative text-white">
 				<!-- Logo -->
 				<div class="relative h-12 flex-shrink-0 w-10/12 text-gray-400 focus-within:text-light focus-within:text-gray-700">
 					<a class="btn btn-ghost btn-circle" href="./"> 
@@ -101,7 +101,7 @@
 			  </div>
 
 			<!-- Search Bar -->
-			<aside class="h-full w-6/12 flex flex-col border-l border-gray-200 dark:border-gray-700 space-y-10 items-center relative">
+			<aside class="h-full hidden xl:block xl:w-5/12 flex flex-col border-l border-gray-200 dark:border-gray-700 space-y-10 items-center relative">
 				<SearchBar />
 
 				<RecommendationComp />
