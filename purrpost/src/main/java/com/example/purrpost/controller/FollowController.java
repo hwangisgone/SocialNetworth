@@ -28,7 +28,7 @@ public class FollowController {
 		try {
 			// !!! IMPORTANT TO FIX
 			Follow _follow = followRepository.save(new Follow(UserRetrieval.getCurrentUserId(), userId));
-			
+
 			return new ResponseEntity<>(_follow.getFollowerId() + " followed " + _follow.getUserId(), HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

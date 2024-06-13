@@ -1,6 +1,7 @@
 package com.example.purrpost.controller;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +18,23 @@ import com.example.purrpost.model.Reaction;
 import com.example.purrpost.repository.ReactionRepository;
 import com.example.purrpost.service.UserRetrieval;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/api")
 public class ReactionController {
+
+	//  Input for create
+	static class ReactionInput {
+		@Schema(example = "L", requiredMode = Schema.RequiredMode.REQUIRED)
+		private char reactionType;
+
+		public char getReactionType() {
+			return reactionType;
+		}
+	}
+
 
 	@Autowired
 	ReactionRepository reactionRepository;
@@ -43,11 +57,14 @@ public class ReactionController {
 
 
 	@PostMapping("/post/{id}/react")
-	public ResponseEntity<Reaction> createReaction(@RequestBody Reaction reaction) {
+	public ResponseEntity<Reaction> createReaction(@PathVariable("id") long postId, @RequestBody ReactionInput new_react) {
 		try {
-			reaction.setUserId(UserRetrieval.getCurrentUserId());
-			Reaction _reaction = reactionRepository.save(reaction);
-			
+			Reaction _reaction = reactionRepository.save(new Reaction(
+					UserRetrieval.getCurrentUserId(),
+					postId,
+					new_react.getReactionType()
+			));
+
 			return new ResponseEntity<>(_reaction, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -56,9 +73,9 @@ public class ReactionController {
 
 
 	@DeleteMapping("/post/{id}/react")
-	public ResponseEntity<HttpStatus> deleteReaction(@RequestBody Reaction reaction) {
+	public ResponseEntity<HttpStatus> deleteReaction(@PathVariable("id") long postId) {
 		try {
-			reactionRepository.deleteByUserIdAndPostId(UserRetrieval.getCurrentUserId(), reaction.getPostId());
+			reactionRepository.deleteByUserIdAndPostId(UserRetrieval.getCurrentUserId(), postId);
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

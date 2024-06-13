@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserRetrieval {
-	// Retrieve from the JWT defined in JwtTokenService
+	// Retrieve custom claim from the JWT defined in JwtTokenService
 	public static long getCurrentUserId() throws UserRetrievalException {
 		SecurityContext context = SecurityContextHolder.getContext();
-		
+
 		if (null != context.getAuthentication()) {
 			Jwt testJwt  = (Jwt) context.getAuthentication().getPrincipal();
 			return testJwt.getClaim("user_id");

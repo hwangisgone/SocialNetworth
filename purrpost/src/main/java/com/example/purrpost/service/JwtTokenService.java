@@ -18,23 +18,23 @@ import com.example.purrpost.model.SocialUser;
 @Service
 public class JwtTokenService {
 	private final JwtEncoder encoder;
-	
+
 	public JwtTokenService(JwtEncoder encoder) {
 		this.encoder = encoder;
 	}
-	
+
 	public String generateToken(SocialUser user) {
 		Instant now = Instant.now();
-		
+
 		// Reference: https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/index.html#servlet-authentication-unpwd
 		Authentication auth = UsernamePasswordAuthenticationToken.unauthenticated(user.getUserId(), user.getPassword());
 
 		// authRequest.setAuthenticated(true);
-		
+
 		String scope = auth.getAuthorities().stream()
 				.map(GrantedAuthority::getAuthority)
 				.collect(Collectors.joining(" "));
-		
+
 		JwtClaimsSet claims = JwtClaimsSet.builder()
 				.issuer("self")
 				.issuedAt(now)
@@ -43,7 +43,7 @@ public class JwtTokenService {
 				.claim("scope", scope)
 				.claim("user_id", user.getUserId())		// Custom claim
 				.build();
-		
+
 		return this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
 	}
 

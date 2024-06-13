@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.purrpost.model.Post;
 import com.example.purrpost.model.Reply;
-import com.example.purrpost.repository.ReplyRepository;
 import com.example.purrpost.repository.PostRepository;
+import com.example.purrpost.repository.ReplyRepository;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController

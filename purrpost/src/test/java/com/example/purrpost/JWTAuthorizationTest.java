@@ -2,11 +2,8 @@ package com.example.purrpost;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.hamcrest.Matchers.startsWith;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.response.Response;
-
 import org.junit.jupiter.api.BeforeAll;
 //import org.junit.jupiter.api.AfterAll;
 //import org.junit.jupiter.api.BeforeAll;
@@ -20,8 +17,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_CLASS;
 
-import com.example.purrpost.model.SocialUser;
-import com.example.purrpost.repository.UserRepository;
+import com.example.purrpost.util.UserTestHelper;
 
 // https://testcontainers.com/guides/testing-spring-boot-rest-api-using-testcontainers/
 
