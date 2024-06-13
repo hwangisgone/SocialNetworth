@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.purrpost.model.Post;
 import com.example.purrpost.repository.PostRepository;
+import com.example.purrpost.service.UserRetrieval;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
@@ -32,23 +33,13 @@ public class PostController {
 	public ResponseEntity<List<Post>> getAllPosts() {
 		try {
 			List<Post> allPosts = postRepository.findAll();
-			
 			return new ResponseEntity<>(allPosts, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	@GetMapping("/post/{id}")
-	public ResponseEntity<Post> getTutorialById(@PathVariable("id") long id) {
-		Optional<Post> postData = postRepository.findById(id);
 
-		if (postData.isPresent()) {
-			return new ResponseEntity<>(postData.get(), HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
 
 //	Send a request with post body:
 //	{
@@ -59,13 +50,26 @@ public class PostController {
 	@PostMapping("/post")
 	public ResponseEntity<Post> createPost(@RequestBody Post post) {
 		try {
+			post.setUserId(UserRetrieval.getCurrentUserId());
 			post.setTimePosted(OffsetDateTime.now());		// !!! May need to reconsider timezome problems
 			// https://stackoverflow.com/questions/3914404/how-to-get-current-moment-in-iso-8601-format-with-date-hour-and-minute
 			Post _post = postRepository.save(post);
 			
 			return new ResponseEntity<>(_post, HttpStatus.CREATED);
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("/post/{id}")
+	public ResponseEntity<Post> getTutorialById(@PathVariable("id") long id) {
+		Optional<Post> postData = postRepository.findById(id);
+
+		if (postData.isPresent()) {
+			return new ResponseEntity<>(postData.get(), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -86,10 +90,14 @@ public class PostController {
 	@DeleteMapping("/post/{id}")
 	public ResponseEntity<HttpStatus> deletePost(@PathVariable("id") long id) {
 		try {
-			postRepository.deleteById(id);
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			if (postRepository.existsById(id)) {
+				postRepository.deleteById(id);
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);	
+			} else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);	
+			}
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 }

@@ -47,6 +47,14 @@ public class Post {
 	}
 
 
+	public long getUserId() {
+		return userId;
+	}
+	
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
 	public String getContent() {
 		return content;
 	}
@@ -93,10 +101,6 @@ public class Post {
 
 	public void setShareCount(int shareCount) {
 		this.shareCount = shareCount;
-	}
-
-	public long getUserId() {
-		return userId;
 	}
 
 	public long getId() {

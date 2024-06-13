@@ -9,28 +9,26 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.http.HttpHeaders;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.purrpost.model.User;
+import com.example.purrpost.model.SocialUser;
 import com.example.purrpost.repository.UserRepository;
 import com.example.purrpost.service.JwtTokenService;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/api")
-public class UserController {
+public class LoginController {
 	
 	@Autowired
 	private UserRepository userRepository;
 	
 	@GetMapping("/allusers")
-	public ResponseEntity<List<User>> getAllUsers() {
+	public ResponseEntity<List<SocialUser>> getAllUsers() {
 		try {
-			List<User> allUsers = userRepository.findAll();
+			List<SocialUser> allUsers = userRepository.findAll();
 			
 			return new ResponseEntity<>(allUsers, HttpStatus.OK);
 		} catch (Exception e) {
@@ -40,20 +38,11 @@ public class UserController {
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity<User> register(@RequestBody User user) {
-		List<User> foundName = userRepository.findByNameTag(user.getNameTag());
+	public ResponseEntity<SocialUser> register(@RequestBody SocialUser user) {
+		List<SocialUser> foundName = userRepository.findByNameTag(user.getNameTag());
 		if (foundName.size() == 0) {
 			try {
-				User _user = userRepository.save(new User(
-					user.getNameTag(),
-					user.getPassword(),
-					user.getName(),
-					user.getEmail(),
-					user.getBio(),
-					user.getRole(),
-					user.getPhone(),
-					user.getRegistrationDate())
-				);
+				SocialUser _user = userRepository.save(new SocialUser(user));
 				return new ResponseEntity<>(_user, HttpStatus.CREATED);
 			} catch (Exception e) {
 				return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -68,17 +57,17 @@ public class UserController {
 	private JwtTokenService tokenService;
 	
 	@PostMapping("/login")
-	public ResponseEntity<String> loginWithJWT(@RequestBody User user){
-		List<User> foundUser = userRepository.findByNameTagAndPassword(user.getNameTag(), user.getPassword());
+	public ResponseEntity<String> loginWithJWT(@RequestBody SocialUser user){
+		List<SocialUser> foundUser = userRepository.findByNameTagAndPassword(user.getNameTag(), user.getPassword());
 
-		// Reference: https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/index.html#servlet-authentication-unpwd
-		Authentication authRequest = UsernamePasswordAuthenticationToken.unauthenticated(user.getNameTag(), user.getPassword());
-		
 		HttpHeaders headers = new HttpHeaders();
 		System.out.println("Logging in with nameTag=" + user.getNameTag() + " and password=" + user.getPassword());
 		
+		
+		
 		if (foundUser.size() == 1) {
-			headers.setBearerAuth(tokenService.generateToken(authRequest));
+			headers.setBearerAuth(tokenService.generateToken(foundUser.get(0)));
+			
 			return new ResponseEntity<>(foundUser.get(0).toString(), headers, HttpStatus.OK);
 		} else if (foundUser.size() < 1) {
 			return new ResponseEntity<>("Username/password incorrect", HttpStatus.UNAUTHORIZED);

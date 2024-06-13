@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.purrpost.model.Reaction;
 import com.example.purrpost.repository.ReactionRepository;
+import com.example.purrpost.service.UserRetrieval;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
@@ -26,9 +27,9 @@ public class ReactionController {
 
 //	!!! For testing only
 	@GetMapping("/post/{id}/reactions")
-	public ResponseEntity<List<Reaction>> getAllReactions(@PathVariable("id") int postId) {
+	public ResponseEntity<List<Reaction>> getAllReactions(@PathVariable("id") long postId) {
 		try {
-			List<Reaction> reactions = reactionRepository.findByPostId(postId);
+			List<Reaction> reactions = reactionRepository.findAllByPostId(postId);
 
 			if (reactions.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -44,6 +45,7 @@ public class ReactionController {
 	@PostMapping("/post/{id}/react")
 	public ResponseEntity<Reaction> createReaction(@RequestBody Reaction reaction) {
 		try {
+			reaction.setUserId(UserRetrieval.getCurrentUserId());
 			Reaction _reaction = reactionRepository.save(reaction);
 			
 			return new ResponseEntity<>(_reaction, HttpStatus.CREATED);
@@ -56,7 +58,7 @@ public class ReactionController {
 	@DeleteMapping("/post/{id}/react")
 	public ResponseEntity<HttpStatus> deleteReaction(@RequestBody Reaction reaction) {
 		try {
-			reactionRepository.deleteByUserIdAndPostId(reaction.getUserId(), reaction.getPostId());
+			reactionRepository.deleteByUserIdAndPostId(UserRetrieval.getCurrentUserId(), reaction.getPostId());
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

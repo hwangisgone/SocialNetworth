@@ -3,12 +3,17 @@ package com.example.purrpost.model.compositeid;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class InteractionId implements Serializable {
-	private int userId;
-	private int postId;
+public class ReactionId implements Serializable {
+	private static final long serialVersionUID = 1L;
 	
-	// getters, setters
-	// equals and hashCode
+	private long userId;
+	private long postId;
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(postId, userId);
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -17,12 +22,8 @@ public class InteractionId implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		InteractionId other = (InteractionId) obj;
+		ReactionId other = (ReactionId) obj;
 		return postId == other.postId && userId == other.userId;
 	}
 	
-	@Override
-	public int hashCode() {
-		return Objects.hash(postId, userId);
-	}
 }

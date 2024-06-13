@@ -39,7 +39,10 @@ public class WebSecurityConfig {
         return http
         		.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(requests -> requests
-                	.requestMatchers("/welcome", "/api/login").permitAll()
+                	.requestMatchers("/welcome", "/api/login",
+                			"/v3/api-docs/**", 
+                			"/swagger-ui/**", 
+                			"/swagger-ui.html").permitAll()
                 	.anyRequest().authenticated()
                 )
                 .logout(logout -> logout.permitAll())
@@ -49,15 +52,7 @@ public class WebSecurityConfig {
                 .build();
     }
     
-    @Bean
-    public InMemoryUserDetailsManager users() {
-        return new InMemoryUserDetailsManager(
-                User.withUsername("dvega")
-                        .password("{noop}123")
-                        .authorities("read")
-                        .build()
-        );
-    }
+    
     
     // the value we need to set in our application.yml
     @Value("${rsa.public.location}")
@@ -67,6 +62,7 @@ public class WebSecurityConfig {
     private RSAPrivateKey privateKey;
     
     // https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html
+    // Create JwtDecoder for Spring Security
     @Bean
     JwtDecoder jwtDecoder() {
     	return NimbusJwtDecoder.withPublicKey(this.publicKey).build();
@@ -77,7 +73,6 @@ public class WebSecurityConfig {
     	// https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/oauth2/jwt/NimbusJwtEncoder.html
     	JWK jwk = new RSAKey.Builder(this.publicKey).privateKey(this.privateKey).build();
     	JWKSource<SecurityContext> jwksource = new ImmutableJWKSet<>(new JWKSet(jwk));
-    	return new NimbusJwtEncoder(jwksource);
-    	
+    	return new NimbusJwtEncoder(jwksource);    	
     }
 }
