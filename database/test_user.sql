@@ -1,2 +1,0 @@
-INSERT INTO social_user (email, password, phone, name, name_tag, bio, registration_date, role, follow_count, followed_count)
-VALUES ('giant@example.com', 'troll', '123-456-7890', 'Giant', 'giant', 'Bio of Giant', '2024-05-15', 'user', 0, 0);
