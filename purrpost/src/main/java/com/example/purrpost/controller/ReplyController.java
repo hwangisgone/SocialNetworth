@@ -47,6 +47,7 @@ public class ReplyController {
 
 	@Autowired
 	ReplyRepository replyRepository;
+	@Autowired
 	PostRepository postRepository;
 
 	// @GetMapping("/replies_to/{id}")
@@ -104,6 +105,7 @@ public class ReplyController {
 
 			return new ResponseEntity<>(_reply, HttpStatus.CREATED);
 		} catch (Exception e) {
+			System.err.println(e.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
