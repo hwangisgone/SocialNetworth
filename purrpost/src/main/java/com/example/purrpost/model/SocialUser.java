@@ -3,11 +3,17 @@ package com.example.purrpost.model;
 import java.time.Instant;
 import java.util.Date;
 
-import jakarta.persistence.*; // for Spring Boot 3
+// for Spring Boot 3
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "social_user")
-public class User{
+public class SocialUser{
 
 //	@GeneratedValue(strategy = GenerationType.AUTO)
 //	private long post_id;
@@ -15,52 +21,45 @@ public class User{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	// Use database side to generate
 	@Column(name = "user_id", insertable = false)
 	private long userId;
-	
+
 	@Column(name = "name_tag")
 	private String nameTag;
-	
+
 	@Column(name = "password")
 	private String password;
-	
+
 	@Column(name = "name")
 	private String name;
-	
+
 	@Column(name = "email")
 	private String email;
-	
+
 	@Column(name = "bio")
 	private String bio;
-	
+
 	@Column(name = "role")
 	private String role;
 
 	@Column(name = "phone")
 	private String phone;
-	
+
 	@Column(name = "registration_date")
 	private Date registrationDate;
 
 
-	public User() {
-		
+	public SocialUser() {
+
 	}
-	
-	public User(String name_tag, String password) {
-		this.nameTag = name_tag; 
-		this.password = password;
-	}
-	
-	public User(String nameTag, String password, String name, String email, String bio, String role,
-			String phone, Date registrationDate) {
+
+	public SocialUser(String nameTag, String password, String name, String email, String bio) {
 		super();
 		this.nameTag = nameTag;
 		this.password = password;
 		this.name = name;
 		this.email = email;
 		this.bio = bio;
-		this.role = role;
-		this.phone = phone;
-		this.registrationDate = registrationDate;
+		this.registrationDate = Date.from(Instant.now());
+		this.role = "user";
 	}
 
 	public void setDefaultTestUser() {
@@ -137,5 +136,9 @@ public class User{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "User [nameTag=" + nameTag + ", registrationDate=" + "]";
+	}
 }

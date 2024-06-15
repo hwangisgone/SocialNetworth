@@ -8,13 +8,10 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static org.hamcrest.Matchers.equalTo;
 
 import io.restassured.RestAssured;
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -31,9 +28,8 @@ import org.springframework.test.context.jdbc.Sql;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_CLASS;
 
 import com.example.purrpost.model.Post;
-import com.example.purrpost.model.User;
 import com.example.purrpost.repository.PostRepository;
-import com.example.purrpost.repository.UserRepository;
+import com.example.purrpost.util.TemplateSetup;
 
 // https://testcontainers.com/guides/testing-spring-boot-rest-api-using-testcontainers/
 
@@ -58,10 +54,7 @@ class PostControllerTest {
 
 	@Autowired
 	PostRepository postRepository;
-	
-	@Autowired
-	UserTestHelper userHelper; // Needed for auths
-	
+
 
 	// BeforeAll can only use static methods
 	@BeforeAll
@@ -71,40 +64,18 @@ class PostControllerTest {
 	}
 	
 	
-	private static boolean dataLoaded = false;
-	private static long testUserId;
+	@Autowired
+	private TemplateSetup temp;
 	
-	RequestSpecification requestSpec;
-	
-	private void setUpOnce() {
-		// Prepare test data
-		testUserId = userHelper.initiateUser();
-		userHelper.initiateToken();
-		
-		postRepository.deleteAll();
-		
-		List<Post> posts = List.of(
-			new Post(testUserId, "First test"), 
-			new Post(testUserId, "Second test")
-		);
-		postRepository.saveAll(posts);
-	}
+	private RequestSpecification requestSpec;
+
 	
 	@BeforeEach
 	void setUp() {
 		// Set up before each test: Make sure this is working with different ports
 		RestAssured.baseURI = "http://localhost:" + port;
 
-		// Load initial data (once only)
-		if (!dataLoaded) {
-			setUpOnce();
-		}
-		
-		// Build request with header
-		RequestSpecBuilder builder = new RequestSpecBuilder();
-		builder.setContentType(ContentType.JSON);
-		builder.addHeader("Authorization", userHelper.getTestToken());
-		requestSpec = builder.build();
+		requestSpec = temp.buildAuthenticatedHeader();
 	}
 	
 	
@@ -125,7 +96,7 @@ class PostControllerTest {
 
 	@Test
 	void testReadPost() {
-		Post newPost = new Post(testUserId, "GET POST TEST");
+		Post newPost = new Post(temp.getUserId(), "GET POST TEST");
 		newPost = postRepository.save(newPost);
 		postRepository.flush();
 		
@@ -148,7 +119,7 @@ class PostControllerTest {
 	@Test
 	void testCreatePost() {
 		given().spec(requestSpec)
-			.body("{\"userId\": " + testUserId + ", \"content\":\"CREATE POST TEST\"}")
+			.body("{\"userId\": " + temp.getUserId() + ", \"content\":\"CREATE POST TEST\"}")
 		.when()
 			.post("/api/post")
 		.then()
@@ -162,7 +133,7 @@ class PostControllerTest {
 	@Test
 	void testUpdatePost() {
 		// Test data
-		Post newPost = new Post(testUserId, "GET POST TEST");
+		Post newPost = new Post(temp.getUserId(), "GET POST TEST");
 		newPost = postRepository.save(newPost);
 		postRepository.flush();
 		
@@ -189,7 +160,7 @@ class PostControllerTest {
 	@Test
 	void testDeletePost() {
 		// Test data
-		Post newPost = new Post(testUserId, "GET POST TEST");
+		Post newPost = new Post(temp.getUserId(), "GET POST TEST");
 		newPost = postRepository.save(newPost);
 		postRepository.flush();
 		

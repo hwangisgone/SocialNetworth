@@ -1,4 +1,4 @@
-package com.example.purrpost;
+package com.example.purrpost.util;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.startsWith;
@@ -6,7 +6,7 @@ import static org.hamcrest.Matchers.startsWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.example.purrpost.model.User;
+import com.example.purrpost.model.SocialUser;
 import com.example.purrpost.repository.UserRepository;
 
 import io.restassured.http.ContentType;
@@ -24,9 +24,9 @@ public class UserTestHelper {
 		this.userRepository = userRepository;
 	}
 	
-	long initiateUser() {
+	public long initiateUser() {
 		userRepository.deleteAll();
-		User testUser = new User();
+		SocialUser testUser = new SocialUser();
 		testUser.setNameTag("TEST 1");
 		testUser.setPassword("TEST PASSWORD");
 		testUser.setDefaultTestUser();
@@ -35,7 +35,7 @@ public class UserTestHelper {
 		return testUser.getUserId();
 	}
 	
-	void initiateToken() {
+	public void initiateToken() {
 		Response res = 
 				given()
 				.contentType(ContentType.JSON)
@@ -48,14 +48,10 @@ public class UserTestHelper {
 					.extract()
 					.response();
 			
-		this.setTestToken(res.getHeader("Authorization"));
+		this.testToken = res.getHeader("Authorization");
 	}
 
 	public String getTestToken() {
 		return testToken;
-	}
-
-	public void setTestToken(String testToken) {
-		this.testToken = testToken;
 	}
 }

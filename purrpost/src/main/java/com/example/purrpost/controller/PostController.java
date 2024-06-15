@@ -19,11 +19,27 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.purrpost.model.Post;
 import com.example.purrpost.repository.PostRepository;
+import com.example.purrpost.service.UserRetrieval;
+
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/api")
 public class PostController {
+
+	//  Input for create/update
+	static class PostInput {
+		@Schema(example = "Something Something", requiredMode = Schema.RequiredMode.REQUIRED)
+		private String content;
+
+		public String getContent() {
+			return content;
+		}
+	}
+
 
 	@Autowired
 	private PostRepository postRepository;
@@ -32,15 +48,43 @@ public class PostController {
 	public ResponseEntity<List<Post>> getAllPosts() {
 		try {
 			List<Post> allPosts = postRepository.findAll();
-			
 			return new ResponseEntity<>(allPosts, HttpStatus.OK);
 		} catch (Exception e) {
+			System.err.println(e.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
+
+
+//	Send a request with post body:
+//	{
+//	    "content": "ABCDE",
+//	}
+	@ApiResponse(responseCode = "201", description = "Post created")
+	@ApiResponse(responseCode = "500", description = "Error in creating post", content = @Content)
+
+	@PostMapping("/post")
+	public ResponseEntity<Post> createPost(@RequestBody PostInput new_post) {
+		try {
+			Post _post = postRepository.save(new Post(
+				UserRetrieval.getCurrentUserId(),
+				new_post.getContent()
+			));
+
+			return new ResponseEntity<>(_post, HttpStatus.CREATED);
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+
+	@ApiResponse(responseCode = "200", description = "Post updated")
+	@ApiResponse(responseCode = "404", description = "Post not found", content = @Content)
+
 	@GetMapping("/post/{id}")
-	public ResponseEntity<Post> getTutorialById(@PathVariable("id") long id) {
+	public ResponseEntity<Post> getPost(@PathVariable("id") long id) {
 		Optional<Post> postData = postRepository.findById(id);
 
 		if (postData.isPresent()) {
@@ -50,27 +94,12 @@ public class PostController {
 		}
 	}
 
-//	Send a request with post body:
-//	{
-//	    "content": "ABCDE",
-//	    "timePosted": "2024-03-20T02:51:41.317"
-//	}
-	
-	@PostMapping("/post")
-	public ResponseEntity<Post> createPost(@RequestBody Post post) {
-		try {
-			post.setTimePosted(OffsetDateTime.now());		// !!! May need to reconsider timezome problems
-			// https://stackoverflow.com/questions/3914404/how-to-get-current-moment-in-iso-8601-format-with-date-hour-and-minute
-			Post _post = postRepository.save(post);
-			
-			return new ResponseEntity<>(_post, HttpStatus.CREATED);
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
+
+	@ApiResponse(responseCode = "200", description = "Post returned")
+	@ApiResponse(responseCode = "404", description = "Post not found", content = @Content)
 
 	@PutMapping("/post/{id}")
-	public ResponseEntity<Post> updatePost(@PathVariable("id") long id, @RequestBody Post updated_post) {
+	public ResponseEntity<Post> updatePost(@PathVariable("id") long id, @RequestBody PostInput updated_post) {
 		Optional<Post> postData = postRepository.findById(id);
 
 		if (postData.isPresent()) {
@@ -83,13 +112,23 @@ public class PostController {
 		}
 	}
 
+
+
+	@ApiResponse(responseCode = "204", description = "Post deleted")
+	@ApiResponse(responseCode = "404", description = "Post not found", content = @Content)
+
 	@DeleteMapping("/post/{id}")
 	public ResponseEntity<HttpStatus> deletePost(@PathVariable("id") long id) {
 		try {
-			postRepository.deleteById(id);
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			if (postRepository.existsById(id)) {
+				postRepository.deleteById(id);
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			} else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
 		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			System.err.println(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 }
