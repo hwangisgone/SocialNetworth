@@ -42,6 +42,7 @@ public class JwtTokenService {
 				.subject(auth.getName())
 				.claim("scope", scope)
 				.claim("user_id", user.getUserId())		// Custom claim
+				.claim("user_role", user.getRole())
 				.build();
 
 		return this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();

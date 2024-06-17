@@ -76,11 +76,11 @@ RETURNS TRIGGER AS '
 BEGIN
     IF TG_OP = ''INSERT'' THEN
         UPDATE post
-        SET comment_count = comment_count + 1
+        SET reply_count = reply_count + 1
         WHERE post_id = NEW.post_id_parent;
     ELSIF TG_OP = ''DELETE'' THEN
         UPDATE post
-        SET comment_count = comment_count - 1
+        SET reply_count = reply_count - 1
         WHERE post_id = OLD.post_id_parent;
     END IF;
     RETURN NULL;

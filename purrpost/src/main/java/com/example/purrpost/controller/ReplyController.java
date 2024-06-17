@@ -19,14 +19,35 @@ import com.example.purrpost.model.Post;
 import com.example.purrpost.model.Reply;
 import com.example.purrpost.repository.PostRepository;
 import com.example.purrpost.repository.ReplyRepository;
+import com.example.purrpost.service.UserRetrieval;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api")
 public class ReplyController {
 
+	//  Input for create/update
+	static class ReplyInput {
+		@Schema(example = "Something Something", requiredMode = Schema.RequiredMode.REQUIRED)
+		private String content;
+
+
+		private int parentId;
+
+		public int getParentId() {
+			return parentId;
+		}
+
+		public String getContent() {
+			return content;
+		}
+	}
+
 	@Autowired
 	ReplyRepository replyRepository;
+	@Autowired
 	PostRepository postRepository;
 
 	// @GetMapping("/replies_to/{id}")
@@ -41,13 +62,13 @@ public class ReplyController {
 	// }
 
 	@GetMapping("/replies_to/{id}")
-	public ResponseEntity<List<Post>> getRepliesFromId(@PathVariable("id") long id) {
+	public ResponseEntity<List<Post>> getRepliesToId(@PathVariable("id") long id) {
 		try {
-			List<Reply> allRepliesFrom = replyRepository.findAllByChildId(id);
+			List<Reply> allRepliesTo = replyRepository.findAllByParentId(id);
 			List<Post> allPosts = new ArrayList<>();
 
 			// Fetch post details for each reply
-			allRepliesFrom.forEach(reply -> {
+			allRepliesTo.forEach(reply -> {
 				Optional<Post> postOptional = postRepository.findById(reply.getParentId());
 				postOptional.ifPresent(allPosts::add);
 			});
@@ -58,7 +79,7 @@ public class ReplyController {
 		}
 	}
 
-	// load post
+	// load reply
 	// @GetMapping("/reply/{id}")
 	// public ResponseEntity<Reply> getReplyById(@PathVariable("id") long id) {
 	// Optional<Reply> replyData = replyRepository.findById(id);
@@ -71,12 +92,20 @@ public class ReplyController {
 	// }
 
 	@PostMapping("/reply")
-	public ResponseEntity<Reply> createReply(@RequestBody Reply reply) {
+	public ResponseEntity<Reply> createReply(@RequestBody ReplyInput reply) {
 		try {
-			Reply _reply = replyRepository.save(reply);
+			Post _post = postRepository.save(new Post(
+				UserRetrieval.getCurrentUserId(),
+				reply.getContent()
+			));
+			Reply _reply = replyRepository.save(new Reply(
+				reply.getParentId(),
+				_post.getUserId()
+			));
 
 			return new ResponseEntity<>(_reply, HttpStatus.CREATED);
 		} catch (Exception e) {
+			System.err.println(e.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

@@ -9,9 +9,9 @@ CREATE TABLE social_user (
 	bio			TEXT,
 	registration_date DATE NOT NULL,
 
-	role		VARCHAR NOT NULL,
-	follow_count int DEFAULT 0, 
-	followed_count int DEFAULT 0,
+	role				VARCHAR NOT NULL,
+	follow_count		int DEFAULT 0, 
+	followed_count		int DEFAULT 0,
 	check (role = 'user' or role = 'admin')
 );
 
