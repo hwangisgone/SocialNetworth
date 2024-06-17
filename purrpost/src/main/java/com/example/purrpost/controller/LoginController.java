@@ -2,6 +2,7 @@ package com.example.purrpost.controller;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -10,7 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -108,13 +111,13 @@ public class LoginController {
 	}
 
 	@PutMapping("/user/{id}")
-	public ResponseEntity<Post> updateUser(@PathVariable("id") long id, @RequestBody SocialUserRegisterInput updated_user) {
+	public ResponseEntity<SocialUser> updateUser(@PathVariable("id") long id, @RequestBody SocialUserRegisterInput updated_user) {
 		Optional<SocialUser> userData = userRepository.findById(id);
 
 		if (userData.isPresent()) {
 			SocialUser selected_user = userData.get();
-			selected_user.setNameTag(updated_post.getNameTag());
-			selected_post.setPassword(updated_post.getPassword());
+			selected_user.setNameTag(updated_user.getNameTag());
+			selected_user.setPassword(updated_user.getPassword());
 			return new ResponseEntity<>(userRepository.save(selected_user), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
