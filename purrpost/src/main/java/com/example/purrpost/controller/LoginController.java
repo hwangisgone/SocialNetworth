@@ -107,6 +107,20 @@ public class LoginController {
 		return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
+	@PutMapping("/user/{id}")
+	public ResponseEntity<Post> updateUser(@PathVariable("id") long id, @RequestBody SocialUserRegisterInput updated_user) {
+		Optional<SocialUser> userData = userRepository.findById(id);
+
+		if (userData.isPresent()) {
+			SocialUser selected_user = userData.get();
+			selected_user.setNameTag(updated_post.getNameTag());
+			selected_post.setPassword(updated_post.getPassword());
+			return new ResponseEntity<>(userRepository.save(selected_user), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+
 
 	@Autowired
 	private JwtTokenService tokenService;
