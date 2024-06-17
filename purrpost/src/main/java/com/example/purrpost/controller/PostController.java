@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.purrpost.model.Post;
@@ -55,7 +56,19 @@ public class PostController {
 		}
 	}
 
+	
+	// Search
+	@GetMapping("/search")
+	public ResponseEntity<List<Post>> searchPost(@RequestParam("term") String searchterm) {
+		try {
+			List<Post> searched = postRepository.searchContent(searchterm);
 
+			return new ResponseEntity<>(searched, HttpStatus.OK);
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		}
+	}
 
 //	Send a request with post body:
 //	{

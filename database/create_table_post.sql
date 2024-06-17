@@ -1,6 +1,6 @@
 CREATE TABLE post (
 	post_id			int		PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	content			text,
+	content			TEXT,
 	time_posted		timestamp with time zone DEFAULT now(),		-- Equivalent type is OffsetDateTime
 	time_edited		timestamp with time zone DEFAULT now(),		-- https://stackoverflow.com/questions/75492508/should-i-use-instant-or-datetime-or-localdatetime-in-java-entities/75498773#75498773
 
@@ -8,8 +8,15 @@ CREATE TABLE post (
 	reply_count		int DEFAULT 0,
 	share_count		int DEFAULT 0,
 
-	user_id		int NOT NULL REFERENCES social_user(user_id) ON DELETE CASCADE
+	user_id		int NOT NULL REFERENCES social_user(user_id) ON DELETE CASCADE,
+
+	-- For search function
+
+	content_search TSVECTOR GENERATED ALWAYS AS (to_tsvector('english', content)) STORED
 );
+
+CREATE INDEX content_search_index ON post USING GIN (content_search);
+
 
 CREATE TABLE reaction (
 	reaction_type char NOT NULL DEFAULT 'L',
