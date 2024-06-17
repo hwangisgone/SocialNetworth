@@ -1,5 +1,34 @@
 <script type="text/javascript">
+    let inputData = {
+        text:"",
+        imgCount:3,
+        imgQueue:[
+            {path:"https://i.imgur.com/GCBVgXD.jpeg"},
+            {path:"https://i.imgur.com/GCBVgXD.jpeg"},
+            {path:"https://i.imgur.com/GCBVgXD.jpeg"},
+        ]
+    };
 
+    function deleteImg(path){
+        inputData.imgQueue = inputData.imgQueue.filter(img => img.path !== path);
+        console.log(inputData);
+        imageQueueUpdate();
+    }
+
+    //Display input images
+    function imageQueueUpdate(){
+        let container = document.getElementById('input-image');
+        inputData.imgQueue.forEach(img => {   
+        const image = document.createElement('div');
+        image.innerHTML = `<img class="w-full h-full" src="${img.path}" alt="" />
+                    <span class=" absolute -right-2 -top-1">
+                        <svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M20.2544 9.66272L15.7278 14.1893L11.2012 9.66272C10.7014 9.16298 9.89028 9.16298 9.39054 9.66272C8.89034 10.1629 8.8908 10.9736 9.39054 11.4734L13.9172 16L9.39054 20.5266C8.89034 21.0268 8.8908 21.8375 9.39054 22.3373C9.89028 22.837 10.701 22.8375 11.2012 22.3373L15.7278 17.8107L20.2544 22.3373C20.7542 22.837 21.5649 22.8375 22.0651 22.3373C22.5648 21.8375 22.5648 21.0264 22.0651 20.5266L17.5385 16L22.0651 11.4734C22.5648 10.9736 22.5648 10.1625 22.0651 9.66272C21.5654 9.16298 20.7542 9.16298 20.2544 9.66272ZM26.5917 26.8639C20.5917 32.864 10.864 32.864 4.86391 26.8639C-1.13614 20.8639 -1.13614 11.1361 4.86391 5.13609C10.8635 -0.863501 20.5917 -0.863954 26.5917 5.13609C32.5918 11.1361 32.5913 20.8643 26.5917 26.8639Z" fill="white"/>
+                        </svg>
+                    </span>`;
+        container?.appendChild(image);
+        });
+    }
 
 	// Function to handle file upload
 	const handleFileUpload = (files) => {
@@ -55,6 +84,8 @@
 	// 	handleFileUpload(event.target.files);
 	// });
 
+    imageQueueUpdate();
+
 	import PicsIcon			from '$lib/icon/pics.svg?component';
 	import LocationIcon	from '$lib/icon/location-pin.svg?component';
 </script>
@@ -93,12 +124,17 @@
                 <form class="w-full">
                     <textarea class="w-full h-52 text-black dark:text-white text-xl bg-gray-300 dark:bg-gray-700 rounded-xl p-2" placeholder="What's happening?"></textarea>
                 </form>
-                <div class="relative flex-shrink-0 w-12 h-12 m-2">
-                    <img class="w-full h-full" src="https://i.imgur.com/GCBVgXD.jpeg" alt="" />
-                    <span class=" absolute -right-2 -top-1">
-                        
-
-                    </span>
+                <div class="flex">
+                    {#each inputData.imgQueue as img} 
+                    <div class="relative flex-shrink-0 w-12 h-12 m-2">  
+                        <img class="w-full h-full" src={img.path} alt="" />
+                        <span class="absolute -right-2 -top-1 cursor-pointer" onclick="deleteImg('{img.path}')">
+                            <svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M20.2544 9.66272L15.7278 14.1893L11.2012 9.66272C10.7014 9.16298 9.89028 9.16298 9.39054 9.66272C8.89034 10.1629 8.8908 10.9736 9.39054 11.4734L13.9172 16L9.39054 20.5266C8.89034 21.0268 8.8908 21.8375 9.39054 22.3373C9.89028 22.837 10.701 22.8375 11.2012 22.3373L15.7278 17.8107L20.2544 22.3373C20.7542 22.837 21.5649 22.8375 22.0651 22.3373C22.5648 21.8375 22.5648 21.0264 22.0651 20.5266L17.5385 16L22.0651 11.4734C22.5648 10.9736 22.5648 10.1625 22.0651 9.66272C21.5654 9.16298 20.7542 9.16298 20.2544 9.66272ZM26.5917 26.8639C20.5917 32.864 10.864 32.864 4.86391 26.8639C-1.13614 20.8639 -1.13614 11.1361 4.86391 5.13609C10.8635 -0.863501 20.5917 -0.863954 26.5917 5.13609C32.5918 11.1361 32.5913 20.8643 26.5917 26.8639Z" fill="white"/>
+                            </svg>
+                        </span>
+                    </div>
+                    {/each}
                 </div>
             </div>
         </div>
