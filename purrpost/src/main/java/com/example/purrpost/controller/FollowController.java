@@ -23,8 +23,8 @@ public class FollowController {
 	FollowRepository followRepository;
 
 //	!!! For testing only
-	@PostMapping("/{user_id}/follow")
-	public ResponseEntity<String> getAllReactions(@PathVariable("user_id") long userId) {
+	@PostMapping("/user/follow/{user_id}")
+	public ResponseEntity<String> addFollow(@PathVariable("user_id") long userId) {
 		try {
 			// !!! IMPORTANT TO FIX
 			Follow _follow = followRepository.save(new Follow(UserRetrieval.getCurrentUserId(), userId));
@@ -35,10 +35,8 @@ public class FollowController {
 		}
 	}
 
-
-
-	@DeleteMapping("/{user_id}/follow")
-	public ResponseEntity<HttpStatus> deleteReaction(@PathVariable("user_id") long userId) {
+	@DeleteMapping("/user/follow/{user_id}")
+	public ResponseEntity<HttpStatus> deleteFollow(@PathVariable("user_id") long userId) {
 		try {
 			// !!! IMPORTANT TO FIX
 			followRepository.deleteByUserIdAndFollowerId(UserRetrieval.getCurrentUserId(), userId);
