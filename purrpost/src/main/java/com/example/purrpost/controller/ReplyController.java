@@ -20,7 +20,7 @@ import com.example.purrpost.model.Reply;
 import com.example.purrpost.repository.PostRepository;
 import com.example.purrpost.repository.ReplyRepository;
 
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api")
 public class ReplyController {

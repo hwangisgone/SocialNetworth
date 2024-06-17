@@ -1,8 +1,11 @@
 <script>
 	import "../app.css";
+	import { Toaster } from 'svelte-french-toast';
 
 	import Detached from './components/Detached.svelte';
 </script>
+
+<Toaster />
 
 <Detached>
 	<div class="p-4 flex flex-col gap-2 bg-black rounded-xl ">

@@ -3,9 +3,10 @@
 	import HeartIcon	from '$lib/icon/heart.svg?component';
 	import ReplyIcon	from '$lib/icon/talk-bubbles.svg?component';
 	import ShareIcon	from '$lib/icon/share.svg?component';
-	import ContentBody  from './ContentBody.svelte';
-
 	import PurrPostLogo from '$lib/purrpost-logo.svg?component'; 
+
+
+	import ContentBody  from './ContentBody.svelte';
 
 	const postArray = [
 		{
