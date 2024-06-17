@@ -4,9 +4,9 @@
 	import ReplyIcon	from '$lib/icon/talk-bubbles.svg?component';
 	import ShareIcon	from '$lib/icon/share.svg?component';
 	import PurrPostLogo from '$lib/purrpost-logo.svg?component'; 
-
-
 	import ContentBody  from './ContentBody.svelte';
+
+	
 
 	const postArray = [
 		{
@@ -93,7 +93,7 @@
 				<!-- Main -->
 				<main class="max-w-full h-full flex relative overflow-y-hidden">
 				  <!-- Container -->
-				   <div id="imageContainer" class="w-full m-4 flex flex-wrap items-start bg-opacity-0 justify-start rounded-tl grid-flow-col auto-cols-max gap-4 overflow-y-scroll">
+				   <div id="imageContainer" class="w-full m-4 flex flex-col  items-start bg-opacity-0 justify-start gap-4 overflow-y-scroll">
 					<!-- Container -->
 					<ContentBody />	  
 					</div>

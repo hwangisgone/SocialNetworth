@@ -1,6 +1,28 @@
+<script>
+	export let post = {
+		content: "Lorem ipsum dolor sit amet, consectetur",
+		timePosted: "2024-06-18T01:27:33.5960633+08:00",
+		timeEdited: null,
+		likeCount: 0,
+		replyCount: 0,
+		shareCount: 0,
+	}
+
+	function toDisplayDate(datestr) {
+		const date = new Date(datestr);
+		return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+	}
+
+	export let postUser = {
+		userId: 1
+		// nameTag:
+	}
+</script>
+
+
 <!-- Post -->
 <div
-	class="border-b border-gray-200 dark:border-gray-200 hover:bg-gray-400 dark:hover:bg-gray-600 cursor-pointer transition duration-350 ease-in-out pb-4 border-l border-r"
+	class=" w-full border-b border-gray-200 dark:border-gray-200 hover:bg-gray-400 dark:hover:bg-gray-600 cursor-pointer transition duration-350 ease-in-out pb-4 border-l border-r"
 >
 	<div class="flex flex-shrink-0 p-4 pb-0">
 		<a href="#" class="flex-shrink-0 group block"
@@ -17,6 +39,7 @@
 						class="flex items-center text-base leading-6 font-medium text-gray-800 dark:text-white"
 					>
 						User Name
+						<!-- TODO -->
 						<svg
 							viewBox="0 0 24 24"
 							aria-label="Verified account"
@@ -30,7 +53,7 @@
 						>
 						<span
 							class="ml-1 text-sm leading-5 font-medium text-gray-400 group-hover:text-gray-300 transition ease-in-out duration-150"
-							>@Username . Nov 7</span
+							>@UserID = {postUser.userId} . {toDisplayDate(post.timePosted)}</span
 						>
 					</p>
 				</div>
@@ -39,15 +62,9 @@
 	</div>
 	<div class="pl-16">
 		<p class="text-base width-auto font-medium text-gray-800 dark:text-white flex-shrink">
-			<a href="#" class="text-blue-400 hover:underline">#Lorem</a>
-			Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-			standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled
-			it to make a type specimen book. It has survived not only five centuries, but also the leap into
-			electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
-			release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
-			software like Aldus PageMaker including versions of Lorem Ipsum.
+			{post.content}
 		</p>
-		<div
+<!-- 		<div
 			class="columns-1 gap-5 sm:columns-2 sm:gap-8 md:columns-3 lg:columns-2 [&amp;>img:not(:first-child)]:mt-8"
 		>
 			<div class="flex my-3 mr-2 rounded-2xl border border-gray-600">
@@ -65,7 +82,7 @@
 			<div class="flex my-3 mr-2 rounded-2xl border border-gray-600">
 				<img class="rounded-2xl" src="https://i.imgur.com/fjXFX93.jpeg" alt="" />
 			</div>
-		</div>
+		</div> -->
 		<div class="flex pt-5">
 			<div class="w-full">
 				<div class="flex items-center">

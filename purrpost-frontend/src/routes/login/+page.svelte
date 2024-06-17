@@ -28,16 +28,12 @@ async function login() {
 		// Check if the response is ok (status code in the range 200-299)
 		if (response.status === 200) {
 			const token = response.headers.get('Authorization');
-			toast.success(token);
+			toast.success("Logged in");
 
 			// Save the token to local storage
 			localStorage.setItem('authToken', token);
-			for (const pair of response.headers.entries()) {
-			   console.log(pair[0]+ ': '+ pair[1]);
-			}
-
 			console.log('Token saved to local storage:', token);
-			goto("/")
+			goto("/");
 		} else if (response.status === 401) {
 			toast.error("Login failed");
 			console.error("FAILED:", response);
