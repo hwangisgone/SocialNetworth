@@ -20,7 +20,7 @@ import com.example.purrpost.service.UserRetrieval;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api")
 public class ReactionController {

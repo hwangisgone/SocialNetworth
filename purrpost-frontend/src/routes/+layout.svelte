@@ -1,53 +1,19 @@
 <script>
-	import Header from './Header.svelte';
-	import './styles.css';
+	import "../app.css";
+	import { Toaster } from 'svelte-french-toast';
+
+	import Detached from './components/Detached.svelte';
 </script>
 
-<div class="app">
-	<Header />
+<Toaster />
 
-	<main>
-		<slot />
-	</main>
+<Detached>
+	<div class="p-4 flex flex-col gap-2 bg-black rounded-xl ">
+		<span class="font-bold text-center">Temp test</span>
+		<a href="./login" class="btn btn-primary btn-sm">Go to Login</a>
+		<a href="./register" class="btn btn-primary btn-sm">Go to Register</a>
+		<a href="./" class="btn btn-primary btn-sm">Go to Home</a>
+	</div>
+</Detached>
 
-	<footer>
-		<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
-	</footer>
-</div>
-
-<style>
-	.app {
-		display: flex;
-		flex-direction: column;
-		min-height: 100vh;
-	}
-
-	main {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		padding: 1rem;
-		width: 100%;
-		max-width: 64rem;
-		margin: 0 auto;
-		box-sizing: border-box;
-	}
-
-	footer {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		padding: 12px;
-	}
-
-	footer a {
-		font-weight: bold;
-	}
-
-	@media (min-width: 480px) {
-		footer {
-			padding: 12px 0;
-		}
-	}
-</style>
+<slot />

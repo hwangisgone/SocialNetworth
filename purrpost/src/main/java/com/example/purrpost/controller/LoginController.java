@@ -22,7 +22,7 @@ import com.example.purrpost.service.JwtTokenService;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api")
 public class LoginController {
@@ -136,6 +136,7 @@ public class LoginController {
 
 		if (foundUser.size() == 1) {
 			headers.setBearerAuth(tokenService.generateToken(foundUser.get(0)));
+			headers.setAccessControlExposeHeaders(List.of("Authorization"));
 
 			return new ResponseEntity<>(foundUser.get(0).toString(), headers, HttpStatus.OK);
 		} else if (foundUser.size() < 1) {
