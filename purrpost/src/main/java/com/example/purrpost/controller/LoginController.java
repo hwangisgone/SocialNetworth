@@ -22,7 +22,7 @@ import com.example.purrpost.service.JwtTokenService;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api")
 public class LoginController {
@@ -72,18 +72,6 @@ public class LoginController {
 	@Autowired
 	private UserRepository userRepository;
 
-	@GetMapping("/allusers")
-	public ResponseEntity<List<SocialUser>> getAllUsers() {
-		try {
-			List<SocialUser> allUsers = userRepository.findAll();
-
-			return new ResponseEntity<>(allUsers, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-
-	}
-
 	@PostMapping("/register")
 	public ResponseEntity<SocialUser> register(@RequestBody SocialUserRegisterInput user) {
 		List<SocialUser> foundName = userRepository.findByNameTag(user.getNameTag());
@@ -112,7 +100,7 @@ public class LoginController {
 	private JwtTokenService tokenService;
 
 	@PostMapping("/login")
-	public ResponseEntity<String> loginWithJWT(@RequestBody SocialUserLoginInput user){
+	public ResponseEntity<SocialUser> loginWithJWT(@RequestBody SocialUserLoginInput user){
 		List<SocialUser> foundUser = userRepository.findByNameTagAndPassword(user.getNameTag(), user.getPassword());
 
 		HttpHeaders headers = new HttpHeaders();
@@ -122,12 +110,13 @@ public class LoginController {
 
 		if (foundUser.size() == 1) {
 			headers.setBearerAuth(tokenService.generateToken(foundUser.get(0)));
+			headers.setAccessControlExposeHeaders(List.of("Authorization"));
 
-			return new ResponseEntity<>(foundUser.get(0).toString(), headers, HttpStatus.OK);
+			return new ResponseEntity<>(foundUser.get(0), headers, HttpStatus.OK);
 		} else if (foundUser.size() < 1) {
-			return new ResponseEntity<>("Username/password incorrect", HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 		} else {
-			return new ResponseEntity<>("Server error, found more than 1 user???", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }

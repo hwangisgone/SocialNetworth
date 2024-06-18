@@ -10,6 +10,7 @@ import com.example.purrpost.model.compositeid.ReactionId;
 
 public interface ReactionRepository extends JpaRepository<Reaction, ReactionId> {
 	  List<Reaction> findAllByPostId(long postId);
+	  List<Reaction> findAllByUserId(long postId);
 
 	  Optional<Reaction> findByUserIdAndPostId(long userId, long postId);
 	  void deleteByUserIdAndPostId(long userId, long postId);

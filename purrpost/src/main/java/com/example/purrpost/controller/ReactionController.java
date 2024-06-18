@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +21,9 @@ import com.example.purrpost.service.UserRetrieval;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
+@Transactional
 @RequestMapping("/api")
 public class ReactionController {
 
@@ -40,8 +42,20 @@ public class ReactionController {
 	ReactionRepository reactionRepository;
 
 //	!!! For testing only
+	@GetMapping("/myreactions")
+	public ResponseEntity<List<Reaction>> getAllMyReactions() {
+		try {
+			List<Reaction> reactions = reactionRepository.findAllByUserId(UserRetrieval.getCurrentUserId());
+
+			return new ResponseEntity<>(reactions, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 	@GetMapping("/post/{id}/reactions")
-	public ResponseEntity<List<Reaction>> getAllReactions(@PathVariable("id") long postId) {
+	public ResponseEntity<List<Reaction>> getAllPostReactions(@PathVariable("id") long postId) {
 		try {
 			List<Reaction> reactions = reactionRepository.findAllByPostId(postId);
 
@@ -55,7 +69,6 @@ public class ReactionController {
 		}
 	}
 
-
 	@PostMapping("/post/{id}/react")
 	public ResponseEntity<Reaction> createReaction(@PathVariable("id") long postId, @RequestBody ReactionInput new_react) {
 		try {
@@ -67,6 +80,7 @@ public class ReactionController {
 
 			return new ResponseEntity<>(_reaction, HttpStatus.CREATED);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -78,6 +92,7 @@ public class ReactionController {
 			reactionRepository.deleteByUserIdAndPostId(UserRetrieval.getCurrentUserId(), postId);
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
