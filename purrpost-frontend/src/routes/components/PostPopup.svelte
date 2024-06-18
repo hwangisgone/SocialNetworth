@@ -2,11 +2,11 @@
     let inputData = {
         text:"",
         imgCount:3,
-        imgQueue:[
-            {path:"https://i.imgur.com/GCBVgXD.jpeg"},
-            {path:"https://i.imgur.com/GCBVgXD.jpeg"},
-            {path:"https://i.imgur.com/GCBVgXD.jpeg"},
-        ]
+        imgQueue:[]
+        //     {path:"https://i.imgur.com/GCBVgXD.jpeg"},
+        //     {path:"https://i.imgur.com/GCBVgXD.jpeg"},
+        //     {path:"https://i.imgur.com/GCBVgXD.jpeg"},
+        // ]
     };
 
     function deleteImg(path){
@@ -78,6 +78,35 @@
 		}
 	};
 
+import toast from 'svelte-french-toast';
+
+let postContent = "";
+async function writePost() {
+    try {
+        const response = await fetch('http://localhost:8081/api/post/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('authToken'),
+            },
+            body: JSON.stringify({ "content": postContent })
+        });
+
+        // Check if the response is ok (status code in the range 200-299)
+        if (response.status === 201) {
+            toast.success("Posted!");
+            my_modal_1.close();
+        } else {
+            toast.error("Failed");
+            my_modal_1.close();
+            console.error(response);
+        }
+    } catch (error) {
+        toast.error(error);
+        console.error(error);
+    }
+}
+
 	// // Add event listener to file input element
 	// const fileInput = document.getElementById('fileInput');
 	// fileInput.addEventListener('change', (event) => {
@@ -122,9 +151,9 @@
 
             <div class="bg-gray-300 dark:bg-gray-700 w-full rounded-xl">
                 <form class="w-full">
-                    <textarea class="w-full h-52 text-black dark:text-white text-xl bg-gray-300 dark:bg-gray-700 rounded-xl p-2" placeholder="What's happening?"></textarea>
+                    <textarea class="w-full h-52 text-black dark:text-white text-xl bg-gray-300 dark:bg-gray-700 rounded-xl p-2" placeholder="What's happening?" bind:value={postContent}></textarea>
                 </form>
-                <div class="flex">
+<!--                 <div class="flex">
                     {#each inputData.imgQueue as img} 
                     <div class="relative flex-shrink-0 w-12 h-12 m-2">  
                         <img class="w-full h-full" src={img.path} alt="" />
@@ -135,7 +164,7 @@
                         </span>
                     </div>
                     {/each}
-                </div>
+                </div> -->
             </div>
         </div>
 
@@ -147,8 +176,9 @@
             <div class="flex">
                 
                 <div class="relative flex-shrink-0 w-10/12 px-2 text-black dark:text-white absolute -right-2">
-                    <button class="w-40 p-2 bg-blue-500 hover:bg-opacity-40 rounded-full font-bold border border-gray-700 ">
-                        Share </button>
+                    <button class="w-40 p-2 bg-blue-500 hover:bg-opacity-40 rounded-full font-bold border border-gray-700 "
+                    on:click={writePost}>
+                        Post </button>
                 </div>
             </div>
         </div>

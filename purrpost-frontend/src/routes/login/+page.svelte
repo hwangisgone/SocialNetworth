@@ -54,15 +54,15 @@ async function login() {
 		<div class="mx-4 sm:mx-24 md:mx-34 lg:mx-56 mx-auto  flex items-center space-y-4 py-16 font-semibold text-gray-500 flex-col">
 			<PurrPostLogo width="60" height="60"/>
 
-			<h1 class="text-white text-2xl">Sign in</h1>
-			<p class="text-white text-xs pt-6 pb-32">Enter your email and password</p>
+			<h1 class="text-2xl">Sign in</h1>
+			<p class="text-xs pt-6 pb-32">Enter your email and password</p>
 			<div
 			  class="w-full transform border-b bg-transparent duration-300 text-sm focus-within:border-indigo-500"
 			>
 			  <input
 				type="text"
 				placeholder="Email or Username"
-				class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none text-white"
+				class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none"
 			  />
 			</div>
 
