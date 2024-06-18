@@ -129,7 +129,7 @@ async function loadData() {
 <!-- Main -->
 <main class="max-w-full h-full flex relative overflow-y-hidden">
   <!-- Container -->
-   <div id="imageContainer" class="w-full m-4 flex flex-col  items-start bg-opacity-0 justify-start gap-4 overflow-y-scroll">
+	<div id="imageContainer" class="w-full m-4 flex flex-col  items-start bg-opacity-0 justify-start gap-4 overflow-y-scroll">
 	<!-- Container -->
 	{#if dataLoaded}
 		<ContentBody {postList}/>
