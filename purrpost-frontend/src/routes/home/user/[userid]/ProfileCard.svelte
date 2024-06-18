@@ -1,5 +1,11 @@
+<script>
+  export let currentUser = {};
+  export let followerList = [];
+  export let followingList = [];
+</script>
+
 <!--Profile card start-->
-<div class="card bg-opacity-1 w-full overflow-hidden  
+<div class="card bg-opacity-1 w-full
 rounded-lg shadow-lg flex flex-col"> 
   <div class="card-image"> 
     <img src="https://i.imgur.com/fjXFX93.jpeg"
@@ -16,27 +22,26 @@ rounded-lg shadow-lg flex flex-col">
     transform hover:scale-110" /> 
     <div class="flex-grow"></div>
     <div class="flex float-right items-end text-base leading-6 font-medium text-gray-800 dark:text-white">
-      <div class="pr-20">
-        <div class="flex items-center h-full text-gray-800 dark:text-white">
-          <a href="#" class="text-xs font-bold text-blue-400 px-4 py-1 rounded-full border-2 border-blue-400">Follow</a>
-        </div>
+      <div class="pr-20 pt-4">
+        <button class="btn btn-outline btn-primary btn-sm px-5 border-2 rounded-3xl">Follow</button>
       </div>
     </div>
   </div> 
   <div class="card-content py-2"> 
-    <div class="pl-16">
-      <div class="">
-        <p class="flex items-center text-base leading-6 font-medium text-gray-800 dark:text-white">
-          Profile Name
+    <div class="pl-12">
+      <div class="font-medium">
+        <p class="flex items-center">
+          {currentUser.name}
         </p>
-        <span class="ml-1 text-sm leading-5 font-medium text-gray-400 group-hover:text-gray-300 transition ease-in-out duration-150">
-          @Username
+        <span class="ml-2 text-sm text-gray-400">
+          @{currentUser.nameTag}
         </span>
+        <p class="text-base width-auto flex-shrink">
+          {currentUser.bio} 
+        </p>
       </div>
-      <p class="text-base width-auto font-medium text-gray-800 dark:text-white flex-shrink">
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-      </p>
-      <div class="flex">
+
+      <!-- <div class="flex">
         <div class="w-full">
           <div class="flex items-center">
             <div class="flex-1 flex items-center text-gray-300 dark:text-white-500 hover:text-green-400 dark:hover:text-green-400 transition duration-350">
@@ -62,39 +67,27 @@ rounded-lg shadow-lg flex flex-col">
             </div>
           </div>
         </div>
-      </div>
-      <div class="flex">
-        <div class="">
-          <div class="flex items-center">
-            <div class="flex-1 flex items-center text-gray-800 text-sm dark:text-gray-400 hover:text-blue-400 dark:hover:text-blue-400 transition duration-350 ease-in-out pr-20">
-              <p class="text-black dark:text-white text-base">123</p>
-              Following
-            </div>
-            <div class="flex-1 flex items-center text-gray-800 text-sm dark:text-gray-400 hover:text-green-400 dark:hover:text-green-400 transition duration-350 ease-in-out">
-              <p class="text-black dark:text-white text-base">456</p>
-              Followers
-            </div>
-          </div>
-        </div>
+      </div> -->
+      <div class="flex justify-start gap-10 my-4 transition duration-350 ease-in-out">
+          <p class="hover:text-blue-400">123 Following</p>
+          <p class="hover:text-green-400">456 Followers</p>
       </div>
 
-      <div class="flex pt-5">
-        <div class="w-full">
-          <div class="flex items-center">
-            <div class="flex-1 flex items-center text-gray-800 dark:text-white text-gray-400 hover:text-blue-400 dark:hover:text-blue-400 transition duration-350 ease-in-out">
+
+      </div>
+
+      <div class="w-full grid grid-cols-2 place-items-center">
+            <div class="hover:text-blue-400 dark:hover:text-blue-400 transition duration-350 ease-in-out">
               Posts
             </div>
-            <div class="flex-1 flex items-center text-gray-800 dark:text-white text-gray-400 hover:text-green-400 dark:hover:text-green-400 transition duration-350 ease-in-out">
+<!--             <div class="hover:text-green-400 dark:hover:text-green-400 transition duration-350 ease-in-out">
               Posts &amp; Replies
             </div>
-            <div class="flex-1 flex items-center text-gray-800 dark:text-white text-gray-400 hover:text-red-600 dark:hover:text-red-600 transition duration-350 ease-in-out">
+            <div class="hover:text-red-600 dark:hover:text-red-600 transition duration-350 ease-in-out">
               Media
-            </div>
-            <div class="flex-1 flex items-center text-gray-800 dark:text-white text-gray-400 hover:text-blue-400 dark:hover:text-blue-400 transition duration-350 ease-in-out">
+            </div> -->
+            <div class="hover:text-blue-400 dark:hover:text-blue-400 transition duration-350 ease-in-out">
               Likes
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div> 
