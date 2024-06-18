@@ -49,7 +49,7 @@
 					/>
 				</div>
 				<div class="ml-3 flex gap-1 items-center font-medium">
-					<a class="text-gray-800" href={"/user/" + postUser.userId}>{postUser.name}</a>
+					<a class="text-gray-800" href={"/home/user/" + postUser.userId}>{postUser.name}</a>
 						<!-- TODO -->
 						<svg viewBox="0 0 24 24"
 								aria-label="Verified account"
@@ -93,9 +93,7 @@
 		<div class="flex pt-5">
 
 			<div class="grid grid-cols-4 gap-4">
-				<div class="pl-4"><ReplyButton /></div>
 				<div class="pl-4"><LikeButton liked={post.liked} postId={post.id} count={post.likeCount}/></div>
-				<div class="pl-4"><ReplyButton /></div>
 				<div class="pl-4"><ReplyButton /></div>
 			</div>					
 				

@@ -1,3 +1,7 @@
+<script>
+	
+</script>
+
 <div
 	class="flex-1 flex items-center text-gray-800 dark:text-white text-xs text-gray-400 hover:text-blue-400 dark:hover:text-blue-400 transition duration-350 ease-in-out"
 >
@@ -8,5 +12,5 @@
 			></path></g
 		></svg
 	>
-	12.3 k
+	0
 </div>

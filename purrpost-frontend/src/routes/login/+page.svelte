@@ -8,13 +8,13 @@
 	import toast from 'svelte-french-toast';
 	import { goto } from '$app/navigation';
 	// Function to log in and save the token
-async function login() {
-	// Define the login data
-	const loginData = {
+	let loginData = {
 		nameTag: "giant",
 		password: "troll"
 	}
 
+async function login() {
+	// Define the login data
 	try {
 		// Make the fetch request
 		const response = await fetch('http://localhost:8081/api/login', {
@@ -33,7 +33,7 @@ async function login() {
 			// Save the token to local storage
 			localStorage.setItem('authToken', token);
 			console.log('Token saved to local storage:', token);
-			goto("/");
+			goto("/home");
 		} else if (response.status === 401) {
 			toast.error("Login failed");
 			console.error("FAILED:", response);
@@ -63,6 +63,7 @@ async function login() {
 				type="text"
 				placeholder="Email or Username"
 				class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+				bind:value={loginData.nameTag}
 			  />
 			</div>
 
@@ -73,6 +74,7 @@ async function login() {
 				type="password"
 				placeholder="Password"
 				class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+				bind:value={loginData.password}
 			  />
 			</div>
 			

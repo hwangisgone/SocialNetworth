@@ -81,7 +81,7 @@ async function loadData() {
   <!-- Container -->
 
 	<div id="imageContainer" class="w-full m-4 flex flex-col items-start bg-opacity-0 justify-start gap-4 overflow-y-scroll">
-	   	<ProfileCard/>
+	   	<ProfileCard {currentUser}/>
 	<!-- Container -->
 	{#if dataLoaded}
 		<ContentBody {postList}/>

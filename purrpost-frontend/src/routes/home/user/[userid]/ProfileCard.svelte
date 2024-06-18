@@ -31,13 +31,13 @@ rounded-lg shadow-lg flex flex-col">
     <div class="pl-12">
       <div class="font-medium">
         <p class="flex items-center">
-          Profile Name
+          {currentUser.name}
         </p>
         <span class="ml-2 text-sm text-gray-400">
-          @Username
+          @{currentUser.nameTag}
         </span>
         <p class="text-base width-auto flex-shrink">
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+          {currentUser.bio} 
         </p>
       </div>
 

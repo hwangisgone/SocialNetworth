@@ -2,6 +2,44 @@
 	import GoogleLogo from '$lib/google-g-logo.svg?component';
 	import GithubLogo from '$lib/github-mark.svg?component';
 	import PurrPostLogo from '$lib/purrpost-logo.svg?component';
+
+async function login() {
+	// Define the login data
+	const loginData = {
+		nameTag: "giant",
+		password: "troll"
+	}
+
+	try {
+		// Make the fetch request
+		const response = await fetch('http://localhost:8081/api/register', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(loginData)
+		});
+
+		// Check if the response is ok (status code in the range 200-299)
+		if (response.status === 200) {
+			const token = response.headers.get('Authorization');
+			toast.success("Logged in");
+
+			// Save the token to local storage
+			localStorage.setItem('authToken', token);
+			console.log('Token saved to local storage:', token);
+			goto("/home");
+		} else if (response.status === 401) {
+			toast.error("Login failed");
+			console.error("FAILED:", response);
+		} else {
+			toast.error("????");
+			console.error("FAILED:", response);
+		}
+	} catch (error) {
+		console.error(error);
+	}
+}
 </script>
 
 <div class="flex min-h-screen items-center justify-center rounded-3xl">

@@ -84,6 +84,7 @@ let postContent = "";
 async function writePost() {
     try {
         const response = await fetch('http://localhost:8081/api/post/', {
+            mode: 'no-cors',
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

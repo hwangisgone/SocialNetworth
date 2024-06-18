@@ -100,7 +100,7 @@ public class LoginController {
 	private JwtTokenService tokenService;
 
 	@PostMapping("/login")
-	public ResponseEntity<String> loginWithJWT(@RequestBody SocialUserLoginInput user){
+	public ResponseEntity<SocialUser> loginWithJWT(@RequestBody SocialUserLoginInput user){
 		List<SocialUser> foundUser = userRepository.findByNameTagAndPassword(user.getNameTag(), user.getPassword());
 
 		HttpHeaders headers = new HttpHeaders();
@@ -112,11 +112,11 @@ public class LoginController {
 			headers.setBearerAuth(tokenService.generateToken(foundUser.get(0)));
 			headers.setAccessControlExposeHeaders(List.of("Authorization"));
 
-			return new ResponseEntity<>(foundUser.get(0).toString(), headers, HttpStatus.OK);
+			return new ResponseEntity<>(foundUser.get(0), headers, HttpStatus.OK);
 		} else if (foundUser.size() < 1) {
-			return new ResponseEntity<>("Username/password incorrect", HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 		} else {
-			return new ResponseEntity<>("Server error, found more than 1 user???", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }
