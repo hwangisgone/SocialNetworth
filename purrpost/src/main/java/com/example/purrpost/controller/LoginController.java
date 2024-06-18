@@ -72,18 +72,6 @@ public class LoginController {
 	@Autowired
 	private UserRepository userRepository;
 
-	@GetMapping("/allusers")
-	public ResponseEntity<List<SocialUser>> getAllUsers() {
-		try {
-			List<SocialUser> allUsers = userRepository.findAll();
-
-			return new ResponseEntity<>(allUsers, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-
-	}
-
 	@PostMapping("/register")
 	public ResponseEntity<SocialUser> register(@RequestBody SocialUserRegisterInput user) {
 		List<SocialUser> foundName = userRepository.findByNameTag(user.getNameTag());

@@ -55,6 +55,17 @@ public class PostController {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@GetMapping("/user/{id}/allposts")
+	public ResponseEntity<List<Post>> getUserPost(@PathVariable("id") long id) {
+		try {
+			List<Post> allPosts = postRepository.findAllByUserId(id);
+			return new ResponseEntity<>(allPosts, HttpStatus.OK);
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
 	
 	// Search
