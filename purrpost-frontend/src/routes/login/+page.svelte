@@ -7,6 +7,8 @@
 
 	import toast from 'svelte-french-toast';
 	import { goto } from '$app/navigation';
+
+	import { myUser } from '$lib/stores';
 	// Function to log in and save the token
 	let loginData = {
 		nameTag: "giant",
@@ -33,6 +35,9 @@ async function login() {
 			// Save the token to local storage
 			localStorage.setItem('authToken', token);
 			console.log('Token saved to local storage:', token);
+
+			$myUser = await response.json();
+
 			goto("/home");
 		} else if (response.status === 401) {
 			toast.error("Login failed");

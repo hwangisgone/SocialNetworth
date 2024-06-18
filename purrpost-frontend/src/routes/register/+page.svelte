@@ -3,12 +3,19 @@
 	import GithubLogo from '$lib/github-mark.svg?component';
 	import PurrPostLogo from '$lib/purrpost-logo.svg?component';
 
-async function login() {
-	// Define the login data
-	const loginData = {
-		nameTag: "giant",
-		password: "troll"
-	}
+	import toast from 'svelte-french-toast';
+	import { goto } from '$app/navigation';
+
+const registerData = {
+    "name": "",
+    "nameTag": "",
+    "password": "",
+    "email": "",
+    "role": "user",
+    "bio": "No bio yet"
+}
+
+async function register() {
 
 	try {
 		// Make the fetch request
@@ -17,20 +24,15 @@ async function login() {
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify(loginData)
+			body: JSON.stringify(registerData)
 		});
 
 		// Check if the response is ok (status code in the range 200-299)
-		if (response.status === 200) {
-			const token = response.headers.get('Authorization');
-			toast.success("Logged in");
-
-			// Save the token to local storage
-			localStorage.setItem('authToken', token);
-			console.log('Token saved to local storage:', token);
-			goto("/home");
+		if (response.status === 201) {
+			toast.success("Registered!");
+			goto("/login");
 		} else if (response.status === 401) {
-			toast.error("Login failed");
+			toast.error("Register failed");
 			console.error("FAILED:", response);
 		} else {
 			toast.error("????");
@@ -51,7 +53,7 @@ async function login() {
 			<!-- <div class="w-full mx-auto max-w-sm transform space-y-4 text-center flex items-center flex-col"> -->
 				<PurrPostLogo width="60" height="60"/>
 
-				<h1 class="text-white text-2xl">Join PurrPost today</h1>
+				<h1 class=" text-2xl">Join PurrPost today</h1>
 				<!-- <button class="w-full p-2 bg-gray-50 rounded-full font-bold text-gray-900 border border-gray-700 "> <img src="your-image-url.jpg" alt="Apple Logo" class="inline-block h-6 w-6 mr-2"> Sign up with Google</button> -->
 				<button class="w-full p-2 bg-gray-50 rounded-full font-bold text-gray-900 border border-gray-700 flex items-center justify-center">
 					<!-- {@html GoogleLogo} -->
@@ -70,14 +72,15 @@ async function login() {
 					<div class="text-sm text-gray-400">Or</div>
 					<hr class="w-full border-b" />
 				</div>
-			<p class="text-white text-xs pt-6 pb-16">Enter your email and password</p>
+			<p class=" text-xs pt-6 pb-16">Enter your infos</p>
 			<div
 				class="w-full transform border-b bg-transparent duration-300 text-sm focus-within:border-indigo-500"
 			>
 				<input
 				type="text"
 				placeholder="Email"
-				class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none text-white"
+				class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none "
+				bind:value={registerData.email}
 				/>
 			</div>
 
@@ -88,19 +91,34 @@ async function login() {
 				type="password"
 				placeholder="Password"
 				class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+				bind:value={registerData.password}
 				/>
 			</div>
+			
 			<div
 				class="w-full transform border-b bg-transparent duration-300 text-sm focus-within:border-indigo-500"
 			>
 				<input
-				type="password"
-				placeholder="Confirm Password"
-				class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none"
+				type="text"
+				placeholder="nameTag"
+				class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none "
+				bind:value={registerData.nameTag}
 				/>
 			</div>
-			
-			<button class="w-full p-2 bg-gray-50 rounded-full font-bold text-gray-900 border border-gray-700 "> Create account</button>
+
+			<div
+				class="w-full transform border-b bg-transparent duration-300 text-sm focus-within:border-indigo-500"
+			>
+				<input
+				type="text"
+				placeholder="Your name here"
+				class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none "
+				bind:value={registerData.name}
+				/>
+			</div>
+
+			<button class="w-full p-2 bg-gray-50 rounded-full font-bold text-gray-900 border border-gray-700 "
+			on:click={register}> Create account</button>
 				<p class="text-sm">Already have an account? 
 					<a class="font-semibold text-sky-700" href="./login">Sign in</a> </p>
 			

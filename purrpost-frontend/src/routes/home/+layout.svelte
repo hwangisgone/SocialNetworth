@@ -5,6 +5,15 @@
 	import PostPopup from './PostPopup.svelte';
 	import NavigationBar from './NavigationBar.svelte';
 	import RecommendationComp from './RecommendationComp.svelte';
+
+	import toast from 'svelte-french-toast';
+	import { goto } from '$app/navigation';
+
+	function logout() {
+		localStorage.setItem('authToken', '');
+		toast.success("Logged out");
+		goto('/login');
+	}
 </script>
 
 
@@ -23,6 +32,7 @@
 				</div>
 
 				<NavigationBar />
+				<button class="btn btn-error btn-circle" on:click={logout}>Log out</button>
 <!-- 
 				<PostPopup /> -->
 			</aside>

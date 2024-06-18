@@ -87,11 +87,12 @@ public class LoginController {
 				return new ResponseEntity<>(_user, HttpStatus.CREATED);
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
+				e.printStackTrace();
 				return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 
 		}
-		System.out.println("User registered");
+		System.out.println("User already registered");
 		return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
