@@ -26,7 +26,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
-@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api")
 public class PostController {
@@ -51,7 +50,7 @@ public class PostController {
 			List<Post> allPosts = postRepository.findAll();
 			return new ResponseEntity<>(allPosts, HttpStatus.OK);
 		} catch (Exception e) {
-			System.err.println(e.getMessage());
+			e.printStackTrace();
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -62,7 +61,7 @@ public class PostController {
 			List<Post> allPosts = postRepository.findAllByUserId(id);
 			return new ResponseEntity<>(allPosts, HttpStatus.OK);
 		} catch (Exception e) {
-			System.err.println(e.getMessage());
+			e.printStackTrace();
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -76,7 +75,7 @@ public class PostController {
 
 			return new ResponseEntity<>(searched, HttpStatus.OK);
 		} catch (Exception e) {
-			System.err.println(e.getMessage());
+			e.printStackTrace();
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		}
 	}
@@ -90,6 +89,7 @@ public class PostController {
 
 	@PostMapping("/post")
 	public ResponseEntity<Post> createPost(@RequestBody PostInput new_post) {
+		System.out.println("POST /post");
 		try {
 			Post _post = postRepository.save(new Post(
 				UserRetrieval.getCurrentUserId(),
@@ -98,7 +98,7 @@ public class PostController {
 
 			return new ResponseEntity<>(_post, HttpStatus.CREATED);
 		} catch (Exception e) {
-			System.err.println(e.getMessage());
+			e.printStackTrace();
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -109,6 +109,7 @@ public class PostController {
 
 	@GetMapping("/post/{id}")
 	public ResponseEntity<Post> getPost(@PathVariable("id") long id) {
+		System.out.println("GET /post/" + id);
 		Optional<Post> postData = postRepository.findById(id);
 
 		if (postData.isPresent()) {
@@ -124,6 +125,7 @@ public class PostController {
 
 	@PutMapping("/post/{id}")
 	public ResponseEntity<Post> updatePost(@PathVariable("id") long id, @RequestBody PostInput updated_post) {
+		System.out.println("PUT /post/" + id);
 		Optional<Post> postData = postRepository.findById(id);
 
 		if (postData.isPresent()) {
@@ -143,6 +145,7 @@ public class PostController {
 
 	@DeleteMapping("/post/{id}")
 	public ResponseEntity<HttpStatus> deletePost(@PathVariable("id") long id) {
+		System.out.println("DELETE /post/" + id);
 		try {
 			if (postRepository.existsById(id)) {
 				postRepository.deleteById(id);
@@ -151,7 +154,7 @@ public class PostController {
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			}
 		} catch (Exception e) {
-			System.err.println(e.getMessage());
+			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}

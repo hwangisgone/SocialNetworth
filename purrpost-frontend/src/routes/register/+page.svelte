@@ -120,7 +120,7 @@ async function register() {
 			<button class="w-full p-2 bg-gray-50 rounded-full font-bold text-gray-900 border border-gray-700 "
 			on:click={register}> Create account</button>
 				<p class="text-sm">Already have an account? 
-					<a class="font-semibold text-sky-700" href="./login">Sign in</a> </p>
+					<a class="font-semibold text-sky-700" href="/login">Sign in</a> </p>
 			
 			<!-- </div> -->
 		</div>

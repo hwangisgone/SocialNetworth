@@ -17,7 +17,6 @@ import com.example.purrpost.model.SocialUser;
 import com.example.purrpost.repository.PostRepository;
 import com.example.purrpost.repository.UserRepository;
 
-@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api")
 public class UserController {

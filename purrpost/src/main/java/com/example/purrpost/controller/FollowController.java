@@ -14,7 +14,6 @@ import com.example.purrpost.model.Follow;
 import com.example.purrpost.repository.FollowRepository;
 import com.example.purrpost.service.UserRetrieval;
 
-@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api")
 public class FollowController {

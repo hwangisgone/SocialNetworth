@@ -21,7 +21,6 @@ import com.example.purrpost.service.UserRetrieval;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @Transactional
 @RequestMapping("/api")
@@ -71,6 +70,7 @@ public class ReactionController {
 
 	@PostMapping("/post/{id}/react")
 	public ResponseEntity<Reaction> createReaction(@PathVariable("id") long postId, @RequestBody ReactionInput new_react) {
+		System.out.println("POST /post/" + postId +"/react");
 		try {
 			Reaction _reaction = reactionRepository.save(new Reaction(
 					UserRetrieval.getCurrentUserId(),
@@ -88,6 +88,7 @@ public class ReactionController {
 
 	@DeleteMapping("/post/{id}/react")
 	public ResponseEntity<HttpStatus> deleteReaction(@PathVariable("id") long postId) {
+		System.out.println("DELETE /post/" + postId +"/react");
 		try {
 			reactionRepository.deleteByUserIdAndPostId(UserRetrieval.getCurrentUserId(), postId);
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);

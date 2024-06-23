@@ -2,7 +2,6 @@
 	import PurrPostLogo from '$lib/purrpost-logo.svg?component'; 
 
 	import SearchBar from './SearchBar.svelte';
-	import PostPopup from './PostPopup.svelte';
 	import NavigationBar from './NavigationBar.svelte';
 	import RecommendationComp from './RecommendationComp.svelte';
 
@@ -33,8 +32,6 @@
 
 				<NavigationBar />
 				<button class="btn btn-error btn-circle" on:click={logout}>Log out</button>
-<!-- 
-				<PostPopup /> -->
 			</aside>
 
 			
@@ -45,7 +42,7 @@
 				<!-- Profile -->
 					<div class="flex w-full justify-between items-center border-b px-4 py-3 sticky top-0 border-l border-r border-gray-200 dark:border-gray-700">
 					  <!-- Title -->
-					  <a class="text-gray-800 dark:text-gray-100 font-bold font-sm" href="./home">
+					  <a class="text-gray-800 dark:text-gray-100 font-bold font-sm" href="/home">
 						Home
 					  </a>
 					  <!-- /Title -->

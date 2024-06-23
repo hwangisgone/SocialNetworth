@@ -37,7 +37,7 @@
       </div>
       <div class="">
         <div class="flex items-center h-full text-gray-800 dark:text-white">
-          <a href="#" class="text-xs font-bold text-blue-400 px-4 py-1 rounded-full border-2 border-blue-400">Follow</a>
+          <a href="/" class="text-xs font-bold text-blue-400 px-4 py-1 rounded-full border-2 border-blue-400">Follow</a>
         </div>
       </div>
     </div>

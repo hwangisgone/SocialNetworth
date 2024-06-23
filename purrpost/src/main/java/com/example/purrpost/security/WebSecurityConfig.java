@@ -2,6 +2,7 @@ package com.example.purrpost.security;
 
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +16,9 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -30,48 +34,54 @@ public class WebSecurityConfig {
 	// https://www.danvega.dev/blog/spring-security-jwt
 	// @Configuration makes this class visible to spring
 
-	// More docs: https://docs.spring.io/spring-security/reference/servlet/oauth2/index.html
+	// More docs:
+	// https://docs.spring.io/spring-security/reference/servlet/oauth2/index.html
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-        		.csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(requests -> requests
-                	.requestMatchers("/welcome", "/api/login", "/api/register",
-                			"/v3/api-docs/**",
-                			"/v3/api-docs.yaml",
-                			"/swagger-ui/**",
-                			"/swagger-ui.html").permitAll()
-                	.anyRequest().authenticated()
-                )
-                .logout(logout -> logout.permitAll())
-                .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))
-                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .httpBasic(Customizer.withDefaults())
-                .build();
-    }
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		return http
+				.csrf(csrf -> csrf.disable())
+				.cors(Customizer.withDefaults())
+				.authorizeHttpRequests(requests -> requests
+						.requestMatchers("/welcome", "/api/login", "/api/register", "/v3/api-docs/**", "/v3/api-docs.yaml", "/swagger-ui/**", "/swagger-ui.html")
+						.permitAll()
+						.anyRequest().authenticated())
+				.logout(logout -> logout.permitAll())
+				.oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))
+				.sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.httpBasic(Customizer.withDefaults()).build();
+	}
 
+	// the value we need to set in our application.yml
+	@Value("${rsa.public.location}")
+	private RSAPublicKey publicKey;
 
+	@Value("${rsa.private.location}")
+	private RSAPrivateKey privateKey;
 
-    // the value we need to set in our application.yml
-    @Value("${rsa.public.location}")
-    private RSAPublicKey publicKey;
+	// https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html
+	// Create JwtDecoder for Spring Security
+	@Bean
+	JwtDecoder jwtDecoder() {
+		return NimbusJwtDecoder.withPublicKey(this.publicKey).build();
+	}
 
-    @Value("${rsa.private.location}")
-    private RSAPrivateKey privateKey;
+	@Bean
+	JwtEncoder jwtEncoder() {
+		// https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/oauth2/jwt/NimbusJwtEncoder.html
+		JWK jwk = new RSAKey.Builder(this.publicKey).privateKey(this.privateKey).build();
+		JWKSource<SecurityContext> jwksource = new ImmutableJWKSet<>(new JWKSet(jwk));
+		return new NimbusJwtEncoder(jwksource);
+	}
 
-    // https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html
-    // Create JwtDecoder for Spring Security
-    @Bean
-    JwtDecoder jwtDecoder() {
-    	return NimbusJwtDecoder.withPublicKey(this.publicKey).build();
-    }
-
-    @Bean
-    JwtEncoder jwtEncoder() {
-    	// https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/oauth2/jwt/NimbusJwtEncoder.html
-    	JWK jwk = new RSAKey.Builder(this.publicKey).privateKey(this.privateKey).build();
-    	JWKSource<SecurityContext> jwksource = new ImmutableJWKSet<>(new JWKSet(jwk));
-    	return new NimbusJwtEncoder(jwksource);
-    }
+	@Bean
+	CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+		configuration.setAllowedMethods(Arrays.asList("*"));
+		configuration.setAllowedHeaders(Arrays.asList("*"));
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
+	}
 }

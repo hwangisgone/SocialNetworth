@@ -39,7 +39,7 @@
 	class=" w-full border-b border-gray-200 dark:border-gray-200 hover:bg-gray-400 dark:hover:bg-gray-600 cursor-pointer transition duration-350 ease-in-out pb-4 border-l border-r"
 >
 	<div class="flex flex-shrink-0 p-4 pb-0">
-		<a href="#" class="flex-shrink-0 group block"
+		<a href="/" class="flex-shrink-0 group block"
 			><div class="flex items-top">
 				<div>
 					<img
@@ -49,7 +49,7 @@
 					/>
 				</div>
 				<div class="ml-3 flex gap-1 items-center font-medium">
-					<a class="text-gray-800" href={"/home/user/" + postUser.userId}>{postUser.name}</a>
+					<a class="text-gray-800" href={"/user/" + postUser.userId}>{postUser.name}</a>
 						<!-- TODO -->
 						<svg viewBox="0 0 24 24"
 								aria-label="Verified account"

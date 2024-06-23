@@ -2,7 +2,7 @@
 	import "../app.css";
 	import { Toaster } from 'svelte-french-toast';
 
-	import Detached from './home/components/Detached.svelte';
+	import Detached from './(main)/components/Detached.svelte';
 </script>
 
 <Toaster />

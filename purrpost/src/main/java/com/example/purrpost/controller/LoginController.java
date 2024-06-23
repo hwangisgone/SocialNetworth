@@ -22,7 +22,6 @@ import com.example.purrpost.service.JwtTokenService;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 
-@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api")
 public class LoginController {

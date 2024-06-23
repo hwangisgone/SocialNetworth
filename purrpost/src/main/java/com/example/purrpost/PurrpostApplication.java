@@ -10,5 +10,4 @@ public class PurrpostApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PurrpostApplication.class, args);
 	}
-
 }
