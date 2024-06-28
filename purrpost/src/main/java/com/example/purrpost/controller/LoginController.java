@@ -48,19 +48,12 @@ public class LoginController {
 		@NonNull @Schema(example = "example@email.com", requiredMode = Schema.RequiredMode.REQUIRED)
 		private String email;
 
-		@NonNull @Schema(example = "This bio contains nothing.", requiredMode = Schema.RequiredMode.REQUIRED)
-		private String bio;
-
 		public String getName() {
 			return name;
 		}
 
 		public String getEmail() {
 			return email;
-		}
-
-		public String getBio() {
-			return bio;
 		}
 	}
 
@@ -77,8 +70,7 @@ public class LoginController {
 						user.getNameTag(),
 						user.getPassword(),
 						user.getName(),
-						user.getEmail(),
-						user.getBio()
+						user.getEmail()
 				));
 				return new ResponseEntity<>(_user, HttpStatus.CREATED);
 			} catch (Exception e) {

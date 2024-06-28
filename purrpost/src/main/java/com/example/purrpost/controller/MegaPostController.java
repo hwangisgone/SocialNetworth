@@ -3,9 +3,11 @@ package com.example.purrpost.controller;
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,9 @@ import com.example.purrpost.repository.ReactionRepository;
 import com.example.purrpost.repository.ReplyRepository;
 import com.example.purrpost.repository.UserRepository;
 import com.example.purrpost.service.UserRetrieval;
+
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 @RestController
 @RequestMapping("/api")
@@ -96,8 +101,29 @@ public class MegaPostController {
 		
 		return newPostList;
 	}
+	
+	private PostOutput populatePost(Post post) throws Exception {
+		Optional<SocialUser> user = userRepository.findById(post.getUserId());
+		Optional<Reaction> reaction = reactionRepository.findByUserIdAndPostId(post.getUserId(), post.getId());
+		
+		boolean liked = (reaction.get() != null) ? true : false;
+		
+		return new PostOutput(post, liked, user.get());
+	}
 
+	@ApiResponse(responseCode = "200", description = "Post returned")
+	@ApiResponse(responseCode = "404", description = "Post not found", content = @Content)
 
+	@GetMapping("/post/{id}")
+	public ResponseEntity<PostOutput> getPost(@PathVariable("id") long id) {
+		Optional<Post> postData = postRepository.findById(id);
+
+		try {
+			return new ResponseEntity<>(this.populatePost(postData.get()), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 //	@GetMapping("/allposts")
 //	public ResponseEntity<List<Post>> getAllPosts() {
 //		try {
@@ -113,9 +139,27 @@ public class MegaPostController {
 	public ResponseEntity<List<PostOutput>> getNewsfeed() {
 		try {
 			OffsetDateTime previousWeek = OffsetDateTime.now().minus(14, ChronoUnit.DAYS);
-			List<Post> hotPosts = postRepository.findFirst10ByTimePostedGreaterThanOrderByLikeCountDesc(previousWeek);
+			List<Post> hotPosts = postRepository.findAllByTimePostedGreaterThanOrderByLikeCountDescIdDesc(previousWeek);
 			
-			return new ResponseEntity<>(this.populatePostList(hotPosts), HttpStatus.OK);
+			OffsetDateTime recently = OffsetDateTime.now().minus(15, ChronoUnit.MINUTES);
+			List<Post> myRecentPost = postRepository.findFirst10ByUserIdAndTimePostedGreaterThanOrderByIdDesc(UserRetrieval.getCurrentUserId(), recently);
+			
+	        Set<Long> seenIds = new HashSet<>();
+	        List<Post> newsFeedPost = new ArrayList<>();
+	        
+	        for (Post post : myRecentPost) {
+	        	seenIds.add(post.getId());
+	            newsFeedPost.add(post);
+	        }
+	        
+	        // To not repeat
+	        for (Post post : hotPosts) {
+	            if (seenIds.add(post.getId())) {
+	            	newsFeedPost.add(post);
+	            }
+	        }
+			
+			return new ResponseEntity<>(this.populatePostList(newsFeedPost), HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -66,23 +65,10 @@ public class PostController {
 	}
 
 
+
+
+
 	@ApiResponse(responseCode = "200", description = "Post updated")
-	@ApiResponse(responseCode = "404", description = "Post not found", content = @Content)
-
-	@GetMapping("/post/{id}")
-	public ResponseEntity<Post> getPost(@PathVariable("id") long id) {
-		System.out.println("GET /post/" + id);
-		Optional<Post> postData = postRepository.findById(id);
-
-		if (postData.isPresent()) {
-			return new ResponseEntity<>(postData.get(), HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
-
-
-	@ApiResponse(responseCode = "200", description = "Post returned")
 	@ApiResponse(responseCode = "404", description = "Post not found", content = @Content)
 
 	@PutMapping("/post/{id}")

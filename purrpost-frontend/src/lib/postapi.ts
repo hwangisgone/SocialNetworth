@@ -101,6 +101,31 @@ export async function writePost(postContent) {
 
 
 
+export async function getPostReplies(postId) {
+	try {
+		const response = await fetch('http://localhost:8081/api/replies_to/' + postId, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': localStorage.getItem('authToken'),
+			},
+		});
+
+		// Check if the response is ok (status code in the range 200-299)
+		if (response.status === 200) {
+			return await response.json();
+		} else if (response.status === 401) {
+			// Redirect back to login
+			toast.error("Login required");
+			goto("/login");
+		}
+	} catch (error) {
+		toast.error(error);
+		console.error(error);
+	}
+}
+
+
 
 export async function postReaction(postId, reactionType) {
 	try {

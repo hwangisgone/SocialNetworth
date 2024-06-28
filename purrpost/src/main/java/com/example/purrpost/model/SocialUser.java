@@ -51,13 +51,13 @@ public class SocialUser{
 
 	}
 
-	public SocialUser(String nameTag, String password, String name, String email, String bio) {
+	public SocialUser(String nameTag, String password, String name, String email) {
 		super();
 		this.nameTag = nameTag;
 		this.password = password;
 		this.name = name;
 		this.email = email;
-		this.bio = bio;
+		this.bio = "No bio yet.";
 		this.registrationDate = Date.from(Instant.now());
 		this.role = "user";
 	}

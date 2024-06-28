@@ -38,7 +38,7 @@
 
 <!-- Post -->
 <div
-	class=" w-full border-b border-gray-200 dark:border-gray-200 hover:bg-gray-400 dark:hover:bg-gray-600 cursor-pointer transition duration-350 ease-in-out pb-4 border-l border-r"
+	class=" w-full border-2 border-t-0 border-base-300 cursor-pointer transition duration-350 ease-in-out pb-4 "
 >
 	<div class="flex flex-shrink-0 p-4 pb-0">
 		<div href="/" class="flex-shrink-0 group block">
