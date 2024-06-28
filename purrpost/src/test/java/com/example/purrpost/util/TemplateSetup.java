@@ -2,6 +2,7 @@ package com.example.purrpost.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import com.example.purrpost.model.Post;
 import com.example.purrpost.repository.PostRepository;
 
@@ -15,15 +16,15 @@ public class TemplateSetup {
 	private long testUserId;
 	private long testPost1Id;
 	private long testPost2Id;
-	
+
 	@Autowired
 	PostRepository postRepository;
-	
+
 	@Autowired
 	UserTestHelper userHelper; // Needed for auths
 
-	
-	
+
+
 	public long getUserId() {
 		return testUserId;
 	}
@@ -39,9 +40,9 @@ public class TemplateSetup {
 		// Prepare test data
 		testUserId = userHelper.initiateUser();
 		userHelper.initiateToken();
-		
+
 		postRepository.deleteAll();
-		
+
 		testPost1Id = postRepository.save(new Post(testUserId, "First test")).getId();
 		testPost2Id = postRepository.save(new Post(testUserId, "Second test")).getId();
 	}
@@ -51,7 +52,7 @@ public class TemplateSetup {
 		if (!dataLoaded) {
 			setUpOnce();
 		}
-		
+
 		// Build request with header
 		RequestSpecBuilder builder = new RequestSpecBuilder();
 		builder.setContentType(ContentType.JSON);

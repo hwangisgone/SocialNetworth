@@ -2,8 +2,8 @@ package com.example.purrpost;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_CLASS;
+
 import org.junit.jupiter.api.BeforeAll;
 //import org.junit.jupiter.api.AfterAll;
 //import org.junit.jupiter.api.BeforeAll;
@@ -15,23 +15,25 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_CLASS;
 
 import com.example.purrpost.util.UserTestHelper;
+
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 
 // https://testcontainers.com/guides/testing-spring-boot-rest-api-using-testcontainers/
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql(scripts = {
 	"file:../database/reset_all_table.sql",
-	"file:../database/create_user.sql", 
+	"file:../database/create_user.sql",
 	"file:../database/create_table_post.sql",
 	"file:../database/function_post.sql"
 }, executionPhase = BEFORE_TEST_CLASS)
 
 @TestPropertySource({"/test.properties"})
 class JWTAuthorizationTest {
-	
+
 	@LocalServerPort
 	private Integer port;
 
@@ -45,11 +47,11 @@ class JWTAuthorizationTest {
 		// Check if using the correct database
 		assertEquals("jdbc:postgresql://localhost:5432/PURRPOST-TEST", dataSourceURL);
 	}
-	
+
 	@Autowired
 	UserTestHelper userHelper;
 	// Needed for auths
-	
+
 	@Test
 	void testUnauthorizedApi() {
 		given()
@@ -66,7 +68,7 @@ class JWTAuthorizationTest {
 		userHelper.initiateUser();
 		userHelper.initiateToken();
 	}
-	
+
 	@Test
 	void testAuthorizedApi() {
 		given()

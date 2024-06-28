@@ -15,9 +15,9 @@
 	
 	import { myReactionMap } from '$lib/stores';
 
-async function getAllPosts() {
+async function getHotPosts() {
 	try {
-		const response = await fetch('http://localhost:8081/api/allposts', {
+		const response = await fetch('http://localhost:8081/api/newsfeed', {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ async function getAllPosts() {
 		// Check if the response is ok (status code in the range 200-299)
 		if (response.status === 200) {
 			postList = await response.json();
-			console.log(postList);
+
 		} else if (response.status === 401) {
 			// Redirect back to login
 			toast.error("Login required");
@@ -104,7 +104,7 @@ async function getAllMyReactions() {
 
 let dataLoaded = false;
 async function loadData() {
-	await getAllPosts();
+	await getHotPosts();
 	await getAllUsers();
 	await getAllMyReactions();
 
@@ -115,7 +115,7 @@ async function loadData() {
 		post.user = userMap[post.userId];
 	});
 
-	postList = postList.sort((a, b) => a.timePosted.localeCompare(b.timePosted));
+	// postList = postList.sort((a, b) => a.timePosted.localeCompare(b.timePosted));
 
 	dataLoaded = true;
 }

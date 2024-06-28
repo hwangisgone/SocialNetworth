@@ -1,13 +1,13 @@
 package com.example.purrpost.controller;
 
 import java.time.OffsetDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -55,6 +55,19 @@ public class PostController {
 		}
 	}
 	
+	@GetMapping("/newsfeed")
+	public ResponseEntity<List<Post>> getNewsfeed() {
+		try {
+			OffsetDateTime previousWeek = OffsetDateTime.now().minus(14, ChronoUnit.DAYS);
+			List<Post> hotPosts = postRepository.findFirst10ByTimePostedGreaterThanOrderByLikeCountDesc(previousWeek);
+					
+			return new ResponseEntity<>(hotPosts, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 	@GetMapping("/user/{id}/allposts")
 	public ResponseEntity<List<Post>> getUserPost(@PathVariable("id") long id) {
 		try {
@@ -66,7 +79,7 @@ public class PostController {
 		}
 	}
 
-	
+
 	// Search
 	@GetMapping("/search")
 	public ResponseEntity<List<Post>> searchPost(@RequestParam("term") String searchterm) {

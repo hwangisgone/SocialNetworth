@@ -14,16 +14,16 @@ import io.restassured.response.Response;
 
 @Component
 public class UserTestHelper {
-	
+
 	private String testToken;
 
 	UserRepository userRepository;
-	
+
 	@Autowired
 	public UserTestHelper(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
-	
+
 	public long initiateUser() {
 		userRepository.deleteAll();
 		SocialUser testUser = new SocialUser();
@@ -31,12 +31,12 @@ public class UserTestHelper {
 		testUser.setPassword("TEST PASSWORD");
 		testUser.setDefaultTestUser();
 		testUser = userRepository.save(testUser);
-		
+
 		return testUser.getUserId();
 	}
-	
+
 	public void initiateToken() {
-		Response res = 
+		Response res =
 				given()
 				.contentType(ContentType.JSON)
 					.body("{\"nameTag\":\"TEST 1\", \"password\": \"TEST PASSWORD\"}")
@@ -47,7 +47,7 @@ public class UserTestHelper {
 					.header("Authorization", startsWith("Bearer"))
 					.extract()
 					.response();
-			
+
 		this.testToken = res.getHeader("Authorization");
 	}
 

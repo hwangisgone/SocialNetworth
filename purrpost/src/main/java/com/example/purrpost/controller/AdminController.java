@@ -23,7 +23,7 @@ public class AdminController {
 			if (!UserRetrieval.getCurrentUserRole().equals("admin")) {
 				return new ResponseEntity<>(HttpStatus.FORBIDDEN);	// 403 if not admin
 			}
-			
+
 			if (userRepository.existsById(id)) {
 				userRepository.deleteById(id);
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);

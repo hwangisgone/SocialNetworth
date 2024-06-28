@@ -8,8 +8,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +18,6 @@ import com.example.purrpost.repository.UserRepository;
 import com.example.purrpost.service.JwtTokenService;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api")
@@ -40,7 +37,7 @@ public class LoginController {
 		public String getPassword() {
 			return password;
 		}
-		
+
 	}
 
 	// Spring DOES clear out static class before assigning them with RequestBody
