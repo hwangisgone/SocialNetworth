@@ -1,18 +1,11 @@
 <script>
-	import PurrPostLogo from '$lib/purrpost-logo.svg?component'; 
+	import PurrPostLogo from '$lib/logo/purrpost-logo.svg?component'; 
 
 	import SearchBar from './SearchBar.svelte';
 	import NavigationBar from './NavigationBar.svelte';
 	import RecommendationComp from './RecommendationComp.svelte';
 
-	import toast from 'svelte-french-toast';
-	import { goto } from '$app/navigation';
-
-	function logout() {
-		localStorage.setItem('authToken', '');
-		toast.success("Logged out");
-		goto('/login');
-	}
+	import { logout } from '$lib/authapi';
 </script>
 
 

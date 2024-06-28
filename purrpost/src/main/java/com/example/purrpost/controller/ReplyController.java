@@ -48,46 +48,8 @@ public class ReplyController {
 	@Autowired
 	PostRepository postRepository;
 
-	// @GetMapping("/replies_to/{id}")
-	// public ResponseEntity<List<Reply>> getRepliesToId(@PathVariable("id") long id) {
-	// 	try {
-	// 		List<Reply> allRepliesTo = replyRepository.findAllByParentId(id);
 
-	// 		return new ResponseEntity<>(allRepliesTo, HttpStatus.OK);
-	// 	} catch (Exception e) {
-	// 		return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-	// 	}
-	// }
-
-	@GetMapping("/replies_to/{id}")
-	public ResponseEntity<List<Post>> getRepliesToId(@PathVariable("id") long id) {
-		try {
-			List<Reply> allRepliesTo = replyRepository.findAllByParentId(id);
-			List<Post> allPosts = new ArrayList<>();
-
-			// Fetch post details for each reply
-			allRepliesTo.forEach(reply -> {
-				Optional<Post> postOptional = postRepository.findById(reply.getParentId());
-				postOptional.ifPresent(allPosts::add);
-			});
-
-			return new ResponseEntity<>(allPosts, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-		}
-	}
-
-	// load reply
-	// @GetMapping("/reply/{id}")
-	// public ResponseEntity<Reply> getReplyById(@PathVariable("id") long id) {
-	// Optional<Reply> replyData = replyRepository.findById(id);
-
-	// if (replyData.isPresent()) {
-	// return new ResponseEntity<>(replyData.get(), HttpStatus.OK);
-	// } else {
-	// return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	// }
-	// }
+	
 
 	@PostMapping("/reply")
 	public ResponseEntity<Reply> createReply(@RequestBody ReplyInput reply) {

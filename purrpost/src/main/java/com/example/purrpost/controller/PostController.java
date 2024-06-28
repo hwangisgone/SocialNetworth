@@ -1,8 +1,6 @@
 package com.example.purrpost.controller;
 
 import java.time.OffsetDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.purrpost.model.Post;
@@ -44,54 +41,6 @@ public class PostController {
 	@Autowired
 	private PostRepository postRepository;
 
-	@GetMapping("/allposts")
-	public ResponseEntity<List<Post>> getAllPosts() {
-		try {
-			List<Post> allPosts = postRepository.findAll();
-			return new ResponseEntity<>(allPosts, HttpStatus.OK);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-	
-	@GetMapping("/newsfeed")
-	public ResponseEntity<List<Post>> getNewsfeed() {
-		try {
-			OffsetDateTime previousWeek = OffsetDateTime.now().minus(14, ChronoUnit.DAYS);
-			List<Post> hotPosts = postRepository.findFirst10ByTimePostedGreaterThanOrderByLikeCountDesc(previousWeek);
-					
-			return new ResponseEntity<>(hotPosts, HttpStatus.OK);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-
-	@GetMapping("/user/{id}/allposts")
-	public ResponseEntity<List<Post>> getUserPost(@PathVariable("id") long id) {
-		try {
-			List<Post> allPosts = postRepository.findAllByUserId(id);
-			return new ResponseEntity<>(allPosts, HttpStatus.OK);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-
-
-	// Search
-	@GetMapping("/search")
-	public ResponseEntity<List<Post>> searchPost(@RequestParam("term") String searchterm) {
-		try {
-			List<Post> searched = postRepository.searchContent(searchterm);
-
-			return new ResponseEntity<>(searched, HttpStatus.OK);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-		}
-	}
 
 //	Send a request with post body:
 //	{

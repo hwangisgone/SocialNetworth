@@ -16,7 +16,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 	// https://docs.spring.io/spring-data/jpa/reference/repositories/query-methods-details.html#repositories.limit-query-result
 	Post findTopByOrderByIdDesc();
 
-	List<Post> findAllByUserId(long userId);
+	List<Post> findAllByUserIdOrderByIdDesc(long userId);
 
 	@Query(value ="SELECT * FROM post WHERE content_search @@ plainto_tsquery(:searchQuery)", nativeQuery = true)
 	List<Post> searchContent(@Param(value="searchQuery") String searchQuery);

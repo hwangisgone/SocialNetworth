@@ -1,5 +1,5 @@
 <script type="text/javascript">
-	import toast from 'svelte-french-toast';
+	import { postReaction, deleteReaction } from '$lib/postapi';
 
 	function shortenNumber(num) {
 		if (num >= 1e6) {
@@ -15,58 +15,20 @@
 	export let count = 0;
 	export let liked = false;
 
+
 async function likePost() {
-	try {
-		if (postId < 1) { throw new Error("postId < 1: " + postId); }
-
-		const response = await fetch('http://localhost:8081/api/post/' + postId + '/react', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				'Authorization': localStorage.getItem('authToken'),
-			},
-			body: JSON.stringify({ "reactionType": "L" })
-		});
-
-		// Check if the response is ok (status code in the range 200-299)
-		if (response.status === 201) {
-			liked = true;
-			count += 1;
-			// console.log(userList);
-		} else {
-			toast.error("Failed");
-			console.error(response);
-		}
-	} catch (error) {
-		toast.error(error);
-		console.error(error);
-	}
+	await postReaction(postId, "L");
+	liked = true;
+	count += 1;
 }
 
 async function unlikePost() {
-	try {
-		const response = await fetch('http://localhost:8081/api/post/' + postId + '/react', {
-			method: 'DELETE',
-			headers: {
-				'Content-Type': 'application/json',
-				'Authorization': localStorage.getItem('authToken'),
-			},
-		});
-
-		// Check if the response is ok (status code in the range 200-299)
-		if (response.status === 204) {
-			liked = false;
-			count -= 1;
-			// console.log(userList);
-		} else {
-			toast.error("Failed");
-			console.error(response);
-		}
-	} catch (error) {
-		toast.error(error);
-		console.error(error);
-	}
+	await deleteReaction(postId);
+	liked = false;
+	count -= 1;
 }
+
+
 </script>
 
 

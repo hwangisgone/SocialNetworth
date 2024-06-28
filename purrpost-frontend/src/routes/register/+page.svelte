@@ -1,7 +1,7 @@
 <script>
-	import GoogleLogo from '$lib/google-g-logo.svg?component';
-	import GithubLogo from '$lib/github-mark.svg?component';
-	import PurrPostLogo from '$lib/purrpost-logo.svg?component';
+	import GoogleLogo from '$lib/logo/google-g-logo.svg?component';
+	import GithubLogo from '$lib/logo/github-mark.svg?component';
+	import PurrPostLogo from '$lib/logo/purrpost-logo.svg?component';
 
 	import toast from 'svelte-french-toast';
 	import { goto } from '$app/navigation';

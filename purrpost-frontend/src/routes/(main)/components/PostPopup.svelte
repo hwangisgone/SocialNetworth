@@ -78,34 +78,12 @@
 		}
 	};
 
-import toast from 'svelte-french-toast';
+
+
+import { writePost } from '$lib/postapi';
 
 let postContent = "";
-async function writePost() {
-    try {
-        const response = await fetch('http://localhost:8081/api/post', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': localStorage.getItem('authToken'),
-            },
-            body: JSON.stringify({ "content": postContent })
-        });
 
-        // Check if the response is ok (status code in the range 200-299)
-        if (response.status === 201) {
-            toast.success("Posted!");
-            my_modal_1.close();
-        } else {
-            toast.error("Failed");
-            my_modal_1.close();
-            console.error(response);
-        }
-    } catch (error) {
-        toast.error(error);
-        console.error(error);
-    }
-}
 
 	// // Add event listener to file input element
 	// const fileInput = document.getElementById('fileInput');
@@ -177,7 +155,7 @@ async function writePost() {
                 
                 <div class="relative flex-shrink-0 w-10/12 px-2 text-black dark:text-white absolute -right-2">
                     <button class="w-40 p-2 bg-blue-500 hover:bg-opacity-40 rounded-full font-bold border border-gray-700 "
-                    on:click={writePost}>
+                    on:click={() => { writePost(postContent); my_modal_1.close(); }}>
                         Post </button>
                 </div>
             </div>

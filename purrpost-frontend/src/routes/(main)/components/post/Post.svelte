@@ -1,12 +1,13 @@
 <script>
-	export let post = {
-		content: "Lorem ipsum dolor sit amet, consectetur",
-		timePosted: "2024-06-18T01:27:33.5960633+08:00",
-		timeEdited: null,
-		likeCount: 0,
-		replyCount: 0,
-		shareCount: 0,
-
+	export let postInfo = {
+		post: {
+			content: "Lorem ipsum dolor sit amet, consectetur",
+			timePosted: "2024-06-18T01:27:33.5960633+08:00",
+			timeEdited: null,
+			likeCount: 0,
+			replyCount: 0,
+			shareCount: 0,
+		},
 				// Extra
 		liked: false,
 		user: {
@@ -27,7 +28,8 @@
 		return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 	}
 
-	const postUser = post.user;
+	const postUser = postInfo.user;
+	const post = postInfo.post;
 
 	import LikeButton from './LikeButton.svelte';
 	import ReplyButton from './ReplyButton.svelte';
@@ -39,8 +41,8 @@
 	class=" w-full border-b border-gray-200 dark:border-gray-200 hover:bg-gray-400 dark:hover:bg-gray-600 cursor-pointer transition duration-350 ease-in-out pb-4 border-l border-r"
 >
 	<div class="flex flex-shrink-0 p-4 pb-0">
-		<a href="/" class="flex-shrink-0 group block"
-			><div class="flex items-top">
+		<div href="/" class="flex-shrink-0 group block">
+			<div class="flex items-top">
 				<div>
 					<img
 						class="inline-block h-9 w-9 rounded-full"
@@ -64,8 +66,8 @@
 					<span>·</span>
 					<span class="text-sm text-gray-400 ">{toDisplayDate(post.timePosted)}</span>
 				</div>
-			</div></a
-		>
+			</div>
+		</div>
 	</div>
 	<div class="pl-16">
 		<p class="text-base width-auto font-medium text-gray-800 dark:text-white flex-shrink">
@@ -93,8 +95,8 @@
 		<div class="flex pt-5">
 
 			<div class="grid grid-cols-4 gap-4">
-				<div class="pl-4"><LikeButton liked={post.liked} postId={post.id} count={post.likeCount}/></div>
-				<div class="pl-4"><ReplyButton replyPost={post}/></div>
+				<div class="pl-4"><LikeButton liked={postInfo.liked} postId={post.id} count={post.likeCount}/></div>
+				<div class="pl-4"><ReplyButton postId={post.id}/></div>
 			</div>					
 				
 					
