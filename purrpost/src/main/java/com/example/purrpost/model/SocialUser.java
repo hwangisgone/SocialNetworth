@@ -42,6 +42,9 @@ public class SocialUser{
 
 	@Column(name = "phone")
 	private String phone;
+	
+	@Column(name = "avatar_url")
+	private String avatarUrl;
 
 	@Column(name = "registration_date")
 	private Date registrationDate;
@@ -57,8 +60,11 @@ public class SocialUser{
 		this.password = password;
 		this.name = name;
 		this.email = email;
+		
+		
 		this.bio = "No bio yet.";
 		this.registrationDate = Date.from(Instant.now());
+		this.avatarUrl = "https://i.imgur.com/ng36sqK.jpeg";
 		this.role = "user";
 	}
 
@@ -135,6 +141,14 @@ public class SocialUser{
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getAvatarUrl() {
+		return avatarUrl;
+	}
+
+	public void setAvatarUrl(String avatarUrl) {
+		this.avatarUrl = avatarUrl;
 	}
 
 	@Override

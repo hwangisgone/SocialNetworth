@@ -1,25 +1,25 @@
 ---1. Funciton retrieve all the post of some user
 
 CREATE OR REPLACE FUNCTION retrieve_posts_by_user_id(
-    user_id_param int
+	user_id_param int
 )
 RETURNS JSONB
 AS '
 DECLARE
-    posts_json JSONB;
+	posts_json JSONB;
 BEGIN
-    SELECT jsonb_agg(to_jsonb(posts.*))
-    INTO posts_json
-    FROM (
-        SELECT
-            * 
-        FROM
-            post
-        WHERE
-            user_id = user_id_param
-    ) posts;
+	SELECT jsonb_agg(to_jsonb(posts.*))
+	INTO posts_json
+	FROM (
+		SELECT
+			* 
+		FROM
+			post
+		WHERE
+			user_id = user_id_param
+	) posts;
 
-    RETURN posts_json;
+	RETURN posts_json;
 END;
 ' LANGUAGE plpgsql;
 
@@ -28,16 +28,16 @@ END;
 CREATE OR REPLACE FUNCTION update_share_count()
 RETURNS TRIGGER AS '
 BEGIN
-    IF TG_OP = ''INSERT'' THEN
-        UPDATE post
-        SET share_count = share_count + 1
-        WHERE post_id = NEW.post_id;
-    ELSIF TG_OP = ''DELETE'' THEN
-        UPDATE post
-        SET share_count = share_count - 1
-        WHERE post_id = OLD.post_id;
-    END IF;
-    RETURN NULL;
+	IF TG_OP = ''INSERT'' THEN
+		UPDATE post
+		SET share_count = share_count + 1
+		WHERE post_id = NEW.post_id;
+	ELSIF TG_OP = ''DELETE'' THEN
+		UPDATE post
+		SET share_count = share_count - 1
+		WHERE post_id = OLD.post_id;
+	END IF;
+	RETURN NULL;
 END;
 ' LANGUAGE plpgsql;
 
@@ -51,16 +51,16 @@ EXECUTE FUNCTION update_share_count();
 CREATE OR REPLACE FUNCTION update_reaction_count()
 RETURNS TRIGGER AS '
 BEGIN
-    IF TG_OP = ''INSERT'' THEN
-        UPDATE post
-        SET like_count = like_count + 1
-        WHERE post_id = NEW.post_id;
-    ELSIF TG_OP = ''DELETE'' THEN
-        UPDATE post
-        SET like_count = like_count - 1
-        WHERE post_id = OLD.post_id;
-    END IF;
-    RETURN NULL;
+	IF TG_OP = ''INSERT'' THEN
+		UPDATE post
+		SET like_count = like_count + 1
+		WHERE post_id = NEW.post_id;
+	ELSIF TG_OP = ''DELETE'' THEN
+		UPDATE post
+		SET like_count = like_count - 1
+		WHERE post_id = OLD.post_id;
+	END IF;
+	RETURN NULL;
 END;
 ' LANGUAGE plpgsql;
 
@@ -74,16 +74,16 @@ EXECUTE FUNCTION update_reaction_count();
 CREATE OR REPLACE FUNCTION update_reply_count()
 RETURNS TRIGGER AS '
 BEGIN
-    IF TG_OP = ''INSERT'' THEN
-        UPDATE post
-        SET reply_count = reply_count + 1
-        WHERE post_id = NEW.post_id_parent;
-    ELSIF TG_OP = ''DELETE'' THEN
-        UPDATE post
-        SET reply_count = reply_count - 1
-        WHERE post_id = OLD.post_id_parent;
-    END IF;
-    RETURN NULL;
+	IF TG_OP = ''INSERT'' THEN
+		UPDATE post
+		SET reply_count = reply_count + 1
+		WHERE post_id = NEW.post_id_parent;
+	ELSIF TG_OP = ''DELETE'' THEN
+		UPDATE post
+		SET reply_count = reply_count - 1
+		WHERE post_id = OLD.post_id_parent;
+	END IF;
+	RETURN NULL;
 END;
 ' LANGUAGE plpgsql;
 
@@ -96,25 +96,25 @@ EXECUTE FUNCTION update_reply_count();
 CREATE OR REPLACE FUNCTION update_follow_count()
 RETURNS TRIGGER AS '
 BEGIN
-    IF TG_OP = ''INSERT'' THEN
-        UPDATE "user"
-        SET follow_count = follow_count + 1
-        WHERE user_id = NEW.user_id_follow;
+	IF TG_OP = ''INSERT'' THEN
+		UPDATE social_user
+		SET follow_count = follow_count + 1
+		WHERE user_id = NEW.follower_id;
 		
-		UPDATE "user"
-        SET followed_count = followed_count + 1
-        WHERE user_id = NEW.user_id;
+		UPDATE social_user
+		SET followed_count = followed_count + 1
+		WHERE user_id = NEW.user_id;
 		
-    ELSIF TG_OP = ''DELETE'' THEN
-        UPDATE "user"
-        SET follow_count = follow_count - 1
-        WHERE user_id = OLD.user_id_follow;
+	ELSIF TG_OP = ''DELETE'' THEN
+		UPDATE social_user
+		SET follow_count = follow_count - 1
+		WHERE user_id = OLD.follower_id;
 		
-		UPDATE "user"
-        SET followed_count = followed_count - 1
-        WHERE user_id = OLD.user_id;
-    END IF;
-    RETURN NULL;
+		UPDATE social_user
+		SET followed_count = followed_count - 1
+		WHERE user_id = OLD.user_id;
+	END IF;
+	RETURN NULL;
 END;
 ' LANGUAGE plpgsql;
 
@@ -171,13 +171,13 @@ EXECUTE FUNCTION update_follow_count();
 --         SET content = new_content_param,
 --             time_edited = now()
 --         WHERE post_id = post_id_param;
-        
+		
 --         -- Retrieve the updated post as JSONB
 --         SELECT to_jsonb(p.*)
 --         INTO updated_post_json
 --         FROM post p
 --         WHERE p.post_id = post_id_param;
-        
+		
 --         RETURN updated_post_json;
 --     ELSE
 --         -- Return NULL if the post does not exist or does not belong to the specified user
@@ -205,10 +205,10 @@ EXECUTE FUNCTION update_follow_count();
 --         -- Delete the post
 --         DELETE FROM post
 --         WHERE post_id = post_id_param;
-        
+		
 --         deletion_successful := true;
 --     END IF;
-    
+	
 --     RETURN deletion_successful;
 -- END;
 -- ' LANGUAGE plpgsql;

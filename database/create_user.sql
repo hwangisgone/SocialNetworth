@@ -8,6 +8,7 @@ CREATE TABLE social_user (
 	name_tag	VARCHAR(50) UNIQUE NOT NULL,
 	bio			TEXT,
 	registration_date DATE NOT NULL,
+	avatar_url  VARCHAR(200),
 
 	role				VARCHAR NOT NULL,
 	follow_count		int DEFAULT 0, 
