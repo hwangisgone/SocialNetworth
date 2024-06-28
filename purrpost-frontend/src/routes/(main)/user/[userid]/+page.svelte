@@ -4,7 +4,7 @@
 
 	import { myReactionMap } from '$lib/stores';
 
-	import ContentBody  from '../../home/ContentBody.svelte';
+	import ContentBody  from '../../components/post/ContentBody.svelte';
 
 	import ProfileCard  from './ProfileCard.svelte';
 

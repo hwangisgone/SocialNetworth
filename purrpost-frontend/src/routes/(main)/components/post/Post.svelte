@@ -94,7 +94,7 @@
 
 			<div class="grid grid-cols-4 gap-4">
 				<div class="pl-4"><LikeButton liked={post.liked} postId={post.id} count={post.likeCount}/></div>
-				<div class="pl-4"><ReplyButton /></div>
+				<div class="pl-4"><ReplyButton replyPost={post}/></div>
 			</div>					
 				
 					

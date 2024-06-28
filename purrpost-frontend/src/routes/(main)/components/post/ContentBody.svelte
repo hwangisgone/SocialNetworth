@@ -1,5 +1,5 @@
 <script lang='ts'>
-	import Post		from '../components/post/Post.svelte';
+	import Post		from './Post.svelte';
 	// import CommentContainer		from './components/CommentContainer.svelte';
 	// import EditProfile	from './components/EditProfileCard.svelte';
 	// import ProfileCard		from './components/ProfileCard.svelte';

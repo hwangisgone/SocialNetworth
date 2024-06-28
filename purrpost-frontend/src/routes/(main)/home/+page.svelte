@@ -4,7 +4,7 @@
 	// import ReplyIcon	from '$lib/icon/talk-bubbles.svg?component';
 	// import ShareIcon	from '$lib/icon/share.svg?component';
 
-	import ContentBody  from './ContentBody.svelte';
+	import ContentBody  from '../components/post/ContentBody.svelte';
 
 
 	import toast from 'svelte-french-toast';
