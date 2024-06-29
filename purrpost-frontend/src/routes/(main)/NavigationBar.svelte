@@ -2,18 +2,14 @@
   import PostPopup from "./components/PostPopup.svelte";
 
   import { myUserId } from '$lib/authapi';
-  import { goto } from '$app/navigation';
+  import { getMyself } from '$lib/userapi';
 
   $: checkOn($myUserId);
 
-  function checkOn(myId) {
+  async function checkOn(myId) {
     if (myId == 0) {
-      const storageId = parseInt(localStorage.getItem('myUserId'));
-      if (!storageId | storageId < 1 ) {
-        goto('/login');
-      } else {
-        myId = storageId;
-      }
+      const myUser = await getMyself();
+      $myUserId = myUser.userId;
     }
   }
 
