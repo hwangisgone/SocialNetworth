@@ -205,7 +205,7 @@ public class MegaPostController {
 
 			// Fetch post details for each reply
 			allRepliesTo.forEach(reply -> {
-				Optional<Post> postOptional = postRepository.findById(reply.getParentId());
+				Optional<Post> postOptional = postRepository.findById(reply.getChildId());
 				postOptional.ifPresent(allPosts::add);
 			});
 

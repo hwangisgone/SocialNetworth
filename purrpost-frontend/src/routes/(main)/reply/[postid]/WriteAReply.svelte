@@ -1,11 +1,37 @@
 <script>
+	import { postReply } from '$lib/postapi';
+	import { getMyself } from '$lib/userapi';
+
+	import { page } from '$app/stores';
+
 	let replyContent = "";
+	let currentUser = {}
+	async function load() {
+		currentUser = await getMyself();
+		console.log(currentUser);
+	}
+	
+	load();
 </script>
 
 
-<textarea>
-	
-</textarea>
+<div class="flex w-full gap-4 p-2">
+	<img
+		class="inline-block h-9 w-9 rounded-full object-cover"
+		src={currentUser.avatarUrl}
+		alt="User profile picture"
+	/>
+	<form class="w-full flex gap-4">
+	    <textarea class="w-full text-xl bg-base-300 rounded-xl p-2" placeholder="Write a reply..." required
+	    bind:value={replyContent}></textarea>
+	    <button class="btn btn-primary"
+    	on:click={() => { postReply($page.params.postid, replyContent); }}>
+        	Post 
+    	</button>
+	</form>
+
+</div>
+
 
 <style>
 	textarea {

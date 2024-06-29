@@ -1,6 +1,7 @@
 <script lang='ts'>
 	import ContentBody  from '../../components/post/ContentBody.svelte';
 	import Post from '../../components/post/Post.svelte';
+	import WriteAReply from './WriteAReply.svelte';
 
 	import { page } from '$app/stores';
 	import { getPost, getPostReplies } from '$lib/postapi';
@@ -29,7 +30,8 @@ async function loadAll() {
 	<!-- Container -->
 	{#if dataLoaded}
 		<Post postInfo={currentPost}/>
-		<div class="ml-4 pl-4 border-l-4 border-gray-200">
+		<WriteAReply />
+		<div class="ml-8 pl-4 border-l-4 border-gray-200 w-full">
 			{#if replyList.length > 0}
 				<ContentBody postList={replyList}/>
 			{:else}

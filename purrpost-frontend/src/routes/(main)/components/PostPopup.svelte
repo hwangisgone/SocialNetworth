@@ -111,25 +111,27 @@ let postContent = "";
 
 
 
-<dialog id="my_modal_1" class="modal w-100">
+<dialog id="my_modal_1" class="modal w-100  text-base-content">
 	<!-- Press ESC key or click outside to close -->
 	<form method="dialog" class="modal-backdrop">
         <button>close</button>
     </form>
 
-    <div class="modal-box max-w-none max-h-none w-5/12 p-4 pt-12 bg-white dark:bg-gray-900 text-black dark:text-white">
+    <div class="modal-box max-w-none max-h-none w-5/12 p-4 pt-12">
         <form method="dialog" class="text-right">
             <button class="btn text-lg btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
         </form>
 
         <div class="flex gap-2">
             <div class="flex-shrink-0 w-10 h-10">
-                <img class="w-full h-full rounded-full" src="https://i.imgur.com/GCBVgXD.jpeg" alt="" />
+                <svg fill="currentColor" viewBox="0 0 24 24" class="block w-full h-full transform-gpu -scale-x-100">
+      <path d="M8.8 7.2H5.6V3.9c0-.4-.3-.8-.8-.8s-.7.4-.7.8v3.3H.8c-.4 0-.8.3-.8.8s.3.8.8.8h3.3v3.3c0 .4.3.8.8.8s.8-.3.8-.8V8.7H9c.4 0 .8-.3.8-.8s-.5-.7-1-.7zm15-4.9v-.1h-.1c-.1 0-9.2 1.2-14.4 11.7-3.8 7.6-3.6 9.9-3.3 9.9.3.1 3.4-6.5 6.7-9.2 5.2-1.1 6.6-3.6 6.6-3.6s-1.5.2-2.1.2c-.8 0-1.4-.2-1.7-.3 1.3-1.2 2.4-1.5 3.5-1.7.9-.2 1.8-.4 3-1.2 2.2-1.6 1.9-5.5 1.8-5.7z"></path>
+                <!-- <img class="w-full h-full rounded-full" src="https://i.imgur.com/GCBVgXD.jpeg" alt="" /> -->
             </div>
 
-            <div class="bg-gray-300 dark:bg-gray-700 w-full rounded-xl">
+            <div class="w-full rounded-xl">
                 <form class="w-full">
-                    <textarea class="w-full h-52 text-black dark:text-white text-xl bg-gray-300 dark:bg-gray-700 rounded-xl p-2" placeholder="What's happening?" bind:value={postContent}></textarea>
+                    <textarea class="w-full h-52 text-xl bg-base-300 rounded-xl p-2" placeholder="What's happening?" bind:value={postContent}></textarea>
                 </form>
 <!--                 <div class="flex">
                     {#each inputData.imgQueue as img} 
@@ -146,15 +148,15 @@ let postContent = "";
             </div>
         </div>
 
-        <div class="flex pt-4 pl-4 items-center justify-between text-black dark:text-white">
+        <div class="flex pt-4 pl-4 items-center justify-between">
             <div class="flex gap-4">
                 <PicsIcon width=24 height=24 fill="currentColor"/>
                 <LocationIcon width=24 height=24 fill="currentColor"/>			
             </div>
             <div class="flex">
                 
-                <div class="relative flex-shrink-0 w-10/12 px-2 text-black dark:text-white absolute -right-2">
-                    <button class="w-40 p-2 bg-blue-500 hover:bg-opacity-40 rounded-full font-bold border border-gray-700 "
+                <div class="relative flex-shrink-0 w-10/12 px-2 absolute -right-2">
+                    <button class="w-40 p-2 bg-primary rounded-full font-bold border border-gray-700 "
                     on:click={() => { writePost(postContent); my_modal_1.close(); }}>
                         Post </button>
                 </div>

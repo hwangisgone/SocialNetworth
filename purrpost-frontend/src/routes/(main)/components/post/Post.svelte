@@ -91,12 +91,12 @@
 
 			<div class="grid grid-cols-4 gap-4">
 				<div class="pl-4"><LikeButton liked={postInfo.liked} postId={post.id} count={post.likeCount}/></div>
-				<div class="pl-4"><ReplyButton postId={post.id}/></div>
+				<div class="pl-4"><ReplyButton postId={post.id} count={post.replyCount}/></div>
 			</div>					
 				
 					
 <!-- 					<div
-						class="flex-1 flex items-center text-gray-800 dark:text-white text-xs text-gray-400 hover:text-blue-400 dark:hover:text-blue-400 transition duration-350 ease-in-out"
+						class="flex-1 flex items-center text-xs text-gray-400 hover:text-blue-400 dark:hover:text-blue-400 transition duration-350 ease-in-out"
 					>
 						<svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-2"
 							><g

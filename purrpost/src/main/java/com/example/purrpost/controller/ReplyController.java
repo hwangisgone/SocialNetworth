@@ -31,13 +31,6 @@ public class ReplyController {
 		@Schema(example = "Something Something", requiredMode = Schema.RequiredMode.REQUIRED)
 		private String content;
 
-
-		private int parentId;
-
-		public int getParentId() {
-			return parentId;
-		}
-
 		public String getContent() {
 			return content;
 		}
@@ -51,16 +44,16 @@ public class ReplyController {
 
 	
 
-	@PostMapping("/reply")
-	public ResponseEntity<Reply> createReply(@RequestBody ReplyInput reply) {
+	@PostMapping("/replies_to/{post_id}")
+	public ResponseEntity<Reply> createReply(@PathVariable("post_id") long parentId, @RequestBody ReplyInput reply) {
 		try {
 			Post _post = postRepository.save(new Post(
 				UserRetrieval.getCurrentUserId(),
 				reply.getContent()
 			));
 			Reply _reply = replyRepository.save(new Reply(
-				reply.getParentId(),
-				_post.getUserId()
+				parentId,
+				_post.getId()
 			));
 
 			return new ResponseEntity<>(_reply, HttpStatus.CREATED);
