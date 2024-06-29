@@ -26,19 +26,20 @@ async function loadAll() {
 <!-- Main -->
 <main class="max-w-full h-full flex relative overflow-y-hidden">
   <!-- Container -->
-	<div id="imageContainer" class="w-full m-4 flex flex-col  items-start bg-opacity-0 justify-start gap-4 overflow-y-scroll">
+	<div id="imageContainer" class="w-full p-4 flex flex-col  items-start bg-opacity-0 justify-start gap-4 overflow-y-scroll">
 	<!-- Container -->
 	{#if dataLoaded}
 		<Post postInfo={currentPost}/>
 		<WriteAReply />
-		<div class="ml-8 pl-4 border-l-4 border-gray-200 w-full">
-			{#if replyList.length > 0}
-				<ContentBody postList={replyList}/>
-			{:else}
-				<span class="font-semibold">No reply...</span>
-			{/if}
+		<div class="pl-8 w-full">
+			<div class="pl-4 border-l-4 border-gray-200 ">
+				{#if replyList.length > 0}
+					<ContentBody postList={replyList}/>
+				{:else}
+					<span class="font-semibold">No reply...</span>
+				{/if}
+			</div>
 		</div>
-
 	{:else}
 		<p>Fetching...</p>
 	{/if}

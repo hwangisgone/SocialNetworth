@@ -26,7 +26,7 @@ public class UserRetrieval {
 			Jwt testJwt  = (Jwt) context.getAuthentication().getPrincipal();
 			return testJwt.getClaimAsString("user_role");
 		} else {
-			throw new UserRetrievalException("Cannot get current user id");
+			throw new UserRetrievalException("Cannot get current user role");
 		}
 	}
 }

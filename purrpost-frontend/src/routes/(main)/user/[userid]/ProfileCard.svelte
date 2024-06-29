@@ -6,6 +6,7 @@
   import FollowButton from './FollowButton.svelte';
   import { myUserId } from '$lib/authapi';
 
+  let addedvalue = 0;
 </script>
 
 <!--Profile card start-->
@@ -30,7 +31,7 @@ rounded-lg shadow-lg flex flex-col">
         <div class="justify-between flex items-center">
           <p class="text-xl">{currentUser.name}</p>
           {#if $myUserId != currentUser.userId}
-            <FollowButton />
+            <FollowButton bind:addedvalue />
           {/if}
         </div>
 
@@ -70,8 +71,8 @@ rounded-lg shadow-lg flex flex-col">
         </div>
       </div> -->
       <div class="flex justify-start gap-10 my-4 transition duration-350 ease-in-out">
-          <p class="hover:text-blue-400">123 Following</p>
-          <p class="hover:text-green-400">456 Followers</p>
+          <p class="hover:text-blue-400">{currentUser.followingCount} Following</p>
+          <p class="hover:text-green-400">{currentUser.followerCount + addedvalue} Followers</p>
       </div>
 
 

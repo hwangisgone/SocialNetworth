@@ -48,6 +48,12 @@ public class SocialUser{
 
 	@Column(name = "registration_date")
 	private Date registrationDate;
+	
+	@Column(name = "follow_count")
+	private int followingCount;
+
+	@Column(name = "followed_count")
+	private int followerCount;
 
 
 	public SocialUser() {
@@ -149,6 +155,22 @@ public class SocialUser{
 
 	public void setAvatarUrl(String avatarUrl) {
 		this.avatarUrl = avatarUrl;
+	}
+
+	public int getFollowingCount() {
+		return followingCount;
+	}
+
+	public void setFollowingCount(int followingCount) {
+		this.followingCount = followingCount;
+	}
+
+	public int getFollowerCount() {
+		return followerCount;
+	}
+
+	public void setFollowerCount(int followerCount) {
+		this.followerCount = followerCount;
 	}
 
 	@Override

@@ -3,7 +3,18 @@
 @tailwind utilities;
 
 ::-webkit-scrollbar {
-    width: 2px;
+    -webkit-appearance: none;
+    width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0,0,0,.25);
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.25);
+}
+
+/*::-webkit-scrollbar {
+    width: 0px;
     height: 2px;
   }
   ::-webkit-scrollbar-button {
@@ -34,4 +45,4 @@
   }
   ::-webkit-scrollbar-corner {
     background: transparent;
-  }
+  }*/

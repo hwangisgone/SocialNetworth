@@ -3,6 +3,7 @@
 	import { getMyself } from '$lib/userapi';
 
 	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
 
 	let replyContent = "";
 	let currentUser = {}
@@ -25,7 +26,11 @@
 	    <textarea class="w-full text-xl bg-base-300 rounded-xl p-2" placeholder="Write a reply..." required
 	    bind:value={replyContent}></textarea>
 	    <button class="btn btn-primary"
-    	on:click={() => { postReply($page.params.postid, replyContent); }}>
+    	on:click|preventDefault={() => { 
+    		postReply($page.params.postid, replyContent); 
+    		console.log("Clicked"); 
+    		goto('/').then(() => goto($page.url.pathname)); 
+    	}}>
         	Post 
     	</button>
 	</form>

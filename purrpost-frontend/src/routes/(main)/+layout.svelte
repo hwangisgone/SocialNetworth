@@ -42,7 +42,7 @@
 
 			
 		 
-			<div class="w-full h-full flex flex-col justify-between">
+			<div class="w-full h-full flex flex-col">
 				<!-- Header -->
 				<header class="h-12 w-full flex items-center relative justify-end text-base">
 				<!-- Profile -->

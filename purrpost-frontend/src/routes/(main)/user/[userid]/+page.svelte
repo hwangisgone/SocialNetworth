@@ -29,7 +29,7 @@ async function loadAll() {
 <main class="max-w-full h-full flex relative overflow-y-hidden">
   <!-- Container -->
 
-	<div class="w-full m-4 flex flex-col items-start bg-opacity-0 justify-start gap-4 overflow-y-scroll">
+	<div class="w-full p-4 flex flex-col items-start bg-opacity-0 justify-start gap-4 overflow-y-scroll">
 	   	<ProfileCard {currentUser}/>
 	<!-- Container -->
 	{#if dataLoaded}

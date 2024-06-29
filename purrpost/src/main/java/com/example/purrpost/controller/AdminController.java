@@ -18,7 +18,7 @@ public class AdminController {
 	UserRepository userRepository;
 
 	@DeleteMapping("/user/delete/{user_id}")
-	public ResponseEntity<HttpStatus> deletePost(@PathVariable("id") long id) {
+	public ResponseEntity<HttpStatus> deleteUser(@PathVariable("id") long id) {
 		try {
 			if (!UserRetrieval.getCurrentUserRole().equals("admin")) {
 				return new ResponseEntity<>(HttpStatus.FORBIDDEN);	// 403 if not admin
