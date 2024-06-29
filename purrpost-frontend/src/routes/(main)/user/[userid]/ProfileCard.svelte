@@ -2,6 +2,10 @@
   export let currentUser = {};
   export let followerList = [];
   export let followingList = [];
+
+  import FollowButton from './FollowButton.svelte';
+  import { myUserId } from '$lib/authapi';
+
 </script>
 
 <!--Profile card start-->
@@ -12,27 +16,24 @@ rounded-lg shadow-lg flex flex-col">
     alt="Image" 
     class="w-full h-48 object-cover rounded-t-lg" /> 
   </div> 
-  <div class="profile-image flex"> 
-    <img src= 
-    "https://i.imgur.com/GCBVgXD.jpeg" 
+  <div class="flex"> 
+    <img src={currentUser.avatarUrl ? currentUser.avatarUrl : "https://i.imgur.com/xcLTrkV.png"}
     alt=""
     class="float-left z-10 w-24 h-24 relative ml-16 -mt-16  
     block rounded-full border-2 border-gary-800  
     transition-transform duration-400  
-    transform hover:scale-110" /> 
-    <div class="flex-grow"></div>
-    <div class="flex float-right items-end text-base leading-6 font-medium text-gray-800 dark:text-white">
-      <div class="pr-20 pt-4">
-        <button class="btn btn-outline btn-primary btn-sm px-5 border-2 rounded-3xl">Follow</button>
-      </div>
-    </div>
+    transform hover:scale-110 object-cover" /> 
   </div> 
   <div class="card-content py-2"> 
     <div class="pl-12">
       <div class="font-medium">
-        <p class="flex items-center">
-          {currentUser.name}
-        </p>
+        <div class="justify-between flex items-center">
+          <p class="text-xl">{currentUser.name}</p>
+          {#if $myUserId != currentUser.userId}
+            <FollowButton />
+          {/if}
+        </div>
+
         <span class="ml-2 text-sm text-gray-400">
           @{currentUser.nameTag}
         </span>

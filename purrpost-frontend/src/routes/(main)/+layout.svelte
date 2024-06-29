@@ -9,7 +9,7 @@
 </script>
 
 
-<div class="flex min-h-full w-full items-center justify-center text-2lx bg-white dark:bg-gray-800">
+<div class="flex min-h-full w-full items-center justify-center text-2lx bg-base-100 dark:bg-gray-800">
 	<div class="nd-background w-screen min-h-1/2 border border-gray-900">
 		<!-- component -->
 	<div class="h-screen w-full relative flex overflow-hidden">

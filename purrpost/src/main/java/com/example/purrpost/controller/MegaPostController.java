@@ -106,7 +106,7 @@ public class MegaPostController {
 		Optional<SocialUser> user = userRepository.findById(post.getUserId());
 		Optional<Reaction> reaction = reactionRepository.findByUserIdAndPostId(post.getUserId(), post.getId());
 		
-		boolean liked = (reaction.get() != null) ? true : false;
+		boolean liked = !reaction.isEmpty();
 		
 		return new PostOutput(post, liked, user.get());
 	}
@@ -121,6 +121,7 @@ public class MegaPostController {
 		try {
 			return new ResponseEntity<>(this.populatePost(postData.get()), HttpStatus.OK);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}

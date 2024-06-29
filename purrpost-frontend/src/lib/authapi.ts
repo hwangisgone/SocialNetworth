@@ -8,6 +8,7 @@ export const myUserId = writable(0);
 
 export function logout() {
 	localStorage.setItem('authToken', '');
+	localStorage.setItem('myUserId', 0);
 	myUserId.set(0);
 	toast.success("Logged out");
 	goto('/login');
@@ -45,6 +46,7 @@ export async function login(loginData: LoginInfo) {
 			// console.log('Token saved to local storage:', token);
 
 			const userInfo = await response.json();
+			localStorage.setItem('myUserId', userInfo.userId);
 			myUserId.set(userInfo.userId);
 			console.log(userInfo);
 

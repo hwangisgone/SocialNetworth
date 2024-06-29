@@ -21,10 +21,10 @@
 	<div class="nd-background w-2/3 min-h-1/2 border border-gray-900 rounded-3xl">
 
 		<form class="mx-4 sm:mx-24 md:mx-34 lg:mx-56 mx-auto  flex items-center space-y-4 py-16 font-semibold text-gray-500 flex-col">
-			<PurrPostLogo width="60" height="60"/>
+			<PurrPostLogo class="text-primary" width="120" height="120"/>
 
 			<h1 class="text-2xl">Sign in</h1>
-			<p class="text-xs pt-6 pb-32">Enter your email and password</p>
+			<p class="text-xs pt-6 pb-16">Enter your email and password</p>
 
 
 			<div class="w-full transform border-b bg-transparent duration-300 text-sm focus-within:border-indigo-500">
@@ -42,7 +42,7 @@
 				placeholder="Password"
 				class="w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none"
 				bind:value={loginData.password}
-				
+
 				autocomplete="on"
 			  />
 			</div>
@@ -60,7 +60,7 @@
 			</div>
 			<div class="mt-5 flex justify-center gap-3 ">
 				<GoogleLogo width="40" height="40"/>
-				<GithubLogo width="40" height="40"/>
+				<GithubLogo class="text-base-content" width="40" height="40"/>
 				<FacebookLogo width="40" height="40"/>
 			</div>
 

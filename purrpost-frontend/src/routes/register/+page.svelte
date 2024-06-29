@@ -24,19 +24,19 @@ const registerData = {
 			
 			
 			<!-- <div class="w-full mx-auto max-w-sm transform space-y-4 text-center flex items-center flex-col"> -->
-				<PurrPostLogo width="60" height="60"/>
+				<PurrPostLogo class="text-primary" width="80" height="80"/>
 
 				<h1 class=" text-2xl">Join PurrPost today</h1>
 				<!-- <button class="w-full p-2 bg-gray-50 rounded-full font-bold text-gray-900 border border-gray-700 "> <img src="your-image-url.jpg" alt="Apple Logo" class="inline-block h-6 w-6 mr-2"> Sign up with Google</button> -->
-				<button class="w-full p-2 bg-gray-50 rounded-full font-bold text-gray-900 border border-gray-700 flex items-center justify-center">
+				<button class="w-72 p-2 bg-gray-50 rounded-full font-bold border border-gray-700 flex items-center">
 					<!-- {@html GoogleLogo} -->
-					<GoogleLogo width="40" height="40"/>
-					Sign up with Google
+					<GoogleLogo width="30" height="30"/>
+					<span class="pl-9">Sign up with Google</span>
 				</button>
 				
-				<button class="w-full p-2 bg-gray-50 rounded-full font-bold text-gray-900 border border-gray-700 flex items-center justify-center">
-					<GithubLogo width=35 height=35/>
-					Sign up with Github
+				<button class="w-72 p-2 bg-gray-50 rounded-full font-bold border border-gray-700 flex items-center">
+					<GithubLogo width=28 height=28/>
+					<span class="pl-10">Sign up with Github</span>
 				</button>
 
 

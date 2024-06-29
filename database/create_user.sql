@@ -19,7 +19,5 @@ CREATE TABLE social_user (
 CREATE TABLE follow (
 	user_id			int REFERENCES social_user(user_id) ON DELETE CASCADE,
 	follower_id		int REFERENCES social_user(user_id) ON DELETE CASCADE,
-	PRIMARY KEY (user_id, follower_id),
-	
-	CHECK (user_id < follower_id)
+	PRIMARY KEY (user_id, follower_id)
 );

@@ -64,7 +64,7 @@ public class SocialUser{
 		
 		this.bio = "No bio yet.";
 		this.registrationDate = Date.from(Instant.now());
-		this.avatarUrl = "https://i.imgur.com/ng36sqK.jpeg";
+		this.avatarUrl = "https://i.imgur.com/9l1A4OS.jpeg";
 		this.role = "user";
 	}
 

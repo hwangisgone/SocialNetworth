@@ -10,7 +10,7 @@ VALUES ('giant@example.com', 'troll', '123-456-7890', 'Giant', 'giant', 'Bio of 
 
 -- Insert mock data into user table
 INSERT INTO social_user (email, password, phone, name, name_tag, bio, registration_date, avatar_url, role) VALUES
-    ('user1@example.com', 'password1', '1234567890', 'Trinh Diem Quynh', 'quynhtd', 'Hello.', '2024-03-29', 'https://i.imgur.com/ng36sqK.jpeg', 'user'),
+    ('user1@example.com', 'password1', '1234567890', 'Trinh Diem Quynh', 'quynhtd', 'Hello.', '2024-03-29', 'https://i.imgur.com/9l1A4OS.jpeg', 'user'),
     ('user2@example.com', 'password2', '9876543210', 'Jane Austen', 'janeausten', 'Nice to meet you!', '2024-03-29', 'https://i.imgur.com/ng36sqK.jpeg', 'user'),
     ('admin@example.com', 'admin', NULL, 'Admin User', 'admin', 'I am the admin.', '2024-03-29', 'https://i.imgur.com/0VGAy.png', 'admin');
 
