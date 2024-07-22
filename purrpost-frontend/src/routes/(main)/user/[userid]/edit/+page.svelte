@@ -53,7 +53,8 @@ rounded-lg shadow-lg flex flex-col">
 			placeholder="No bio..." required
 			bind:value={currentUser.bio}/>
 			
-		<button type="submit" class="col-span-5 btn rounded-lg btn-primary px-8 mr-8">Save</button>
+		<button class="col-span-5 btn rounded-lg btn-primary px-8 mr-8"
+			on:click={() => {}}>Save</button>
 	</form>
 	</div>  
 <!--Profile card end-->

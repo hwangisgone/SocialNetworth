@@ -227,3 +227,27 @@ export async function deleteReaction(postId) {
 		console.error(error);
 	}
 }
+
+export async function deletePost(postId) {
+	try {
+		const response = await fetch('http://localhost:8081/api/post/' + postId, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': localStorage.getItem('authToken'),
+			},
+		});
+
+		if (response.status === 204) {
+			toast.success("Deleted post!");
+			return;
+			// console.log(userList);
+		} else {
+			toast.error("Failed");
+			console.error(response);
+		}
+	} catch (error) {
+		toast.error(error);
+		console.error(error);
+	}
+}

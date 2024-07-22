@@ -1,11 +1,10 @@
 <script>
 	import PurrPostLogo from '$lib/logo/purrpost-logo.svg?component'; 
 
-	import SearchBar from './SearchBar.svelte';
-	import NavigationBar from './NavigationBar.svelte';
-	import RecommendationComp from './RecommendationComp.svelte';
+	import SearchBar from '../(main)/SearchBar.svelte';
+	import AdminNavigation from './AdminNavigation.svelte';
 
-	import { logout, myUserRole } from '$lib/authapi';
+	import { logout } from '$lib/authapi';
 
 	function toggleTheme() {
 	    // Check the current value of the data-theme attribute
@@ -36,7 +35,8 @@
 					</a>
 				</div>
 
-				<NavigationBar />
+				<AdminNavigation />
+
 				<button class="btn btn-error btn-circle" on:click={logout}>Log out</button>
 			</aside>
 
@@ -48,16 +48,9 @@
 				<!-- Profile -->
 					<div class="flex w-full justify-between items-center border-b px-4 py-3 sticky top-0 border-l border-r border-gray-200 dark:border-gray-700">
 					  <!-- Title -->
-
-						{#if $myUserRole == "admin"}
-							<a class="font-bold font-sm" href="/dashboard">
-								Admin Dashboard
-							</a>
-						{:else}
-							<a class="font-bold font-sm" href="/home">
-								Home
-							</a>
-						{/if}
+					  <a class="font-bold font-sm" href="/dashboard">
+						Admin Dashboard
+					  </a>
 					  <!-- /Title -->
 		  
 					  <!-- Custom Timeline -->
@@ -80,9 +73,7 @@
 			<aside class="h-full hidden xl:block xl:w-5/12 flex flex-col border-l border-gray-200 dark:border-gray-700 space-y-10 items-center relative">
 				<SearchBar />
 
-				{#if $myUserRole != "admin"}
-					<RecommendationComp />
-				{/if}
+				<!-- <RecommendationComp /> -->
 			</aside>
 		</div>
 

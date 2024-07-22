@@ -4,6 +4,7 @@ import { goto } from '$app/navigation';
 
 import { writable } from 'svelte/store';
 export const myUserId = writable(0);
+export const myUserRole = writable("user");
 
 
 export function logout() {
@@ -50,7 +51,12 @@ export async function login(loginData: LoginInfo) {
 			myUserId.set(userInfo.userId);
 			console.log(userInfo);
 
-			goto("/home");
+			if (userInfo.role == "admin") {
+				goto("/dashboard");
+			} else {
+				goto("/home");
+			}
+
 		} else if (response.status === 401) {
 			toast.error("Login failed");
 			console.error("FAILED:", response);

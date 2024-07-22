@@ -125,17 +125,7 @@ public class MegaPostController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-//	@GetMapping("/allposts")
-//	public ResponseEntity<List<Post>> getAllPosts() {
-//		try {
-//			List<Post> allPosts = postRepository.findAll();
-//			return new ResponseEntity<>(allPosts, HttpStatus.OK);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-//		}
-//	}
-	
+
 	@GetMapping("/newsfeed")
 	public ResponseEntity<List<PostOutput>> getNewsfeed() {
 		try {
@@ -158,6 +148,10 @@ public class MegaPostController {
 	            if (seenIds.add(post.getId())) {
 	            	newsFeedPost.add(post);
 	            }
+	        }
+	        
+	        if (newsFeedPost.isEmpty()) {
+	        	newsFeedPost = postRepository.findFirst10ByOrderByLikeCountDescIdDesc();
 	        }
 			
 			return new ResponseEntity<>(this.populatePostList(newsFeedPost), HttpStatus.OK);
@@ -212,6 +206,25 @@ public class MegaPostController {
 			return new ResponseEntity<>(this.populatePostList(allPosts), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	// Admin
+	// Admin
+	@GetMapping("/allposts")
+	public ResponseEntity<List<PostOutput>> getAllPosts() {
+		try {
+			if (UserRetrieval.getCurrentUserRole().equals("admin")) {
+				List<Post> allPosts = postRepository.findAll();
+				
+				return new ResponseEntity<>(this.populatePostList(allPosts), HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }

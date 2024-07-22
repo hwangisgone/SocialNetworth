@@ -28,4 +28,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 	
 	// Find HOT posts
 	List<Post> findAllByTimePostedGreaterThanOrderByLikeCountDescIdDesc(OffsetDateTime timePosted);
+
+	List<Post> findFirst10ByOrderByLikeCountDescIdDesc();
 }

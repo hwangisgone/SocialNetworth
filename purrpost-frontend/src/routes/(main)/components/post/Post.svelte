@@ -65,7 +65,7 @@
 		</div>
 	</div>
 	<div class="pl-16 pr-4">
-		<p class="text-base-content width-auto font-medium flex-shrink">
+		<p class="text-base-content width-auto font-medium flex-shrink whitespace-pre-line">
 			{post.content}
 		</p>
 <!-- 		<div

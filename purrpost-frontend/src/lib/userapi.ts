@@ -42,8 +42,8 @@ export async function getMyself() {
 
 		} else if (response.status === 401) {
 			// Redirect back to login
-			toast.error("Login required");
-			goto("/login");
+			// toast.error("Login required");
+			// goto("/login");
 		}
 	} catch (error) {
 		toast.error(error);

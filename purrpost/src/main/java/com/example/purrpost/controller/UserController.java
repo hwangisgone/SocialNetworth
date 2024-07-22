@@ -23,17 +23,6 @@ public class UserController {
 	private UserRepository userRepository;
 
 
-	@GetMapping("/allusers")
-	public ResponseEntity<List<SocialUser>> getAllUsers() {
-		try {
-			List<SocialUser> allUsers = userRepository.findAll();
-			return new ResponseEntity<>(allUsers, HttpStatus.OK);
-		} catch (Exception e) {
-			System.err.println(e.getMessage());
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-
 	@GetMapping("/user/{id}")
 	public ResponseEntity<SocialUser> getUser(@PathVariable("id") long id) {
 		Optional<SocialUser> userData = userRepository.findById(id);

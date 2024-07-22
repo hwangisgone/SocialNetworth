@@ -11,4 +11,7 @@ public interface UserRepository extends JpaRepository<SocialUser, Long> {
 	// https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html
 	List<SocialUser> findByNameTagAndPassword(String nameTag, String password);
 	List<SocialUser> findByNameTag(String nameTag);
+	
+	// Admin
+	List<SocialUser> findAllByOrderByUserIdAsc();
 }

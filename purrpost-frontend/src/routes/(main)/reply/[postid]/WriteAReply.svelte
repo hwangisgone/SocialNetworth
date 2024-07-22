@@ -29,7 +29,7 @@
     	on:click|preventDefault={() => { 
     		postReply($page.params.postid, replyContent); 
     		console.log("Clicked"); 
-    		goto('/').then(() => goto($page.url.pathname)); 
+    		goto('/home').then(() => goto($page.url.pathname)); 
     	}}>
         	Post 
     	</button>
